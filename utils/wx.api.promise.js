@@ -56,12 +56,18 @@ function wxPostRequestPromise(url, data) {
 	})
 }
 
-function wxGetSystemInfoPromise(){
+function wxGetSystemInfoPromise() {
 	return wxPromisify(wx.getSystemInfo)();
+}
+
+function wxSetStoragePromise(data) {
+	wx.clearStorageSync();
+	return wxPromisify(wx.setStorage)(data);
 }
 
 module.exports = {
 	getRequest: wxGetRequestPromise,
 	postRequest: wxPostRequestPromise,
-	getSystemInfo: wxGetSystemInfoPromise
+	getSystemInfo: wxGetSystemInfoPromise,
+	setStorage: wxSetStoragePromise
 }

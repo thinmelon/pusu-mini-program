@@ -1,11 +1,12 @@
 {
 	"pages": [
-		"pages/index/index"
+		"pages/index/index",
+		"pages/bullion/bullion"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
-		"navigationBarTitleText": "WeChat",
-		"navigationBarTextStyle": "black"
+		"navigationBarBackgroundColor": "#648e93",
+		"navigationBarTitleText": "朴素",
+		"navigationBarTextStyle": "white"
 	}
 }
