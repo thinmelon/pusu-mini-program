@@ -2,7 +2,7 @@
  *  访问地址前缀
  */
 const PROTOCOL = 'https://';
-const HOST = 'www.thinmelon.cc';
+const HOST = 'www.pusudo.cn';
 const API = '/finance';
 const PREFIX = PROTOCOL + HOST + API;
 /**

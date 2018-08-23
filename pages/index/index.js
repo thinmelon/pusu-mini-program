@@ -1,6 +1,5 @@
 //index.js
 //获取应用实例
-const app = getApp()
 const wxApiPromise = require('../../utils/wx.api.promise.js');
 const economic = require('../../services/economic.service.js');
 const chart = require('../../services/chart.service.js');

@@ -56,18 +56,47 @@ function wxPostRequestPromise(url, data) {
 	})
 }
 
+/**
+ * 获取系统信息
+ * brand	手机品牌	1.5.0
+ * model	手机型号
+ * pixelRatio	设备像素比
+ * screenWidth	屏幕宽度	1.1.0
+ * screenHeight	屏幕高度	1.1.0
+ * windowWidth	可使用窗口宽度
+ * windowHeight	可使用窗口高度
+ * statusBarHeight	状态栏的高度	1.9.0
+ * language	微信设置的语言
+ * version	微信版本号
+ * system	操作系统版本
+ * platform	客户端平台
+ * fontSizeSetting	用户字体大小设置。以“我-设置-通用-字体大小”中的设置为准，单位：px	1.5.0
+ * SDKVersion	客户端基础库版本
+ */
 function wxGetSystemInfoPromise() {
 	return wxPromisify(wx.getSystemInfo)();
 }
 
+/**
+ * 本地存储
+ * 将数据存储在本地缓存中指定的 key 中，会覆盖掉原来该 key 对应的内容
+ */
 function wxSetStoragePromise(data) {
 	wx.clearStorageSync();
 	return wxPromisify(wx.setStorage)(data);
+}
+
+/**
+ * 调用接口wx.login() 获取临时登录凭证（code）
+ */
+function wxLoginPromise() {
+    return wxPromisify(wx.login)();
 }
 
 module.exports = {
 	getRequest: wxGetRequestPromise,
 	postRequest: wxPostRequestPromise,
 	getSystemInfo: wxGetSystemInfoPromise,
-	setStorage: wxSetStoragePromise
+	setStorage: wxSetStoragePromise,
+    login: wxLoginPromise
 }
