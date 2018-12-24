@@ -3,15 +3,33 @@
  */
 const PROTOCOL = 'https://';
 const HOST = 'www.pusudo.cn';
-const API = '/finance';
-const PREFIX = PROTOCOL + HOST + API;
+const PREFIX_FINANCE = PROTOCOL + HOST + '/finance';
+const PREFIX_PLATFORM = PROTOCOL + HOST + '/platform';
+
+/**
+ * 模板有效性验证
+ */
+const checkTemplateValidity = () => {
+    return `${PREFIX_PLATFORM}/template/ever/bought`;
+}
+
+/**
+ *   用户登录
+ */
+const userLogin = (appid) => {
+    return `${PREFIX_PLATFORM}/miniprogram/${appid}`;
+}
+
 /**
  *  中债国债收益率
  */
-const ChinaBondYieldRate = (from, to) => {
-	return `${PREFIX}/bond/${from}-${to}`;
+const ChinaBondYieldRate = (session, from, to) => {
+    return `${PREFIX_FINANCE}/bond/${from}-${to}?session=${session}`;
 }
 
+
 module.exports = {
-	getChinaBondYieldRate: ChinaBondYieldRate
+    checkTemplateValidity: checkTemplateValidity,
+    userLogin: userLogin,
+    getChinaBondYieldRate: ChinaBondYieldRate
 }

@@ -1,12 +1,11 @@
 {
 	"pages": [
-		"pages/index/index",
-		"pages/bullion/bullion"
+		"pages/index/index"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#648e93",
-		"navigationBarTitleText": "莆素",
+		"navigationBarTitleText": "中债国债",
 		"navigationBarTextStyle": "white"
 	}
 }

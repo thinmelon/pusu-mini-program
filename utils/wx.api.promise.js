@@ -3,18 +3,18 @@ const Promise = require('../lib/es6-promise.js').Promise;
 /**
  *  封装
  */
-function wxPromisify(fn) {
-	return function (options = {}) {
-		return new Promise((resolve, reject) => {
-			options.success = function (result) {
-				resolve(result);
-			}
-			options.fail = function (reason) {
-				reject(reason);
-			}
-			fn(options);
-		});
-	}
+function Promisify(fn) {
+    return function(options = {}) {
+        return new Promise((resolve, reject) => {
+            options.success = function(result) {
+                resolve(result);
+            }
+            options.fail = function(reason) {
+                reject(reason);
+            }
+            fn(options);
+        });
+    }
 }
 
 //无论promise对象最后状态如何都会执行
@@ -32,28 +32,28 @@ function wxPromisify(fn) {
  * data 以对象的格式传入
  */
 function wxGetRequestPromise(url, data) {
-	return wxPromisify(wx.request)({
-		url: url,
-		method: 'GET',
-		data: data,
-		header: {
-			'Content-Type': 'application/json'
-		}
-	})
+    return Promisify(wx.request)({
+        url: url,
+        method: 'GET',
+        data: data,
+        header: {
+            'Content-Type': 'application/json'
+        }
+    })
 }
 
 /**
  * 微信请求post方法封装
  */
 function wxPostRequestPromise(url, data) {
-	return wxPromisify(wx.request)({
-		url: url,
-		method: 'POST',
-		data: data,
-		header: {
-			"Content-Type": "application/x-www-form-urlencoded"
-		}
-	})
+    return Promisify(wx.request)({
+        url: url,
+        method: 'POST',
+        data: data,
+        header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    })
 }
 
 /**
@@ -74,7 +74,7 @@ function wxPostRequestPromise(url, data) {
  * SDKVersion	客户端基础库版本
  */
 function wxGetSystemInfoPromise() {
-	return wxPromisify(wx.getSystemInfo)();
+    return Promisify(wx.getSystemInfo)();
 }
 
 /**
@@ -82,21 +82,45 @@ function wxGetSystemInfoPromise() {
  * 将数据存储在本地缓存中指定的 key 中，会覆盖掉原来该 key 对应的内容
  */
 function wxSetStoragePromise(data) {
-	wx.clearStorageSync();
-	return wxPromisify(wx.setStorage)(data);
+    wx.removeStorageSync(data.key);
+    return Promisify(wx.setStorage)(data);
 }
 
 /**
  * 调用接口wx.login() 获取临时登录凭证（code）
  */
 function wxLoginPromise() {
-    return wxPromisify(wx.login)();
+    return Promisify(wx.login)();
+}
+
+/**
+ * 	  显示加载框
+ */
+function wxShowLoadingPromise(options) {
+    return Promisify(wx.showLoading)(options);
+}
+
+/**
+ *    关闭加载框
+ */
+function wxHideLoadingPromise() {
+    return Promisify(wx.hideLoading)();
+}
+
+/**
+ * 	获取第三方平台自定义的数据字段
+ */
+function wxGetExtConfigPromise(options) {
+    return Promisify(wx.getExtConfig)();
 }
 
 module.exports = {
-	getRequest: wxGetRequestPromise,
-	postRequest: wxPostRequestPromise,
-	getSystemInfo: wxGetSystemInfoPromise,
-	setStorage: wxSetStoragePromise,
-    login: wxLoginPromise
+    login: wxLoginPromise,
+    getRequest: wxGetRequestPromise,
+    postRequest: wxPostRequestPromise,
+    getSystemInfo: wxGetSystemInfoPromise,
+    setStorage: wxSetStoragePromise,
+    showLoading: wxShowLoadingPromise,
+    hideLoading: wxHideLoadingPromise,
+    getExtConfig: wxGetExtConfigPromise
 }
