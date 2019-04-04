@@ -27,9 +27,13 @@ const ChinaBondYieldRate = (session, from, to) => {
     return `${PREFIX_FINANCE}/bond/${from}-${to}?session=${session}`;
 }
 
+const ChinaTreasuryYieldsCurve = (from, to) => {
+    return `https://finance.pusudo.cn/china/treasury/yields/curve/${from}/${to}`;
+}
 
 module.exports = {
     checkTemplateValidity: checkTemplateValidity,
     userLogin: userLogin,
-    getChinaBondYieldRate: ChinaBondYieldRate
+    getChinaBondYieldRate: ChinaBondYieldRate,
+    getChinaTreasuryYieldsCurve: ChinaTreasuryYieldsCurve
 }
