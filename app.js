@@ -4,53 +4,53 @@ const __USER__ = require('./services/user.service.js');
 const __RESOURCE__ = require('./services/resource.service.js');
 
 App({
-	isLogIn: true,
+    isLogIn: true,
 
-    onLaunch: function() {
-        let that = this;
+    // onLaunch: function() {
+    //     let that = this;
 
-        // __WX_API_PROMISE__
-        //     .showLoading({ //  开始，显示加载框
-        //         title: '玩命加载中',
-        //         mask: true
-        //     })
-        //     .then(__WX_API_PROMISE__.getExtConfig) //	获取第三方平台自定义的数据字段( appid )
-        //     .then(config => {
-        //         console.log(config);
-        //         return new Promise((resolve, reject) => {
-        //             if (config.hasOwnProperty('errMsg') && config.errMsg === "getExtConfig: ok") {
-        //                 console.log("app.js | userid  ===> ", config.extConfig.userid);
-        //                 console.log("app.js | templateid  ===> ", config.extConfig.templateid);
-        //                 wx.setStorageSync('__AUTHORIZER_APPID__', config.extConfig.appid || 'wxc91180e424549fbf')
-        //                 resolve({
-        //                     userid: config.extConfig.userid,
-        //                     templateid: config.extConfig.templateid
-        //                 });
-        //             } else {
-        //                 reject(config); //	发生错误
-        //             }
-        //         });
-        //     })
-        //     .then(__RESOURCE__.checkTemplateValidity)
-        //     .then(validity => {
-        //         console.log(validity)
-        //         return new Promise((resolve, reject) => {
-        //             if (validity.data.code === 0) {
-        //                 resolve("OK");
-        //             } else {
-        //                 reject(validity.data.msg);
-        //             }
-        //         })
-        //     })
-        //     .then(that.wxLogin)
-        //     .catch(exception => {
-        //         console.error('Login failed!')
-        //         console.error(exception);
-        //     })
-        //     .finally(() => {
-        //         __WX_API_PROMISE__.hideLoading();
-        //     });
-    },
+    //     __WX_API_PROMISE__
+    //         .showLoading({ //  开始，显示加载框
+    //             title: '玩命加载中',
+    //             mask: true
+    //         })
+    //         .then(__WX_API_PROMISE__.getExtConfig) //	获取第三方平台自定义的数据字段( appid )
+    //         .then(config => {
+    //             console.log(config);
+    //             return new Promise((resolve, reject) => {
+    //                 if (config.hasOwnProperty('errMsg') && config.errMsg === "getExtConfig: ok") {
+    //                     console.log("app.js | userid  ===> ", config.extConfig.userid);
+    //                     console.log("app.js | templateid  ===> ", config.extConfig.templateid);
+    //                     wx.setStorageSync('__AUTHORIZER_APPID__', config.extConfig.appid || 'wxc91180e424549fbf')
+    //                     resolve({
+    //                         userid: config.extConfig.userid,
+    //                         templateid: config.extConfig.templateid
+    //                     });
+    //                 } else {
+    //                     reject(config); //	发生错误
+    //                 }
+    //             });
+    //         })
+    //         .then(__RESOURCE__.checkTemplateValidity)
+    //         .then(validity => {
+    //             console.log(validity)
+    //             return new Promise((resolve, reject) => {
+    //                 if (validity.data.code === 0) {
+    //                     resolve("OK");
+    //                 } else {
+    //                     reject(validity.data.msg);
+    //                 }
+    //             })
+    //         })
+    //         .then(that.wxLogin)
+    //         .catch(exception => {
+    //             console.error('Login failed!')
+    //             console.error(exception);
+    //         })
+    //         .finally(() => {
+    //             __WX_API_PROMISE__.hideLoading();
+    //         });
+    // },
 
     /**
      * 		第三方登录

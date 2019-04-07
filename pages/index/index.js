@@ -40,18 +40,32 @@ Page({
      */
     getChinaBondYieldRate: function() {
         wx.showLoading({
-            title: '请稍等一会儿',
+            title: '正在抓取数据',
             mask: true
         });
         wxApiPromise
             .getSystemInfo() //  获取设备系统信息
             .then(this.setMyCanavsStyle) //  设置Canvas的样式
             .then(economic.getChinaBondYieldRate) //  获取中债国债收益率数据 
+            .then(this.changeLoadingContent)    //  更换加载提示内容
             .then(this.showLineChart) //  将数据绘制成拆线图
             .then(wxApiPromise.setStorage) // 将数据保存在本地
             .then(() => {
                 wx.hideLoading();
             });
+    },
+    /**
+     * 更换加载提示内容
+     */
+    changeLoadingContent: function(res) {
+        wx.hideLoading();
+        wx.showLoading({
+            title: '绘制图表中',
+            mask: true
+        });
+        return new Promise((resolve, reject) => {
+            resolve(res);
+        });
     },
     /**
      * 触碰开始
@@ -88,21 +102,23 @@ Page({
     /**
      *   显示拆线图
      */
-    showLineChart: function(result) {
+    showLineChart: function(res) {
         return new Promise((resolve, reject) => {
-            if (result.data.code === 0) {
+            const result = res.data;
+            console.log(result)
+            if (result.code === 0) {
                 //   记录数据数组长度
-                this.data.totalLabels = result.data.date.length;
+                this.data.totalLabels = result.date.length;
                 const margin = [],
                     oneYear = [],
                     tenYear = [],
                     date = [];
                 //   计算不同期限的收益率差
-                for (let i = 0, length = result.data.date.length; i < length; i++) {
-                    oneYear[i] = result.data.oneYear[length - 1 - i];
-                    tenYear[i] = result.data.tenYear[length - 1 - i];
-                    date[i] = result.data.date[length - 1 - i];
-                    margin[i] = tenYear[i] - oneYear[i];
+                for (let i = 0, length = result.date.length; i < length; i++) {
+                    oneYear[i] = result.oneYear[length - 1 - i];
+                    tenYear[i] = result.tenYear[length - 1 - i];
+                    date[i] = result.date[length - 1 - i];
+                    margin[i] = (tenYear[i] - oneYear[i]).toFixed(4);
                 }
                 //   绘制
                 this.data.canvasOptions = chart.createLineChart({
