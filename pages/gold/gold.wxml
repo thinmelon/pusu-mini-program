@@ -1,0 +1,136 @@
+<!--pages/gold/gold.wxml-->
+<view class='header'>
+    <text class='exchange'>上海黄金交易所</text>
+    <text class='explain font-smaller'>黄金延期Au（T+D）、黄金单月延期Au（T+N1）、黄金双月延期Au（T+N2）</text>
+</view>
+
+
+<view wx:for="{{goldShangHai}}" wx:key="{{item.variety}}" wx:for-item="item">
+    <view class='highlight'>
+        <text class='variety'>{{item.variety}}</text>
+        <text class='latest-price'>{{item.latestpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>最高价：</text>
+        <text>{{item.maxpri}}</text>
+        <text>最低价：</text>
+        <text>{{item.minpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>开盘价：</text>
+        <text>{{item.openpri}}</text>
+        <text>昨收价：</text>
+        <text>{{item.yespri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>涨跌幅：</text>
+        <text>{{item.limit}}</text>
+        <text>总成交量：</text>
+        <text>{{item.totalvol}}</text>
+    </view>
+
+    <text class='font-smaller'>更新时间：{{item.time}}</text>
+    <view class='div-line'></view>
+</view>
+
+<view class='header'>
+    <text class='exchange'>银行账户黄金</text>
+    <text class='explain font-smaller'>人民币账户贵金属：您可以直接用人民币完成对贵金属（克）的即时交易、委托交易等各项投资。美元账户贵金属：您可以委托工行进行美元和贵金属之间的买卖，工行在接受您的委托后，将根据国际金融市场上贵金属与美元的比价（分为买入价、卖出价两种）办理交易。交易方式：采用即时和委托两种方式进行交易。投资者可以直接按工商银行的报价进行实时成交，或指定价格进行委托挂单。委托交易包括获利委托、止损委托、双向委托，最长委托时间可达120小时。</text>
+</view>
+
+<view wx:for="{{goldBank}}" wx:key="{{item.variety}}" wx:for-item="item">
+    <view class='highlight'>
+        <text class='variety'>{{item.variety}}</text>
+    </view>
+
+    <view class='row'>
+        <text>最高价：</text>
+        <text>{{item.maxpri}}</text>
+        <text>最低价：</text>
+        <text>{{item.minpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>开盘价：</text>
+        <text>{{item.todayopen}}</text>
+        <text>昨收价：</text>
+        <text>{{item.closeyes}}</text>
+    </view>
+
+    <view class='row'>
+        <text>买入价：</text>
+        <text>{{item.buypri}}</text>
+        <text>卖出价：</text>
+        <text>{{item.sellpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>涨跌幅：</text>
+        <text>{{item.quantpri}}</text>
+        <text>中间价：</text>
+        <text>{{item.midpri}}</text>
+    </view>
+
+    <text class='font-smaller'>更新时间：{{item.time}}</text>
+    <view class='div-line'></view>
+</view>
+
+<view class='header'>
+    <text class='exchange'>上海期货交易所</text>
+    <text class='explain font-smaller'>白银当月连续只是期货白银的连续指数，是不可交易的，只能作为期货白银交易的参照系。</text>
+</view>
+
+<view wx:for="{{futureShangHai}}" wx:key="{{item.name}}" wx:for-item="item">
+    <view class='highlight'>
+        <text class='variety'>{{item.name}}</text>
+        <text class='latest-price'>{{item.latestpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>最高价：</text>
+        <text>{{item.maxpri}}</text>
+        <text>最低价：</text>
+        <text>{{item.minpri}}</text>
+    </view>
+
+    <view class='row'>
+        <text>开盘价：</text>
+        <text>{{item.open}}</text>
+        <text>昨收价：</text>
+        <text>{{item.lastclear}}</text>
+    </view>
+
+    <view class='row'>
+        <text>涨跌：</text>
+        <text>{{item.change}}</text>
+        <text>成交量：</text>
+        <text>{{item.tradvol}}</text>
+    </view>
+
+    <view class='row'>
+        <text>买价：</text>
+        <text>{{item.buypri}}</text>
+        <text>买量：</text>
+        <text>{{item.buyvol}}</text>
+    </view>
+
+    <view class='row'>
+        <text>卖价：</text>
+        <text>{{item.sellpri}}</text>
+        <text>卖量：</text>
+        <text>{{item.sellvol}}</text>
+    </view>
+
+    <view class='row'>
+        <text>持仓量：</text>
+        <text>{{item.position}}</text>
+        <text>增仓：</text>
+        <text>{{item.zengcang}}</text>
+    </view>
+
+    <text class='font-smaller'>更新时间：{{item.time}}</text>
+    <view class='div-line'></view>
+</view>

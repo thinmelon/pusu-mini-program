@@ -1,0 +1,28 @@
+<!--pages/currency/exchange.wxml-->
+<!-- <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiCurrencyList}}" range-key="name">
+    <view class="picker">
+        当前选择：{{multiCurrencyList[0][multiIndex[0]].name}}，{{multiCurrencyList[1][multiIndex[1]].name}}
+    </view>
+</picker> -->
+
+<view class='update-time font-smaller'>更新：{{updateTime}}</view>
+
+<view class='currency'>
+    <picker bindchange="bindPickerChange" data-direction='from' value="{{multiIndex[0]}}" range="{{currencyList}}" range-key="name">
+        <view class="picker">
+            {{currencyList[multiIndex[0]].name}} {{currencyList[multiIndex[0]].code}}
+            <image class='icon-smaller' src='/icons/right.png'></image>
+        </view>
+    </picker>
+    <text>{{currencyFD}}</text>
+</view>
+
+<view class='currency'>
+    <picker bindchange="bindPickerChange" data-direction='to' value="{{multiIndex[1]}}" range="{{currencyList}}" range-key="name">
+        <view class="picker">
+            {{currencyList[multiIndex[1]].name}} {{currencyList[multiIndex[1]].code}}
+            <image class='icon-smaller' src='/icons/right.png'></image>
+        </view>
+    </picker>
+    <text>{{result}}</text>
+</view>

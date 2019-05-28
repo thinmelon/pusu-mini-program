@@ -1,21 +1,15 @@
-/**index.wxss**/
+/* pages/index/index.wxss */
 
-.maskerCanvas {
-    position: absolute;
+.section_ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	padding: 30px 0;
+	margin:  17px 0;
 }
 
-.title {
-    padding: 1rem;
-    font-size: 17pt;
-    color: #353535;
-}
-
-.brief {
-    padding: 1rem;
-    font-size: 11pt;
-    color: #353535;
-}
-
-.brief span {
-    color: #576b95;
+.section_ctn image {
+    width: 48px;
+    height: 48px;
 }

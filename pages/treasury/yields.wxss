@@ -1,0 +1,21 @@
+/* pages/treasury/yields.wxss */
+
+.maskerCanvas {
+    position: absolute;
+}
+
+.title {
+    padding: 1rem;
+    font-size: 17pt;
+    color: #353535;
+}
+
+.brief {
+    padding: 1rem;
+    font-size: 11pt;
+    color: #353535;
+}
+
+.brief span {
+    color: #576b95;
+}

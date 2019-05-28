@@ -1,0 +1,20 @@
+<!--pages/treasury/yields.wxml-->
+<canvas canvas-id='{{ canvasId }}' style='width: {{ canvasWidth }}px; height: {{ canvasHeight }}px;' />
+<canvas canvas-id='{{ maskerCanvasId }}' class='maskerCanvas' style='left: {{ maskerLeft }}px; top: {{ maskerTop }}px; width: {{ maskerWidth }}px; height: {{ maskerHeight }}px;' bindtouchstart="bindTouchStart" bindtouchmove="bindTouchMove" bindtouchend="bindTouchEnd"
+/>
+
+<view>
+    <view class='title'>
+        中债国债收益率曲线
+    </view>
+    <view class='brief'>国债收益率曲线是由
+        <span>中央国债登记结算有限责任公司</span> 编制提供的一组反映在岸人民币债券市场到期收益率走势的图表。国债收益率曲线样本包括记账式附息国债和记账式贴现国债。</view>
+    <view class='title'>
+        长短期利差
+    </view>
+    <view class='brief'>长短期利差是宏观经济的先行指标，通常用10年国债和1年国债的利率差表示。</view>
+    <view class='brief'>
+        <span>当收益率曲线正常状态，向上倾斜（upward sloping），利差为正。</span>市场的升息预期不大，而且市场对未来的经济增长和通胀预期稳定。</view>
+    <view class='brief'>
+        <span>出现问题的时候，通常收益率曲线会变平，甚至反转（inverted）。</span>利差接近0，甚至为负。此时，市场的升息预期强烈，所以收益率曲线的近端涨。但是，市场对经济的长期增长不乐观，于是大量购买远期国债以避险，国债价格涨，收益率降低，收益率曲线的远端跌。近端利率涨，远端利率跌，利差就接近0或为负了。</view>
+</view>

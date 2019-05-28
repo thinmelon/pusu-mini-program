@@ -9,3 +9,30 @@
     padding: 200rpx 0;
     box-sizing: border-box;
 }
+
+.font-smaller {
+    font-size: 9pt;
+    color: #888;
+    margin: 17px 9px;
+}
+
+.icon-smaller {
+    width: 28px;
+    height: 28px;
+    margin: 0 7px;
+}
+
+.picker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+/*分割线样式*/
+
+.div-line {
+    background: #e0e3da;
+    width: 100%;
+    height: 3rpx;
+}

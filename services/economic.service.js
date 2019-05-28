@@ -22,6 +22,64 @@ const getChinaBondYieldRate = (
     return __WX_API_PROMISE__.getRequest(url, {});
 }
 
+/**
+ * 		汇率 API
+ */
+
+/**
+ * 		货币列表
+ */
+const getCurrencyList = () => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getCurrencyList(), {});
+}
+
+/**
+ * 	实时货币汇率查询换算
+ */
+const queryCurrencyExchange = (from, to) => {
+    return __WX_API_PROMISE__.getRequest(
+        __URI__.queryCurrencyExchange(from || 'USD', to || 'CNY'), {});
+}
+
+/**
+ * 		黄金 API
+ */
+
+/**
+ * 		上海黄金交易所
+ */
+const getShangHaiGold = () => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getShangHaiGold(), {});
+}
+
+/**
+ * 		上海期货交易所
+ */
+const getShanagHaiFuture = () => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getShanagHaiFuture(), {});
+}
+
+/**
+ * 		银行账户黄金
+ */
+const getBankGold = () => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getBankGold(), {});
+}
+
 module.exports = {
-    getChinaBondYieldRate: getChinaBondYieldRate
+    /**
+     * 	债券
+     */
+    getChinaBondYieldRate: getChinaBondYieldRate,
+    /**
+     * 	汇率
+     */
+    getCurrencyList: getCurrencyList,
+    queryCurrencyExchange: queryCurrencyExchange,
+    /**
+     * 	黄金
+     */
+    getShangHaiGold: getShangHaiGold,
+    getShanagHaiFuture: getShanagHaiFuture,
+    getBankGold: getBankGold
 }

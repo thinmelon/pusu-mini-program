@@ -1,11 +1,14 @@
 {
 	"pages": [
-		"pages/index/index"
+		"pages/index/index",
+		"pages/treasury/yields",
+		"pages/currency/exchange",
+		"pages/gold/gold"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#648e93",
-		"navigationBarTitleText": "中债国债",
+		"navigationBarTitleText": "点滴金融",
 		"navigationBarTextStyle": "white"
 	}
 }
