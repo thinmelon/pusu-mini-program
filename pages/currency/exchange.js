@@ -79,6 +79,7 @@ Page({
     onShareAppMessage: function() {
 
     },
+
     /**
      * 	货币列表
      */
@@ -102,6 +103,7 @@ Page({
                 console.error(err);
             })
     },
+	
     /**
      * 	查询实时汇率
      */

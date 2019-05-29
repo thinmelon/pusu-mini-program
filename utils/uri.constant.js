@@ -69,6 +69,13 @@ const getBankGold = () => {
     return `${PREFIX_SERVER_LESS}/gold/bank`;
 }
 
+/**
+ * 	查询公司股东股份质押 - API网关
+ */
+const getStockSharePledge = (code) => {
+    return `${PREFIX_SERVER_LESS}/stock/pledge/${code}`;
+}
+
 module.exports = {
     checkTemplateValidity: checkTemplateValidity,
     userLogin: userLogin,
@@ -87,5 +94,9 @@ module.exports = {
      */
     getShangHaiGold: getShangHaiGold,
     getShanagHaiFuture: getShanagHaiFuture,
-    getBankGold: getBankGold
+    getBankGold: getBankGold,
+    /**
+     * 	股票
+     */
+    getStockSharePledge: getStockSharePledge
 }

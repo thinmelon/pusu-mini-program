@@ -66,6 +66,17 @@ const getBankGold = () => {
     return __WX_API_PROMISE__.getRequest(__URI__.getBankGold(), {});
 }
 
+/**
+ * 		股票	API
+ */
+
+/**
+ * 	查询公司股东股份质押
+ */
+const getStockSharePledge = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockSharePledge(code), {});
+}
+
 module.exports = {
     /**
      * 	债券
@@ -81,5 +92,9 @@ module.exports = {
      */
     getShangHaiGold: getShangHaiGold,
     getShanagHaiFuture: getShanagHaiFuture,
-    getBankGold: getBankGold
+    getBankGold: getBankGold,
+    /**
+     * 	股票
+     */
+    getStockSharePledge: getStockSharePledge
 }

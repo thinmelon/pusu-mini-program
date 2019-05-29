@@ -3,12 +3,14 @@
 		"pages/index/index",
 		"pages/treasury/yields",
 		"pages/currency/exchange",
-		"pages/gold/gold"
+		"pages/gold/gold",
+		"pages/stock/pannel/pannel",
+		"pages/stock/pledge/pledge"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#648e93",
-		"navigationBarTitleText": "点滴金融",
+		"navigationBarTitleText": "莆素",
 		"navigationBarTextStyle": "white"
 	}
 }

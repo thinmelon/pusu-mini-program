@@ -19,13 +19,20 @@ Page({
                 text: '国债',
                 url: '/pages/treasury/yields'
             },
-			{
-				index: 3,
-				src: '/icons/gold.png',
-				mode: 'aspectFit',
-				text: '黄金',
-				url: '/pages/gold/gold'
-			}
+            {
+                index: 3,
+                src: '/icons/gold.png',
+                mode: 'aspectFit',
+                text: '黄金',
+                url: '/pages/gold/gold'
+            },
+            {
+                index: 4,
+                src: '/icons/stock.png',
+                mode: 'aspectFit',
+                text: '股票',
+                url: 'pages/stock/pannel/pannel'
+            }
         ]
     },
 

@@ -77,8 +77,8 @@ Page({
         const that = this;
         economic.getShangHaiGold() // API
             .then(res => {
+				console.log(res.data);
                 const data = JSON.parse(res.data);
-                console.log(data);
                 if (data.hasOwnProperty('error_code') &&
                     data.error_code === 0 &&
                     data.hasOwnProperty('resultcode') &&
@@ -105,8 +105,8 @@ Page({
         const that = this;
         economic.getShanagHaiFuture() // API
             .then(res => {
+				console.log(res.data);
                 const data = JSON.parse(res.data);
-                console.log(data);
                 if (data.hasOwnProperty('error_code') &&
                     data.error_code === 0 &&
                     data.hasOwnProperty('resultcode') &&
@@ -133,8 +133,8 @@ Page({
         const that = this;
         economic.getBankGold() // API
             .then(res => {
+				console.log(res.data);
                 const data = JSON.parse(res.data);
-                console.log(data);
                 if (data.hasOwnProperty('error_code') &&
                     data.error_code === 0 &&
                     data.hasOwnProperty('resultcode') &&
