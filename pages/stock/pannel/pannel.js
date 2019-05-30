@@ -1,5 +1,5 @@
 // pages/stock/pannel/pannel.js
-const economic = require('../../services/economic.service.js');
+const economic = require('../../../services/economic.service.js');
 
 Page({
 

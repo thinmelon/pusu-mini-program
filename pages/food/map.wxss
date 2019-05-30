@@ -1,0 +1,6 @@
+/* pages/food/map.wxss */
+
+.restaurants-map {
+  width: 100%;
+  height: 100vh;
+}

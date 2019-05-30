@@ -1,16 +1,23 @@
 {
-	"pages": [
-		"pages/index/index",
-		"pages/treasury/yields",
-		"pages/currency/exchange",
-		"pages/gold/gold",
-		"pages/stock/pannel/pannel",
-		"pages/stock/pledge/pledge"
-	],
-	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#648e93",
-		"navigationBarTitleText": "莆素",
-		"navigationBarTextStyle": "white"
-	}
+  "pages": [
+    "pages/index/index",
+    "pages/food/map",
+    "pages/treasury/yields",
+    "pages/currency/exchange",
+    "pages/gold/gold",
+    "pages/stock/pannel/pannel",
+    "pages/stock/pledge/pledge"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#648e93",
+    "navigationBarTitleText": "莆素",
+    "navigationBarTextStyle": "white"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
 }

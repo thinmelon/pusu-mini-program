@@ -1,5 +1,4 @@
 const __URI__ = require('../utils/uri.constant.js');
-const __CRYPT__ = require('../utils/crypt.js');
 const __MOMENT__ = require('../lib/moment.min.js');
 const __WX_API_PROMISE__ = require('../utils/wx.api.promise.js');
 
@@ -12,10 +11,6 @@ const __WX_API_PROMISE__ = require('../utils/wx.api.promise.js');
 const getChinaBondYieldRate = (
     start = __MOMENT__().subtract(1, 'years').format('YYYY/MM/DD'),
     end = __MOMENT__().format('YYYY/MM/DD')) => {
-    // const url = __URI__.getChinaBondYieldRate(
-    //     encodeURIComponent(__CRYPT__.encryptData('')),
-    //     encodeURIComponent(start),
-    //     encodeURIComponent(end));
     const url = __URI__.getChinaTreasuryYieldsCurve(
         encodeURIComponent(start),
         encodeURIComponent(end));
