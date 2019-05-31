@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/food/map",
+	"pages/food/article",
     "pages/treasury/yields",
     "pages/currency/exchange",
     "pages/gold/gold",
