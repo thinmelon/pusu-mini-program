@@ -1,2 +1,2 @@
 <!--pages/food/article.wxml-->
-<web-view src="{{ source }}"></web-view>
+<web-view src="{{ source }}" bindmessage='bindmessage' bindload='bindload' binderror='binderror'></web-view>
