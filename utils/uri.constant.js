@@ -44,6 +44,13 @@ const getRestaurants = () => {
 }
 
 /**
+ *  绑定标签
+ */
+const bindTag = () => {
+  return `${PREFIX_LIFE_SERVER_LESS}/restaurant/tag`;
+}
+
+/**
  * 				金融
  */
 
@@ -111,6 +118,7 @@ module.exports = {
    */
   fetchOfficialNews: fetchOfficialNews,
   getRestaurants: getRestaurants,
+  bindTag: bindTag,
   /**
    * 	债券
    */

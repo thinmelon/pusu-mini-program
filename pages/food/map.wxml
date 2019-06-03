@@ -1,3 +1,9 @@
 <!--pages/food/map.wxml-->
 <map class="restaurants-map" longitude="{{centerLongitude}}" latitude="{{centerLatitude}}" scale="{{scale}}" markers="{{markers}}" bindmarkertap="bindMarkerTap">
 </map>
+<view class='tags'>
+  <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{tags}}" wx:key="{{item.name}}" wx:for-item="item" bindtap='onTagClicked'>
+    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+    <text>{{item.name}}</text>
+  </view>
+</view>

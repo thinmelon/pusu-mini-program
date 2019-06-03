@@ -16,6 +16,49 @@ Page({
     centerLatitude: 25.43034,
     scale: 15,
     markers: [],
+    tags: [{
+        name: '火锅',
+        icon: '/icons/food/_huoguo.png',
+        disabledIcon: '/icons/food/_huoguo_grey.png',
+        enable: true
+      },
+      {
+        name: '小吃',
+        icon: '/icons/food/_baozi.png',
+        disabledIcon: '/icons/food/_baozi_grey.png',
+        enable: true
+      }, {
+        name: '酒吧',
+        icon: '/icons/food/_jiuba.png',
+        disabledIcon: '/icons/food/_jiuba_grey.png',
+        enable: true
+      }, {
+        name: '烧烤',
+        icon: '/icons/food/_shaokao.png',
+        disabledIcon: '/icons/food/_shaokao_grey.png',
+        enable: true
+      }, {
+        name: '日料',
+        icon: '/icons/food/_riliao.png',
+        disabledIcon: '/icons/food/_riliao_grey.png',
+        enable: true
+      }, {
+        name: '西餐',
+        icon: '/icons/food/_xican.png',
+        disabledIcon: '/icons/food/_xican_grey.png',
+        enable: true
+      }, {
+        name: '中餐',
+        icon: '/icons/food/_zhongcan.png',
+        disabledIcon: '/icons/food/_zhongcan_grey.png',
+        enable: true
+      }, {
+        name: '自助',
+        icon: '/icons/food/_zizhu.png',
+        disabledIcon: '/icons/food/_zizhu_grey.png',
+        enable: true
+      }
+    ]
   },
 
   /**
@@ -90,6 +133,10 @@ Page({
 
   },
 
+  onTagClicked: function(evt) {
+    console.log(evt);
+  },
+
   /**
    * 		获取餐馆列表
    */
@@ -105,7 +152,7 @@ Page({
             if (item.location) {
               that.data.markers.push({
                 id: index++,
-                iconPath: "/icons/meishi.png",
+                iconPath: "/icons/food/_baozi.png",
                 latitude: item.location.lat,
                 longitude: item.location.lng,
                 width: 25,
@@ -133,5 +180,13 @@ Page({
     wx.navigateTo({
       url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32)
     })
+  },
+
+  bindTag: function() {
+    __LIFE__.bindTag("5cf27c5a83760ae340b32a11", "火锅")
+      .then(res => {
+        console.log(res);
+      })
+
   }
 })
