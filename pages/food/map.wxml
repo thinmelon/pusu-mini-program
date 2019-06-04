@@ -1,9 +1,18 @@
 <!--pages/food/map.wxml-->
 <map class="restaurants-map" longitude="{{centerLongitude}}" latitude="{{centerLatitude}}" scale="{{scale}}" markers="{{markers}}" bindmarkertap="bindMarkerTap">
+    <cover-view class='container' wx:if="{{ chosenMarker.attach }}" bindtap='closeCoverView'>
+        <cover-view class='info'>
+            <cover-view class='restaurant-name'>{{ chosenMarker.attach.name }}</cover-view>
+            <cover-view class="article" catchtap='catchTapArticle' data-url='{{ item.url }}' wx:for="{{ chosenMarker.attach.articles }}" wx:key="{{ item.title }}">
+                <cover-view class='title'>{{item.title}}</cover-view>
+                <cover-view class='source'>来源：{{item.source}}</cover-view>
+            </cover-view>
+        </cover-view>
+    </cover-view>
 </map>
 <view class='tags'>
-  <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{tags}}" wx:key="{{item.name}}" wx:for-item="item" bindtap='onTagClicked'>
-    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
-    <text>{{item.name}}</text>
-  </view>
+    <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{tags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
+        <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+        <text>{{item.name}}</text>
+    </view>
 </view>
