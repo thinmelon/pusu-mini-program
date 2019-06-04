@@ -1,81 +1,99 @@
 /* pages/food/map.wxss */
 
 .restaurants-map {
-    width: 100%;
-    height: 85vh;
+  width: 100%;
+  height: 85vh;
 }
 
+/*  标签组  */
+
 .tags {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 15vh;
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-    grid-row-gap: 3px;
-    justify-content: center;
-    align-items: center;
-    padding: 7px 0;
-    background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 15vh;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-row-gap: 3px;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 0;
+  background-color: white;
 }
 
 .tag {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    /* background-color: #EEE; */
-    margin: 0 3px;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #EEE; */
+  margin: 0 3px;
+  border-radius: 5px;
 }
 
 .tag image {
-    width: 25px;
-    height: 25px;
-    padding: 7px 5px;
+  width: 25px;
+  height: 25px;
+  padding: 7px 5px;
 }
 
 .tag text {
-    font-size: 1rem;
-    color: gray;
+  font-size: 1rem;
+  color: gray;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .info {
-    width: 77%;
-    height: 38vh;
-    background-color: #fafafa;
-    border-color: #888;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+  width: 77%;
+  height: 38vh;
+  background-color: #fafafa;
+  border-color: #888;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .restaurant-name {
-    padding: 1rem;
+  padding: 1rem;
 }
 
+/*  微信公众号文章列表  */
+
 .article {
-    padding: 7px;
-    width: 95%;
+  padding: 7px;
+  width: 95%;
 }
 
 .article .title {
-    font-size: 10pt;
-    color: blue;
-    text-decoration: underline;
-    padding: 3px 0;
+  font-size: 10pt;
+  color: blue;
+  text-decoration: underline;
+  padding: 3px 0;
 }
 
 .article .source {
-    font-size: 9pt;
-    color: #888;
+  font-size: 9pt;
+  color: #888;
+}
+
+/*  选项卡  */
+
+.list {
+  position: fixed;
+  top: 17px;
+  right: 7px;
+  opacity: 0.5;
+}
+
+.list image {
+  width: 24px;
+  height: 24px;
 }

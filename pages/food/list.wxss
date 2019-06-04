@@ -1,0 +1,6 @@
+/* pages/food/list.wxss */
+
+.restaurant {
+  display: flex;
+  flex-direction: column;
+}

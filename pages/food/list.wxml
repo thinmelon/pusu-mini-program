@@ -1,0 +1,15 @@
+<!--pages/food/list.wxml-->
+<view wx:for="{{restaurants}}" wx:key="{{item._id}}" class='restaurant'>
+  <text>{{item.name}}</text>
+  <text>{{item.address}}</text>
+  <text>{{item.consumptionPerPersion}}</text>
+  <text>{{item.open}}</text>
+  <text>{{item.phone}}</text>
+  <view wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{article.title}}">
+    <text>{{article.title}}</text>
+  </view>
+  <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+    <text>{{tag}}</text>
+  </view>
+  <view class='div-line'></view>
+</view>
