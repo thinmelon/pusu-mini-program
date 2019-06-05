@@ -1,6 +1,31 @@
 /* pages/food/list.wxss */
 
 .restaurant {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+}
+
+.restaurant-basic {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-column-gap: 3px;
+    padding: 7px;
+    font-size: 11pt;
+}
+
+.restaurant-name {
+    font-size: 13pt;
+    color: brown;
+}
+
+.restaurant-article {
+    padding: 7px;
+    font-size: 10pt;
+    text-decoration: underline;
+    color: blue;
+}
+
+.picker {
+    font-size: 11pt;
+    color: blueviolet;
 }

@@ -16,7 +16,9 @@ Page({
      */
     onLoad: function(options) {
         console.log(options);
-        wxApiPromise.showLoading();
+        wxApiPromise.showLoading({
+            title: '加载中'
+        });
         this.setData({
             source: __URI__.fetchOfficialNews(options.collection)
         });
