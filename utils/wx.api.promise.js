@@ -57,6 +57,20 @@ function wxPostRequestPromise(url, data) {
 }
 
 /**
+ * 微信请求delete方法封装
+ */
+function wxDeleteRequestPromise(url, data) {
+    return Promisify(wx.request)({
+        url: url,
+        method: 'DELETE',
+        data: data,
+        header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    })
+}
+
+/**
  * 获取系统信息
  * brand	手机品牌	1.5.0
  * model	手机型号
@@ -84,6 +98,10 @@ function wxGetSystemInfoPromise() {
 function wxSetStoragePromise(data) {
     wx.removeStorageSync(data.key);
     return Promisify(wx.setStorage)(data);
+}
+
+function wxGetStoragePromise(data) {
+    return Promisify(wx.getStorage)(data);
 }
 
 /**
@@ -118,8 +136,10 @@ module.exports = {
     login: wxLoginPromise,
     getRequest: wxGetRequestPromise,
     postRequest: wxPostRequestPromise,
+    deleteRequest: wxDeleteRequestPromise,
     getSystemInfo: wxGetSystemInfoPromise,
     setStorage: wxSetStoragePromise,
+    getStorage: wxGetStoragePromise,
     showLoading: wxShowLoadingPromise,
     hideLoading: wxHideLoadingPromise,
     getExtConfig: wxGetExtConfigPromise

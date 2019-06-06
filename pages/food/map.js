@@ -141,7 +141,7 @@ Page({
      */
     onUnload: function() {
         console.log('=====	onUnload =====');
-        // wx.removeStorageSync('__RESTAURANT__');
+        wx.removeStorageSync('__RESTAURANT__');
     },
 
     /**
@@ -210,39 +210,41 @@ Page({
      * 	在地图上绘制Marker
      */
     paintMarkers: function() {
-        try {
-            const restaurants = wx.getStorageSync('__RESTAURANT__'); //	尝试从缓存中读取餐馆列表
-            if (restaurants) {
-                let index = 0;
-                this.data.markers = [];
-                restaurants.map(item => {
-                    this.data.tags.map(tag => {
-                        if (tag.enable && item.location && item.tags.indexOf(tag.name) >= 0) {
-                            // console.log(item);
-                            this.data.markers.push({
-                                id: index++,
-                                iconPath: tag.icon,
-                                latitude: item.location.lat,
-                                longitude: item.location.lng,
-                                width: 25,
-                                height: 25,
-                                attach: {
-                                    name: item.name,
-                                    articles: item.articles
-                                }
-                            })
-                        } /**	end of if */
-                    }) /**	end of this.data.tags.map */
-                }) /**	end of restaurants.map */
-                this.setData({
-                    markers: this.data.markers
-                })
-            } else {
+        wxApiPromise.getStorage({
+                'key': '__RESTAURANT__'
+            }).then(storage => {
+                console.log(storage.data);
+                if (storage.data) {
+                    let index = 0;
+                    this.data.markers = [];
+                    storage.data.map(item => {
+                        this.data.tags.map(tag => {
+                            if (tag.enable && item.location && item.tags.indexOf(tag.name) >= 0) {
+                                // console.log(item);
+                                this.data.markers.push({
+                                    id: index++,
+                                    iconPath: tag.icon,
+                                    latitude: item.location.lat,
+                                    longitude: item.location.lng,
+                                    width: 25,
+                                    height: 25,
+                                    attach: {
+                                        name: item.name,
+                                        articles: item.articles
+                                    }
+                                })
+                            } /**	end of if */
+                        }) /**	end of this.data.tags.map */
+                    }) /**	end of storage.data.map */
+                    this.setData({
+                        markers: this.data.markers
+                    })
+                }
+            })
+            .catch(err => {
+                console.error(err);
                 this.getRestaurants(this.paintMarkers); //	如果缓存中不存在餐馆列表，发起异步请求获取数据
-            }
-        } catch (err) {
-            console.error(err);
-        }
+            })
     },
 
     /**

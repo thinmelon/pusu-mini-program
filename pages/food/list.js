@@ -82,9 +82,9 @@ Page({
      * 	关联标签
      */
     bindPickerChange: function(evt) {
-        console.log(evt);
-        console.log(evt.currentTarget.dataset.restaurantid);
-        console.log(this.data.tags[evt.detail.value]);
+        // console.log(evt);
+        // console.log(evt.currentTarget.dataset.restaurantid);
+        // console.log(this.data.tags[evt.detail.value]);
         __LIFE__.bindTag(evt.currentTarget.dataset.restaurantid, this.data.tags[evt.detail.value])
             .then(res => {
                 console.log(res);
@@ -93,7 +93,27 @@ Page({
                         title: '成功'
                     })
                 }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    },
 
+    /**
+     * 	移除标签
+     */
+    removeTag: function(evt) {
+        console.log(evt);
+        console.log(evt.currentTarget.dataset.restaurantid);
+        console.log(evt.currentTarget.dataset.tag);
+        __LIFE__.removeTag(evt.currentTarget.dataset.restaurantid, evt.currentTarget.dataset.tag)
+            .then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    wx.showToast({
+                        title: '成功'
+                    })
+                }
             })
             .catch(err => {
                 console.error(err);

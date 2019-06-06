@@ -12,7 +12,7 @@
         <text>标签</text>
         <view>
             <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
-                <button size='mini'>{{tag}}</button>
+                <button size='mini' bindtap='removeTag' data-restaurantid='{{item._id}}' data-tag='{{tag}}'>{{tag}}</button>
             </block>
         </view>
     </view>

@@ -58,6 +58,13 @@ const bindTag = () => {
 }
 
 /**
+ * 	移除标签
+ */
+const removeTag = (id, tag) => {
+    return `${PREFIX_LIFE_SERVER_LESS}/restaurant/tag?id=${id}&tag=${tag}`;
+}
+
+/**
  * 				金融
  */
 
@@ -127,6 +134,7 @@ module.exports = {
     getRestaurants: getRestaurants,
     getTags: getTags,
     bindTag: bindTag,
+    removeTag: removeTag,
     /**
      * 	债券
      */

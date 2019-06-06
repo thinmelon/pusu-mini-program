@@ -25,8 +25,16 @@ const bindTag = (id, tag) => {
     });
 }
 
+/**
+ * 	移除标签
+ */
+const removeTag = (id, tag) => {
+    return __WX_API_PROMISE__.deleteRequest(__URI__.removeTag(id, encodeURIComponent(tag)), {});
+}
+
 module.exports = {
     getRestaurants: getRestaurants,
     getTags: getTags,
-    bindTag: bindTag
+    bindTag: bindTag,
+    removeTag: removeTag
 }
