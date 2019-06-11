@@ -5,7 +5,48 @@ const __RESOURCE__ = require('./services/resource.service.js');
 
 App({
     isLogIn: true,
-
+    environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
+    tags: [{
+        name: '小吃简餐',
+        icon: '/icons/food/tags/xiaochi.png',
+        disabledIcon: '/icons/food/tags/xiaochi_grey.png',
+        enable: true
+    }, {
+        name: '烧烤串串',
+        icon: '/icons/food/tags/shaokao.png',
+        disabledIcon: '/icons/food/tags/shaokao_grey.png',
+        enable: true
+    }, {
+        name: '火锅自助',
+        icon: '/icons/food/tags/huoguo.png',
+        disabledIcon: '/icons/food/tags/huoguo_grey.png',
+        enable: true
+    }, {
+        name: '日韩料理',
+        icon: '/icons/food/tags/riliao.png',
+        disabledIcon: '/icons/food/tags/riliao_grey.png',
+        enable: true
+    }, {
+        name: '甜点茶饮',
+        icon: '/icons/food/tags/tiandian.png',
+        disabledIcon: '/icons/food/tags/tiandian_grey.png',
+        enable: true
+    }, {
+        name: '西餐',
+        icon: '/icons/food/tags/xican.png',
+        disabledIcon: '/icons/food/tags/xican_grey.png',
+        enable: true
+    }, {
+        name: '中餐',
+        icon: '/icons/food/tags/zhongcan.png',
+        disabledIcon: '/icons/food/tags/zhongcan_grey.png',
+        enable: true
+    }, {
+        name: '酒吧',
+        icon: '/icons/food/tags/jiuba.png',
+        disabledIcon: '/icons/food/tags/jiuba_grey.png',
+        enable: true
+    }],
     // onLaunch: function() {
     //     let that = this;
 

@@ -1,28 +1,44 @@
 <!--pages/food/list.wxml-->
-<view wx:for="{{restaurants}}" wx:key="{{item._id}}" class='restaurant'>
-    <view class='restaurant-basic'>
-        <text class='restaurant-name'>{{item.name}}</text>
-        <text>人均：{{item.consumptionPerPerson}}</text>
-        <text>地址：</text>
-        <text>{{item.address}}</text>
-        <text>营业时间：</text>
-        <text>{{item.open}}</text>
-        <text>电话：</text>
-        <text>{{item.phone}}</text>
-        <text>标签</text>
-        <view>
-            <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
-                <button size='mini' bindtap='removeTag' data-restaurantid='{{item._id}}' data-tag='{{tag}}'>{{tag}}</button>
-            </block>
+<!-- <wxs src="../../services/tags.config.wxs" module="tags" /> -->
+<scroll-view scroll-y enable-back-to-top class='restaurants'>
+    <block wx:for="{{restaurants}}" wx:key="{{item._id}}">
+        <view class='restaurant-basic' wx:if="{{environment === 'DEBUG'}}">
+            <text class='restaurant-name'>{{item.name}}</text>
+            <text>{{item.consumptionPerPerson}}</text>
+            <text>地址：</text>
+            <text>{{item.address}}</text>
+            <text>营业时间：</text>
+            <text>{{item.open}}</text>
+            <text>电话：</text>
+            <text>{{item.phone}}</text>
+            <text>标签</text>
+            <view>
+                <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+                    <button size='mini' bindtap='removeTag' data-restaurantid='{{item._id}}' data-tag='{{tag}}'>{{tag}}</button>
+                </block>
+            </view>
+            <picker bindchange="bindPickerChange" data-restaurantid='{{item._id}}' range="{{tags}}">
+                <view class="picker">
+                    添加标签
+                </view>
+            </picker>
         </view>
-    </view>
-    <picker bindchange="bindPickerChange" data-restaurantid='{{item._id}}' range="{{tags}}">
-        <view class="picker">
-            添加标签
+
+        <view wx:if="{{environment === 'PRODUCTION'}}">
+            <text class='restaurant-name'>{{item.name}}</text>
         </view>
-    </picker>
-    <view wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{article.title}}" class='restaurant-article' data-url='{{ article.url }}' catchtap='catchTapArticle'>
-        <text>{{article.title}}</text>
+
+        <view wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{article.title}}" class='restaurant-article' data-url='{{ article.url }}' catchtap='catchTapArticle'>
+            <text class='restaurant-article-title'>{{article.title}}</text>
+            <text class='restaurant-article-source'>来源：{{article.source}}</text>
+        </view>
+        <view class='div-line'></view>
+    </block>
+</scroll-view>
+
+<view class='tags'>
+    <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{displayedTags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
+        <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+        <text>{{item.name}}</text>
     </view>
-    <view class='div-line'></view>
 </view>

@@ -7,8 +7,10 @@ Page({
      * 页面的初始数据
      */
     data: {
+        environment: 'PRODUCTION',
         restaurants: [],
-        tags: []
+        tags: [],
+        displayedTags: []
     },
 
     /**
@@ -27,6 +29,11 @@ Page({
         }
 
         this.getTags();
+
+        this.setData({
+            environment: getApp().environment,
+			displayedTags: getApp().tags
+        });
     },
 
     /**
