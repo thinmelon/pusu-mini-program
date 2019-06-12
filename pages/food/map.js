@@ -17,97 +17,43 @@ Page({
         scale: 15,
         markers: [],
         chosenMarker: {},
-        tags: [{
-                name: '中餐',
-                icon: '/icons/food/_zhongcan.png',
-                disabledIcon: '/icons/food/_zhongcan_grey.png',
-                enable: false
-            },
-            {
-                name: '西餐',
-                icon: '/icons/food/_xican.png',
-                disabledIcon: '/icons/food/_xican_grey.png',
-                enable: false
-            },
-            {
-                name: '火锅',
-                icon: '/icons/food/_huoguo.png',
-                disabledIcon: '/icons/food/_huoguo_grey.png',
-                enable: true
-            },
-            {
-                name: '日料',
-                icon: '/icons/food/_riliao.png',
-                disabledIcon: '/icons/food/_riliao_grey.png',
-                enable: false
-            },
-            {
-                name: '小吃',
-                icon: '/icons/food/_baozi.png',
-                disabledIcon: '/icons/food/_baozi_grey.png',
-                enable: false
-            },
-            {
-                name: '烧烤',
-                icon: '/icons/food/_shaokao.png',
-                disabledIcon: '/icons/food/_shaokao_grey.png',
-                enable: false
-            },
-            {
-                name: '酒吧',
-                icon: '/icons/food/_jiuba.png',
-                disabledIcon: '/icons/food/_jiuba_grey.png',
-                enable: false
-            },
-            {
-                name: '自助',
-                icon: '/icons/food/_zizhu.png',
-                disabledIcon: '/icons/food/_zizhu_grey.png',
-                enable: false
-            },
-            {
-                name: '串串',
-                icon: '/icons/food/_chuanchuan.png',
-                disabledIcon: '/icons/food/_chuanchuan_grey.png',
-                enable: false
-            },
-            {
-                name: '甜点',
-                icon: '/icons/food/_tiandian.png',
-                disabledIcon: '/icons/food/_tiandian_grey.png',
-                enable: false
-            },
-            {
-                name: '简餐',
-                icon: '/icons/food/_jiancan.png',
-                disabledIcon: '/icons/food/_jiancan_grey.png',
-                enable: false
-            },
-            {
-                name: '茶饮',
-                icon: '/icons/food/_chayin.png',
-                disabledIcon: '/icons/food/_chayin_grey.png',
-                enable: false
-            }
-        ]
+        displayedTags: [] //	 显示标签数组
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        QQMapInstance = new QQMapWXJSSDK({ // 实例化API核心类
-            key: this.data.key
+        console.log('======== onLoad ========');
+        const restaurant = options.restaurant ? JSON.parse(decodeURIComponent(options.restaurant)) : null; //	解析传入options参数，获取餐馆基础元信息
+        if (restaurant && restaurant.location) { //	如果餐馆元信息内存在地址信息
+            this.data.centerLongitude = restaurant.location.lng; //	 经度
+            this.data.centerLatitude = restaurant.location.lat; //	纬度
+            this.data.chosenMarker = { //	 显示内容
+                latitude: restaurant.location.lat,
+                longitude: restaurant.location.lng,
+                attach: {
+                    name: restaurant.name,
+                    articles: restaurant.articles
+                }
+            };
+        }
+        this.setData({
+            displayedTags: getApp().tags,
+            centerLongitude: this.data.centerLongitude,
+            centerLatitude: this.data.centerLatitude,
+            chosenMarker: this.data.chosenMarker
         });
-        this.paintMarkers(); //	绘制Marker
-        // TODO: 隔上一段时间在后台更新数据
+        // QQMapInstance = new QQMapWXJSSDK({ // 实例化API核心类
+        //     key: this.data.key
+        // });
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-
+        this.paintMarkers(); //	绘制Marker
     },
 
     /**
@@ -141,7 +87,6 @@ Page({
      */
     onUnload: function() {
         console.log('=====	onUnload =====');
-        wx.removeStorageSync('__RESTAURANT__');
     },
 
     /**
@@ -171,7 +116,7 @@ Page({
     onTagClicked: function(evt) {
         console.log(evt);
         this.setData({
-            tags: this.data.tags.map(tag => {
+            displayedTags: this.data.displayedTags.map(tag => {
                 if (tag.name === evt.currentTarget.dataset.name) {
                     tag.enable = !tag.enable;
                 }
@@ -184,21 +129,13 @@ Page({
     /**
      * 		获取餐馆列表
      */
-    getRestaurants: function(callback) {
-        const that = this;
-
+    getRestaurants: function(request, callback) {
         console.log('>>>>>>>>>>>>> getRestaurants');
-        __LIFE__.getRestaurants() // API
+        __LIFE__.getRestaurants(request)
             .then(res => {
-                // console.log(res.data);
-                if (res.data.code === 0) {
-                    wxApiPromise.setStorage({ //	保存至缓存中
-                        key: '__RESTAURANT__',
-                        data: res.data.data.restaurants
-                    })
-                    if (callback) { //	获取列表完成后回调
-                        callback();
-                    }
+                console.log(res.data);
+                if (callback && res.data.code === 0 && res.data.data.restaurants.length > 0) {
+                    callback(res.data.data.restaurants);
                 }
             })
             .catch(err => {
@@ -210,41 +147,49 @@ Page({
      * 	在地图上绘制Marker
      */
     paintMarkers: function() {
-        wxApiPromise.getStorage({
-                'key': '__RESTAURANT__'
-            }).then(storage => {
-                console.log(storage.data);
-                if (storage.data) {
-                    let index = 0;
-                    this.data.markers = [];
-                    storage.data.map(item => {
-                        this.data.tags.map(tag => {
-                            if (tag.enable && item.location && item.tags.indexOf(tag.name) >= 0) {
-                                // console.log(item);
-                                this.data.markers.push({
-                                    id: index++,
-                                    iconPath: tag.icon,
-                                    latitude: item.location.lat,
-                                    longitude: item.location.lng,
-                                    width: 25,
-                                    height: 25,
-                                    attach: {
-                                        name: item.name,
-                                        articles: item.articles
-                                    }
-                                })
-                            } /**	end of if */
-                        }) /**	end of this.data.tags.map */
-                    }) /**	end of storage.data.map */
-                    this.setData({
-                        markers: this.data.markers
-                    })
-                }
+        let category = [];
+        this.data.displayedTags.map(item => { //	当前要显示的标签
+            if (item.enable) {
+                category = category.concat(item.category)
+            }
+        })
+        this.getRestaurants({
+            package: JSON.stringify({
+                tags: category
             })
-            .catch(err => {
-                console.error(err);
-                this.getRestaurants(this.paintMarkers); //	如果缓存中不存在餐馆列表，发起异步请求获取数据
+        }, result => {
+            let index = 0;
+            this.data.markers = [];
+            result.map(item => {
+                this.data.displayedTags.map(tag => {
+                    let isFound = false;
+                    for (let i = 0; i < item.tags.length; i++) {
+                        if (tag.category.indexOf(item.tags[i]) >= 0) {
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if (tag.enable && item.location && isFound) {
+                        this.data.markers.push({
+                            id: index++,
+                            iconPath: tag.icon,
+                            latitude: item.location.lat,
+                            longitude: item.location.lng,
+                            width: 25,
+                            height: 25,
+                            attach: {
+                                name: item.name,
+                                articles: item.articles
+                            }
+                        })
+
+                    } /** end of if */
+                }); /** end of this.data.displayedTags.map */
+            }); /** end of result.map */
+            this.setData({
+                markers: this.data.markers
             })
+        });
     },
 
     /**
@@ -276,14 +221,5 @@ Page({
         this.setData({
             chosenMarker: {}
         });
-    },
-
-    /**
-     *  切换至列表样式
-     */
-    changeStyle: function() {
-        wx.navigateTo({
-            url: '/pages/food/list'
-        })
     }
 })

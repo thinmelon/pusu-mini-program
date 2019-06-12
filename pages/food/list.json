@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+	"navigationBarTitleText": "下馆子",
+	"enablePullDownRefresh": true,
+	"usingComponents": {}
 }

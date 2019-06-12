@@ -10,42 +10,50 @@ App({
         name: '小吃简餐',
         icon: '/icons/food/tags/xiaochi.png',
         disabledIcon: '/icons/food/tags/xiaochi_grey.png',
+        category: ['小吃', '简餐'],
         enable: true
     }, {
         name: '烧烤串串',
         icon: '/icons/food/tags/shaokao.png',
         disabledIcon: '/icons/food/tags/shaokao_grey.png',
-        enable: true
+        category: ['烧烤', '串串'],
+        enable: false
     }, {
         name: '火锅自助',
         icon: '/icons/food/tags/huoguo.png',
         disabledIcon: '/icons/food/tags/huoguo_grey.png',
-        enable: true
+        category: ['火锅', '自助'],
+        enable: false
     }, {
         name: '日韩料理',
         icon: '/icons/food/tags/riliao.png',
         disabledIcon: '/icons/food/tags/riliao_grey.png',
-        enable: true
+        category: ['日料', '韩餐'],
+        enable: false
     }, {
         name: '甜点茶饮',
         icon: '/icons/food/tags/tiandian.png',
         disabledIcon: '/icons/food/tags/tiandian_grey.png',
-        enable: true
+        category: ['甜点', '茶饮'],
+        enable: false
     }, {
         name: '西餐',
         icon: '/icons/food/tags/xican.png',
         disabledIcon: '/icons/food/tags/xican_grey.png',
-        enable: true
+        category: ['西餐'],
+        enable: false
     }, {
         name: '中餐',
         icon: '/icons/food/tags/zhongcan.png',
         disabledIcon: '/icons/food/tags/zhongcan_grey.png',
-        enable: true
+        category: ['中餐'],
+        enable: false
     }, {
         name: '酒吧',
         icon: '/icons/food/tags/jiuba.png',
         disabledIcon: '/icons/food/tags/jiuba_grey.png',
-        enable: true
+        category: ['酒吧'],
+        enable: false
     }],
     // onLaunch: function() {
     //     let that = this;

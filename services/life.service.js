@@ -4,8 +4,11 @@ const __WX_API_PROMISE__ = require('../utils/wx.api.promise.js');
 /**
  * 	获取餐馆列表
  */
-const getRestaurants = () => {
-    return __WX_API_PROMISE__.getRequest(__URI__.getRestaurants(), {});
+// const getRestaurants = () => {
+//     return __WX_API_PROMISE__.getRequest(__URI__.getRestaurants(), {});
+// }
+const getRestaurants = (request) => {
+    return __WX_API_PROMISE__.postRequest(__URI__.getRestaurants(), request);
 }
 
 /**

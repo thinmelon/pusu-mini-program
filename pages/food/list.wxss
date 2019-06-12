@@ -5,6 +5,31 @@
     height: 80vh;
 }
 
+.restaurant {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.restaurant-location {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.restaurant-location image {
+    width: 24px;
+    height: 24px;
+}
+
+.restaurant-location text {
+    font-size: 9pt;
+    color: #888;
+}
+
 .restaurant-basic {
     display: grid;
     grid-template-columns: 30% 70%;
@@ -14,7 +39,7 @@
 }
 
 .restaurant-name {
-    padding: 0 3px;
+    padding: 7px 0;
     font-size: 13pt;
     color: brown;
 }
@@ -29,8 +54,8 @@
     color: blue;
 }
 
-.restaurant-article-source {
-    padding: 0 37px;
+.restaurant-article-source, .restaurant-article-publish {
+    padding: 0 17px;
     color: #888;
 }
 
