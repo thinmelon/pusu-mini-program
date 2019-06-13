@@ -72,6 +72,25 @@ const getStockSharePledge = (code) => {
     return __WX_API_PROMISE__.getRequest(__URI__.getStockSharePledge(code), {});
 }
 
+/**
+ * 	获取A股基本面数据，如PE、PB等
+ */
+const getStockFundmental = (request) => {
+    return __WX_API_PROMISE__.postRequest(__URI__.getStockFundmental(), {
+        package: JSON.stringify(request)
+    });
+}
+
+/**
+ * 	获取港股基本面数据，如PE、PB等
+ */
+const getHKStockFundmental = (request) => {
+    return __WX_API_PROMISE__.postRequest(__URI__.getHKStockFundmental(), {
+        package: JSON.stringify(request)
+    });
+}
+
+
 module.exports = {
     /**
      * 	债券
@@ -91,5 +110,7 @@ module.exports = {
     /**
      * 	股票
      */
-    getStockSharePledge: getStockSharePledge
+    getStockSharePledge: getStockSharePledge,
+    getStockFundmental: getStockFundmental,
+    getHKStockFundmental: getHKStockFundmental
 }

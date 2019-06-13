@@ -1,0 +1,23 @@
+/* pages/food/index.wxss */
+
+.index {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0;
+}
+
+.identity {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.identity image {
+    width: 48px;
+    height: 48px;
+}

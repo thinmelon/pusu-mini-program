@@ -124,6 +124,20 @@ const getStockSharePledge = (code) => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/pledge/${code}`;
 }
 
+/**
+ * 	获取A股基本面数据，如PE、PB等
+ */
+const getStockFundmental = () => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/fundmental`;
+}
+
+/**
+ * 	获取港股基本面数据，如PE、PB等
+ */
+const getHKStockFundmental = () => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/hk/fundmental`;
+}
+
 module.exports = {
     checkTemplateValidity: checkTemplateValidity,
     userLogin: userLogin,
@@ -154,5 +168,7 @@ module.exports = {
     /**
      * 	股票
      */
-    getStockSharePledge: getStockSharePledge
+    getStockSharePledge: getStockSharePledge,
+    getStockFundmental: getStockFundmental,
+    getHKStockFundmental: getHKStockFundmental
 }

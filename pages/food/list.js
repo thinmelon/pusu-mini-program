@@ -8,19 +8,19 @@ Page({
      */
     data: {
         environment: 'PRODUCTION',
-        restaurants: [],						//	餐馆列表
-        tags: [],									//	标签数组、调试模式下使用
-        displayedTags: []					 //	 显示标签数组
+        restaurants: [], //	餐馆列表
+        tags: [], //	标签数组、调试模式下使用
+        displayedTags: [] //	 显示标签数组
     },
 
-    offset: 0,										//	偏移量
-    itemsPerTime: 10,						//	每次获取数量
+    offset: 0, //	偏移量
+    itemsPerTime: 10, //	每次获取数量
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-		console.log('======== onLoad ========');
+        console.log('======== onLoad ========');
         this.setData({
             environment: getApp().environment,
             displayedTags: getApp().tags
@@ -151,7 +151,7 @@ Page({
             .then(res => {
                 console.log(res.data);
                 if (res.data.code === 0 && res.data.data.restaurants.length > 0) {
-                    this.offset += res.data.data.restaurants.length;										//	下次获取数据时起点位置
+                    this.offset += res.data.data.restaurants.length; //	下次获取数据时起点位置
                     this.setData({
                         restaurants: this.data.restaurants.concat(res.data.data.restaurants)
                     })
@@ -167,7 +167,7 @@ Page({
      */
     showRestaurants: function() {
         let category = [];
-        this.data.displayedTags.map(item => {								//	当前要显示的标签
+        this.data.displayedTags.map(item => { //	当前要显示的标签
             if (item.enable) {
                 category = category.concat(item.category)
             }
@@ -200,14 +200,23 @@ Page({
         this.showRestaurants();
     },
 
-	/**
-	 * 	用户点击餐馆
-	 */
+    /**
+     * 	用户点击餐馆
+     */
     onRestaurantClicked: function(evt) {
         console.log(evt);
-        wx.navigateTo({
-            url: '/pages/food/map?restaurant=' + encodeURIComponent(JSON.stringify(evt.currentTarget.dataset.restaurant)),
-        })
+        // wx.navigateTo({
+        //     url: '/pages/food/map?restaurant=' + encodeURIComponent(JSON.stringify(evt.currentTarget.dataset.restaurant)),
+        // })
+        if (evt.currentTarget.dataset.restaurant.location) {
+            const latitude = evt.currentTarget.dataset.restaurant.location.lat;
+            const longitude = evt.currentTarget.dataset.restaurant.location.lng;
+            wx.openLocation({
+                latitude,
+                longitude,
+                scale: 18
+            });
+        }
     },
 
     /**
@@ -215,9 +224,9 @@ Page({
      */
     catchTapArticle: function(evt) {
         console.log(evt);
-        const url = evt.currentTarget.dataset.url;
+        const url = evt.currentTarget.dataset.article.url;
         wx.navigateTo({
-            url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32)
+            url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32) + '&source=' + evt.currentTarget.dataset.article.source
         })
     }
 })

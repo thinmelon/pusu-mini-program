@@ -37,7 +37,21 @@ Page({
                     articles: restaurant.articles
                 }
             };
+        } else { //	如果未传入指定餐馆的地理信息，则获取当前位置
+            const that = this;
+            wx.getLocation({
+                success: function(res) {
+                    console.log(res);
+                    if (res.errMsg === "getLocation:ok") {
+                        that.setData({
+                            centerLongitude: res.longitude,
+                            centerLatitude: res.latitude
+                        })
+                    }
+                }
+            })
         }
+
         this.setData({
             displayedTags: getApp().tags,
             centerLongitude: this.data.centerLongitude,
@@ -207,9 +221,9 @@ Page({
      */
     catchTapArticle: function(evt) {
         console.log(evt);
-        const url = evt.currentTarget.dataset.url;
+        const url = evt.currentTarget.dataset.article.url;
         wx.navigateTo({
-            url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32)
+            url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32) + '&source=' + evt.currentTarget.dataset.article.source
         })
     },
 

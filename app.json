@@ -1,14 +1,15 @@
 {
 	"pages": [
 		"pages/index/index",
+		"pages/food/index",
 		"pages/food/map",
 		"pages/food/article",
 		"pages/food/list",
 		"pages/treasury/yields",
 		"pages/currency/exchange",
 		"pages/gold/gold",
-		"pages/stock/pannel/pannel",
-		"pages/stock/pledge/pledge"
+		"pages/stock/pannel",
+		"pages/stock/pledge"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

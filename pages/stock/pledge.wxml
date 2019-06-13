@@ -1,0 +1,34 @@
+<!--pages/stock/pledge.wxml-->
+<view wx:for="{{pledges}}" wx:key="{{item.index}}">
+    <view class='pledge'>
+        <view>证券简称</view>
+        <view>{{item.SECNAME}}</view>
+        <view>公告日期</view>
+        <view>{{item.DECLAREDATE}}</view>
+        <view>出质人</view>
+        <view>{{item.F001V}}</view>
+        <view>质权人</view>
+        <view>{{item.F003V}}</view>
+        <view>质押股份性质</view>
+        <view>{{item.F005V}}</view>
+        <view>是否质押式回购交易</view>
+        <view>{{item.F014C}}</view>
+        <view>质押数量</view>
+        <view>{{item.F006N}}</view>
+        <view>占总股本比例</view>
+        <view>{{item.F007N}}%</view>
+        <view>质押起始日</view>
+        <view>{{item.F009D}}</view>
+        <view>质押终止日</view>
+        <view>{{item.F010D}}</view>
+        <view>质押解除数量</view>
+        <view>{{item.F012N}}</view>
+        <view>质押解除日</view>
+        <view>{{item.F011D}}</view>
+    </view>
+    <view class='pledge-reason'>
+        <text>质押原因：</text>
+        <text>{{item.F008V}}</text>
+    </view>
+    <view class='div-line'></view>
+</view>

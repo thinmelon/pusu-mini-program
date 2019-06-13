@@ -16,6 +16,9 @@ Page({
      */
     onLoad: function(options) {
         console.log(options);
+        wx.setNavigationBarTitle({
+            title: options.source
+        })
         wxApiPromise.showLoading({
             title: '加载中'
         });

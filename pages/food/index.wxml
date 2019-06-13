@@ -1,0 +1,10 @@
+<!--pages/food/index.wxml-->
+<view class='index'>
+    <text>我是</text>
+    <view class='identity'>
+        <view class='index' wx:for="{{identity}}" wx:key="{{item.index}}" data-url="{{item.url}}" bindtap='onIdentityClicked'>
+            <image src="{{item.src}}"></image>
+            <text>{{item.name}}</text>
+        </view>
+    </view>
+</view>

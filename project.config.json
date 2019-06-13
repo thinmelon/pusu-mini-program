@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -57,6 +57,21 @@
 					"id": -1,
 					"name": "餐馆列表",
 					"pathName": "pages/food/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "股票市场",
+					"pathName": "pages/stock/pannel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "股权质押",
+					"pathName": "pages/stock/pledge",
+					"query": "",
 					"scene": null
 				}
 			]

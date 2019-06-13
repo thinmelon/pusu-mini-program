@@ -1,0 +1,12 @@
+/* pages/stock/pannel.wxss */
+
+.pannel, .stock {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 7px;
+    font-size: 9pt;
+}
+
+.stock-name {
+    color: #903;
+}

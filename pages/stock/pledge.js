@@ -1,32 +1,21 @@
-// pages/stock/pannel/pannel.js
-const economic = require('../../../services/economic.service.js');
-
+// pages/stock/pledge.js
+const economic = require('../../services/economic.service.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        CHStock: [{
-            name: '光迅科技',
-            code: '002281'
-        }, {
-            name: '通宇通讯',
-            code: '002792'
-        }],
-        USStock: [],
-        HKStock: [{
-            name: '小米集团-W',
-            code: '01810'
-        }]
+        pledges: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        console.log(options);
         this.getStockSharePledge({
-            code: '600225'
+            code: options.code
         });
     },
 
@@ -88,8 +77,15 @@ Page({
             .then(res => {
                 console.log(res);
                 const data = JSON.parse(res.data);
-                if (data.hasOwnProperty('error_code') && data.error_code === 0) {
-
+                if (data.hasOwnProperty('resultcode') && data.resultcode === 200 && data.records.length > 0) {
+                    let index = 0;
+                    this.data.pledges = data.records.map(record => {
+                        record.index = ++index;
+                        return record;
+                    })
+                    this.setData({
+                        pledges: this.data.pledges
+                    })
                 }
             })
             .catch(err => {

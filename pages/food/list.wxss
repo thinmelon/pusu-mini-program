@@ -47,6 +47,8 @@
 .restaurant-article {
     padding: 7px;
     font-size: 10pt;
+    display: flex;
+    flex-direction: column;
 }
 
 .restaurant-article-title {
@@ -55,7 +57,7 @@
 }
 
 .restaurant-article-source, .restaurant-article-publish {
-    padding: 0 17px;
+    /* padding: 0 17px; */
     color: #888;
 }
 
