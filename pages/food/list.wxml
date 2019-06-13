@@ -45,7 +45,7 @@
     </block>
 </scroll-view>
 
-<view class='tags'>
+<view class='bar'>
     <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{displayedTags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
         <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
         <text>{{item.name}}</text>

@@ -40,7 +40,7 @@
 
 /*  标签组  */
 
-.tags {
+.bar {
     position: fixed;
     bottom: 0;
     width: 100%;

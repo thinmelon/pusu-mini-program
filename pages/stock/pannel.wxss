@@ -1,12 +1,51 @@
 /* pages/stock/pannel.wxss */
 
 .pannel, .stock {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    margin: 7px;
-    font-size: 9pt;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 7px;
+  font-size: 9pt;
+}
+
+.scroll {
+  width: 100%;
+  height: 88vh;
 }
 
 .stock-name {
-    color: #903;
+  color: #903;
+}
+
+.markets {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 12vh;
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  grid-row-gap: 3px;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 0;
+  background-color: #fff;
+}
+
+.market {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+
+.market image {
+  width: 48px;
+  height: 32px;
+  padding: 7px 5px;
+}
+
+.market text {
+  font-size: 9pt;
+  color: gray;
 }

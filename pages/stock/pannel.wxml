@@ -1,50 +1,61 @@
 <!--pages/stock/pannel.wxml-->
-<view class='pannel'>
-    <view class='stock' wx:for="{{CHStock}}" wx:key="{{item.code}}">
+<block wx:for="{{markets}}" wx:key="{{item.name}}" wx:for-item="market">
+  <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">
+    <view class='pannel'>
+      <view class='stock' wx:for="{{CHStock}}" wx:key="{{item.code}}">
         <text class='stock-name' data-code='{{item.code}}' bindtap='onStockNameClicked'>{{item.name}}</text>
         <text>{{item.sp}}</text>
-        <text>PE-TTM: </text>
+        <text>PE-TTM</text>
         <text>{{item.d_pe_ttm}}</text>
-        <text>PB: </text>
+        <text>PB</text>
         <text>{{item.pb_wo_gw}}</text>
-        <text>PS-TTM: </text>
+        <text>PS-TTM </text>
         <text>{{item.ps_ttm}}</text>
-        <text>PCF-TTM: </text>
+        <text>PCF-TTM </text>
         <text>{{item.pcf_ttm}}</text>
-        <text>股票收益率: </text>
+        <text>股票收益率 </text>
         <text>{{item.ey}}%</text>
-        <text>股息率: </text>
+        <text>股息率</text>
         <text>{{item.dyr}}%</text>
-        <text>市值: </text>
+        <text>市值 </text>
         <text>{{item.mc}}亿</text>
-        <text>流通市值: </text>
+        <text>流通市值 </text>
         <text>{{item.cmc}}亿</text>
-        <text wx:if="{{item.smt}}">融资融券余额: </text>
+        <text wx:if="{{item.smt}}">融资融券余额</text>
         <text wx:if="{{item.smt}}">{{item.smt}}亿</text>
-        <text wx:if="{{item.ha_shm}}">港股通持仓余额: </text>
+        <text wx:if="{{item.ha_shm}}">港股通持仓余额</text>
         <text wx:if="{{item.ha_shm}}">{{item.ha_shm}}亿</text>
+      </view>
     </view>
-</view>
+  </scroll-view>
 
-<view class='div-line'></view>
-
-<view class='pannel'>
-    <view class='stock' wx:for="{{HKStock}}" wx:key="{{item.code}}">
+  <scroll-view scroll-y enable-back-to-top wx:if="{{(market.name === '港股') && market.enable}}">
+    <view class='pannel'>
+      <view class='stock' wx:for="{{HKStock}}" wx:key="{{item.code}}">
         <text class='stock-name'>{{item.name}}</text>
         <text>{{item.sp}}</text>
-        <text>PE-TTM: </text>
+        <text>PE-TTM </text>
         <text>{{item.pe_ttm}}</text>
-        <text>PB: </text>
+        <text>PB </text>
         <text>{{item.pb}}</text>
-        <text>PS-TTM: </text>
+        <text>PS-TTM </text>
         <text>{{item.ps_ttm}}</text>
-        <text>PCF-TTM: </text>
+        <text>PCF-TTM </text>
         <text>{{item.pcf_ttm}}</text>
-        <text>股息率: </text>
+        <text>股息率 </text>
         <text>{{item.dyr}}%</text>
-        <text>市值: </text>
+        <text>市值 </text>
         <text>{{item.mc}}亿</text>
-        <text>成交量: </text>
+        <text>成交量 </text>
         <text>{{item.tv}}万</text>
+      </view>
     </view>
+  </scroll-view>
+</block>
+
+<view class='markets'>
+  <view class='market' wx:for="{{markets}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onMarketClicked'>
+    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+    <text>{{item.name}}</text>
+  </view>
 </view>
