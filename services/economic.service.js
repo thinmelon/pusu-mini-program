@@ -66,6 +66,41 @@ const getBankGold = () => {
  */
 
 /**
+ * 	查询公司公告资讯
+ */
+const getStockAnnouncement = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockAnnouncement(code), {});
+}
+
+/**
+ * 	查询公司分红转增
+ */
+const getStockDividends = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockDividends(code), {});
+}
+
+/**
+ * 	公司增发股票实施方案
+ */
+const getStockSecondaryPublicOffering = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockSecondaryPublicOffering(code), {});
+}
+
+/**
+ * 	公司配股实施方案
+ */
+const getStockRationedShare = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockRationedShare(code), {});
+}
+
+/**
+ * 	募集资金投资项目计划
+ */
+const getStockRaisingFundUsage = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockRaisingFundUsage(code), {});
+}
+
+/**
  * 	查询公司股东股份质押
  */
 const getStockSharePledge = (code) => {
@@ -110,6 +145,11 @@ module.exports = {
     /**
      * 	股票
      */
+    getStockAnnouncement: getStockAnnouncement,
+    getStockDividends: getStockDividends,
+    getStockSecondaryPublicOffering: getStockSecondaryPublicOffering,
+    getStockRationedShare: getStockRationedShare,
+    getStockRaisingFundUsage: getStockRaisingFundUsage,
     getStockSharePledge: getStockSharePledge,
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental

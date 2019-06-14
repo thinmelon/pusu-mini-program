@@ -50,7 +50,7 @@
     grid-row-gap: 3px;
     justify-content: center;
     align-items: center;
-    padding: 7px 0;
+    /* padding: 7px 0; */
     background-color: white;
 }
 

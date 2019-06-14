@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -72,6 +72,12 @@
 					"name": "股权质押",
 					"pathName": "pages/stock/pledge",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "公司公告",
+					"pathName": "pages/stock/annoucement",
 					"scene": null
 				}
 			]

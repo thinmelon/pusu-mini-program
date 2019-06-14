@@ -9,6 +9,7 @@
 		"pages/currency/exchange",
 		"pages/gold/gold",
 		"pages/stock/pannel",
+		"pages/stock/annoucement",
 		"pages/stock/pledge"
 	],
 	"window": {

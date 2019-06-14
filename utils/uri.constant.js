@@ -118,6 +118,41 @@ const getBankGold = () => {
 }
 
 /**
+ * 	查询公司公告资讯 - API网关
+ */
+const getStockAnnouncement = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/announcement/${code}`;
+}
+
+/**
+ * 	查询公司分红增发 - API网关
+ */
+const getStockDividends = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/dividends/${code}`;
+}
+
+/**
+ * 	公司增发股票实施方案 - API网关
+ */
+const getStockSecondaryPublicOffering = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/spo/${code}`;
+}
+
+/**
+ * 	公司配股实施方案 - API网关
+ */
+const getStockRationedShare = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/rationed/${code}`;
+}
+
+/**
+ * 	募集资金投资项目计划 - API网关
+ */
+const getStockRaisingFundUsage = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/raising/${code}`;
+}
+
+/**
  * 	查询公司股东股份质押 - API网关
  */
 const getStockSharePledge = (code) => {
@@ -125,14 +160,14 @@ const getStockSharePledge = (code) => {
 }
 
 /**
- * 	获取A股基本面数据，如PE、PB等
+ * 	获取A股基本面数据，如PE、PB等	- API网关
  */
 const getStockFundmental = () => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/fundmental`;
 }
 
 /**
- * 	获取港股基本面数据，如PE、PB等
+ * 	获取港股基本面数据，如PE、PB等	- API网关
  */
 const getHKStockFundmental = () => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/hk/fundmental`;
@@ -168,6 +203,11 @@ module.exports = {
     /**
      * 	股票
      */
+    getStockAnnouncement: getStockAnnouncement,
+    getStockDividends: getStockDividends,
+    getStockSecondaryPublicOffering: getStockSecondaryPublicOffering,
+    getStockRationedShare: getStockRationedShare,
+    getStockRaisingFundUsage: getStockRaisingFundUsage,
     getStockSharePledge: getStockSharePledge,
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental
