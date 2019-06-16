@@ -1,16 +1,1 @@
 /* pages/stock/pledge.wxss */
-
-.pledge {
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-column-gap: 3px;
-    padding: 7px;
-    font-size: 9pt;
-}
-
-.pledge-reason {
-    display: flex;
-    flex-direction: column;
-    padding: 7px;
-    font-size: 9pt;
-}

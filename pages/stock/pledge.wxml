@@ -1,34 +1,61 @@
 <!--pages/stock/pledge.wxml-->
-<view wx:for="{{pledges}}" wx:key="{{item.index}}">
-    <view class='pledge'>
-        <view>证券简称</view>
-        <view>{{item.SECNAME}}</view>
-        <view>公告日期</view>
-        <view>{{item.DECLAREDATE}}</view>
-        <view>出质人</view>
-        <view>{{item.F001V}}</view>
-        <view>质权人</view>
-        <view>{{item.F003V}}</view>
-        <view>质押股份性质</view>
-        <view>{{item.F005V}}</view>
-        <view>是否质押式回购交易</view>
-        <view>{{item.F014C}}</view>
-        <view>质押数量</view>
-        <view>{{item.F006N}}</view>
-        <view>占总股本比例</view>
-        <view>{{item.F007N}}%</view>
-        <view>质押起始日</view>
-        <view>{{item.F009D}}</view>
-        <view>质押终止日</view>
-        <view>{{item.F010D}}</view>
-        <view>质押解除数量</view>
-        <view>{{item.F012N}}</view>
-        <view>质押解除日</view>
-        <view>{{item.F011D}}</view>
-    </view>
-    <view class='pledge-reason'>
+<block wx:for="{{displayedTags}}" wx:key="{{item.name}}" wx:for-item="tag">
+  <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '质押') && tag.enable}}">
+    <text>历史股份质押</text>
+    <view class='section' wx:for="{{pledges}}" wx:key="{{item.DECLAREDATE}}">
+      <text class='date'>{{item.DECLAREDATE}}</text>
+      <view class='field' wx:if="{{item.F001V}}">
+        <text>出质人</text>
+        <text>{{item.F001V}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F003V}}">
+        <text>质权人</text>
+        <text>{{item.F003V}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F005V}}">
+        <text>质押股份性质</text>
+        <text>{{item.F005V}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F014C}}">
+        <text>是否质押式回购交易</text>
+        <text>{{item.F014C}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F006N}}">
+        <text>质押数量</text>
+        <text>{{item.F006N}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F007N}}">
+        <text>占总股本比例</text>
+        <text>{{item.F007N}}%</text>
+      </view>
+      <view class='field' wx:if="{{item.F009D}}">
+        <text>质押起始日</text>
+        <text>{{item.F009D}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F010D}}">
+        <text>质押终止日</text>
+        <text>{{item.F010D}}万元</text>
+      </view>
+      <view class='field' wx:if="{{item.F012N}}">
+        <text>质押解除数量</text>
+        <text>{{item.F012N}}</text>
+      </view>
+      <view class='field' wx:if="{{item.F011D}}">
+        <text>质押解除日</text>
+        <text>{{item.F011D}}</text>
+      </view>
+      <view class='field-column' wx:if="{{item.F008V}}">
         <text>质押原因：</text>
         <text>{{item.F008V}}</text>
+      </view>
+      <view class='div-line'></view>
     </view>
-    <view class='div-line'></view>
+  </scroll-view>
+</block>
+
+<view class='bar'>
+  <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{displayedTags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
+    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+    <text>{{item.name}}</text>
+  </view>
 </view>
