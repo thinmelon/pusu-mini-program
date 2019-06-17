@@ -153,10 +153,87 @@ const getStockRaisingFundUsage = (code) => {
 }
 
 /**
+ * 	十大股东持股情况 - API网关
+ */
+const getStockHolder = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/holder/${code}`;
+}
+
+/**
+ * 	十大流通股东持股情况 - API网关
+ */
+const getStockFloatHolder = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/float/holder/${code}`;
+}
+
+/**
+ * 	公司股东人数 - API网关
+ */
+const getStockHolderNumber = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/number/${code}`;
+}
+
+/**
+ * 	股东持股集中度 - API网关
+ */
+const getStockHolderConcentration = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/concentration/${code}`;
+}
+
+/**
+ * 	公司股东实际控制人 - API网关
+ */
+const getStockHolderController = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/controller/${code}`;
+}
+
+/**
+ * 	公司股本变动 - API网关
+ */
+const getStockHolderChange = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/holder/change/${code}`;
+}
+
+/**
+ * 	上市公司高管持股变动 - API网关
+ */
+const getStockHolderManagerChange = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/manager/holder/change/${code}`;
+}
+
+/**
+ * 	股东增（减）持情况 - API网关
+ */
+const getStockHolderChangeDate = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/holder/change/date/${code}`;
+}
+
+/**
  * 	查询公司股东股份质押 - API网关
  */
 const getStockSharePledge = (code) => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/pledge/${code}`;
+}
+
+/**
+ * 	公司股东股份冻结 - API网关
+ */
+const getStockFreeze = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/freeze/${code}`;
+}
+
+/**
+ * 	受限股份实际解禁日期 - API网关
+ */
+const getStockLiftingDate = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/lifting/date/${code}`;
+}
+
+/**
+ * 	受限股份流通上市日期 - API网关
+ */
+const getStockRestrictedListDate = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/restricted/list/date/${code}`;
 }
 
 /**
@@ -208,7 +285,20 @@ module.exports = {
     getStockSecondaryPublicOffering: getStockSecondaryPublicOffering,
     getStockRationedShare: getStockRationedShare,
     getStockRaisingFundUsage: getStockRaisingFundUsage,
+    //	持股情况
+    getStockHolder: getStockHolder,
+    getStockFloatHolder: getStockFloatHolder,
+    getStockHolderNumber: getStockHolderNumber,
+    getStockHolderConcentration: getStockHolderConcentration,
+    getStockHolderController: getStockHolderController,
+    getStockHolderChange: getStockHolderChange,
+    getStockHolderManagerChange: getStockHolderManagerChange,
+    getStockHolderChangeDate: getStockHolderChangeDate,
     getStockSharePledge: getStockSharePledge,
+    getStockFreeze: getStockFreeze,
+    getStockLiftingDate: getStockLiftingDate,
+    getStockRestrictedListDate: getStockRestrictedListDate,
+    //	基本面
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental
 }

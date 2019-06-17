@@ -101,10 +101,87 @@ const getStockRaisingFundUsage = (code) => {
 }
 
 /**
+ * 	十大股东持股情况
+ */
+const getStockHolder = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolder(code), {});
+}
+
+/**
+ * 	十大流通股东持股情况
+ */
+const getStockFloatHolder = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockFloatHolder(code), {});
+}
+
+/**
+ * 	公司股东人数 - API网关
+ */
+const getStockHolderNumber = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderNumber(code), {});
+}
+
+/**
+ * 	股东持股集中度 - API网关
+ */
+const getStockHolderConcentration = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderConcentration(code), {});
+}
+
+/**
+ * 	公司股东实际控制人 - API网关
+ */
+const getStockHolderController = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderController(code), {});
+}
+
+/**
+ * 	公司股本变动 - API网关
+ */
+const getStockHolderChange = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderChange(code), {});
+}
+
+/**
+ * 	上市公司高管持股变动 - API网关
+ */
+const getStockHolderManagerChange = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderManagerChange(code), {});
+}
+
+/**
+ * 	股东增（减）持情况 - API网关
+ */
+const getStockHolderChangeDate = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockHolderChangeDate(code), {});
+}
+
+/**
  * 	查询公司股东股份质押
  */
 const getStockSharePledge = (code) => {
     return __WX_API_PROMISE__.getRequest(__URI__.getStockSharePledge(code), {});
+}
+
+/**
+ * 	公司股东股份冻结 - API网关
+ */
+const getStockFreeze = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockFreeze(code), {});
+}
+
+/**
+ * 	受限股份实际解禁日期 - API网关
+ */
+const getStockLiftingDate = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockLiftingDate(code), {});
+}
+
+/**
+ * 	受限股份流通上市日期 - API网关
+ */
+const getStockRestrictedListDate = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockRestrictedListDate(code), {});
 }
 
 /**
@@ -150,7 +227,20 @@ module.exports = {
     getStockSecondaryPublicOffering: getStockSecondaryPublicOffering,
     getStockRationedShare: getStockRationedShare,
     getStockRaisingFundUsage: getStockRaisingFundUsage,
+    //	持股情况
+    getStockHolder: getStockHolder,
+    getStockFloatHolder: getStockFloatHolder,
+    getStockHolderNumber: getStockHolderNumber,
+    getStockHolderConcentration: getStockHolderConcentration,
+    getStockHolderController: getStockHolderController,
+    getStockHolderChange: getStockHolderChange,
+    getStockHolderManagerChange: getStockHolderManagerChange,
+    getStockHolderChangeDate: getStockHolderChangeDate,
     getStockSharePledge: getStockSharePledge,
+    getStockFreeze: getStockFreeze,
+    getStockLiftingDate: getStockLiftingDate,
+    getStockRestrictedListDate: getStockRestrictedListDate,
+    //	基本面
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental
 }
