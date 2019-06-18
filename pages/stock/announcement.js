@@ -22,6 +22,7 @@ Page({
      */
     onLoad: function(options) {
         // console.log('======== 	onLoad	========')
+		console.log(options);
         this.stockCode = options.code;
         this.setData({
             displayedTags: [{
@@ -56,6 +57,9 @@ Page({
                 enable: false
             }]
         })
+		wx.setNavigationBarTitle({
+			title: options.title
+		})
     },
 
     /**
@@ -233,9 +237,6 @@ Page({
         this.data.displayedTags.map(tag => {
             if (tag.enable) {
                 tag.apiFunc(request);
-                wx.setNavigationBarTitle({
-                    title: tag.name
-                })
             }
         })
     },

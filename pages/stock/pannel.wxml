@@ -3,7 +3,7 @@
   <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">
     <view class='pannel'>
       <view class='stock' wx:for="{{CHStock}}" wx:key="{{item.code}}">
-        <text class='stock-name' data-code='{{item.code}}' bindtap='onStockNameClicked'>{{item.name}}</text>
+        <text class='stock-name' data-stock='{{item}}' bindtap='onStockNameClicked'>{{item.name}}</text>
         <text>{{item.sp}}</text>
         <text>PE-TTM</text>
         <text>{{item.d_pe_ttm}}</text>

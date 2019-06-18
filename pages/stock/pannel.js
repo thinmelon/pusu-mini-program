@@ -212,21 +212,22 @@ Page({
      *  点击股票名称
      */
     onStockNameClicked: function(evt) {
-		// this.data.markets.map(market =>{
+        // this.data.markets.map(market =>{
 
-		// })
+        // })
+        console.log(evt);
         wx.showActionSheet({
             itemList: ['公司资讯', '股权结构', '资产负债'],
             success(res) {
                 switch (res.tapIndex) {
                     case 0:
                         wx.navigateTo({
-                            url: '/pages/stock/announcement?code=' + evt.currentTarget.dataset.code
+                            url: '/pages/stock/announcement?code=' + evt.currentTarget.dataset.stock.code + '&title=' + evt.currentTarget.dataset.stock.name
                         })
                         break;
                     case 1:
                         wx.navigateTo({
-                            url: '/pages/stock/pledge?code=' + evt.currentTarget.dataset.code
+                            url: '/pages/stock/pledge?code=' + evt.currentTarget.dataset.stock.code + '&title=' + evt.currentTarget.dataset.stock.name
                         })
                         break;
                     case 2:

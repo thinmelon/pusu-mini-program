@@ -85,6 +85,9 @@ Page({
                 enable: false
             }]
         })
+        wx.setNavigationBarTitle({
+            title: options.title
+        })
     },
 
     /**
@@ -335,9 +338,6 @@ Page({
             if (tag.enable && tag.apiFuncs && tag.apiFuncs.length > 0) {
                 tag.apiFuncs.map(apiFunc => {
                     apiFunc(request);
-                })
-                wx.setNavigationBarTitle({ //	设置标题栏名称
-                    title: tag.name
                 })
             }
         })
