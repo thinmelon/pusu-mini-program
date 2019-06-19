@@ -1,61 +1,91 @@
 <!--pages/stock/pannel.wxml-->
 <block wx:for="{{markets}}" wx:key="{{item.name}}" wx:for-item="market">
-  <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">
-    <view class='pannel'>
-      <view class='stock' wx:for="{{CHStock}}" wx:key="{{item.code}}">
-        <text class='stock-name' data-stock='{{item}}' bindtap='onStockNameClicked'>{{item.name}}</text>
-        <text>{{item.sp}}</text>
-        <text>PE-TTM</text>
-        <text>{{item.d_pe_ttm}}</text>
-        <text>PB</text>
-        <text>{{item.pb_wo_gw}}</text>
-        <text>PS-TTM </text>
-        <text>{{item.ps_ttm}}</text>
-        <text>PCF-TTM </text>
-        <text>{{item.pcf_ttm}}</text>
-        <text>股票收益率 </text>
-        <text>{{item.ey}}%</text>
-        <text>股息率</text>
-        <text>{{item.dyr}}%</text>
-        <text>市值 </text>
-        <text>{{item.mc}}亿</text>
-        <text>流通市值 </text>
-        <text>{{item.cmc}}亿</text>
-        <text wx:if="{{item.smt}}">融资融券余额</text>
-        <text wx:if="{{item.smt}}">{{item.smt}}亿</text>
-        <text wx:if="{{item.ha_shm}}">港股通持仓余额</text>
-        <text wx:if="{{item.ha_shm}}">{{item.ha_shm}}亿</text>
-      </view>
-    </view>
-  </scroll-view>
+    <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">
+        <view class='pannel'>
+            <view class='stock' wx:for="{{CHStock}}" wx:key="{{item.code}}">
+                <text class='stock-name' data-stock='{{item}}' bindtap='onStockNameClicked'>{{item.name}}</text>
+                <text>{{item.sp}}</text>
+                <text>PE-TTM</text>
+                <text>{{item.d_pe_ttm}}</text>
+                <text>PB</text>
+                <text>{{item.pb_wo_gw}}</text>
+                <text>PS-TTM </text>
+                <text>{{item.ps_ttm}}</text>
+                <text>PCF-TTM </text>
+                <text>{{item.pcf_ttm}}</text>
+                <text>股票收益率 </text>
+                <text>{{item.ey}}%</text>
+                <text>股息率</text>
+                <text>{{item.dyr}}%</text>
+                <text>市值 </text>
+                <text>{{item.mc}}亿</text>
+                <text>流通市值 </text>
+                <text>{{item.cmc}}亿</text>
+                <text wx:if="{{item.smt}}">融资融券余额</text>
+                <text wx:if="{{item.smt}}">{{item.smt}}亿</text>
+                <text wx:if="{{item.ha_shm}}">港股通持仓余额</text>
+                <text wx:if="{{item.ha_shm}}">{{item.ha_shm}}亿</text>
+            </view>
+        </view>
+    </scroll-view>
 
-  <scroll-view scroll-y enable-back-to-top wx:if="{{(market.name === '港股') && market.enable}}">
-    <view class='pannel'>
-      <view class='stock' wx:for="{{HKStock}}" wx:key="{{item.code}}">
-        <text class='stock-name'>{{item.name}}</text>
-        <text>{{item.sp}}</text>
-        <text>PE-TTM </text>
-        <text>{{item.pe_ttm}}</text>
-        <text>PB </text>
-        <text>{{item.pb}}</text>
-        <text>PS-TTM </text>
-        <text>{{item.ps_ttm}}</text>
-        <text>PCF-TTM </text>
-        <text>{{item.pcf_ttm}}</text>
-        <text>股息率 </text>
-        <text>{{item.dyr}}%</text>
-        <text>市值 </text>
-        <text>{{item.mc}}亿</text>
-        <text>成交量 </text>
-        <text>{{item.tv}}万</text>
-      </view>
-    </view>
-  </scroll-view>
+    <scroll-view scroll-y enable-back-to-top wx:if="{{(market.name === '港股') && market.enable}}">
+        <view class='pannel'>
+            <view class='stock' wx:for="{{HKStock}}" wx:key="{{item.code}}">
+                <text class='stock-name' data-stock='{{item}}' bindtap='onStockNameClicked'>{{item.name}}</text>
+                <text>{{item.sp}}</text>
+                <text>PE-TTM </text>
+                <text>{{item.pe_ttm}}</text>
+                <text>PB </text>
+                <text>{{item.pb}}</text>
+                <text>PS-TTM </text>
+                <text>{{item.ps_ttm}}</text>
+                <text>PCF-TTM </text>
+                <text>{{item.pcf_ttm}}</text>
+                <text>股息率 </text>
+                <text>{{item.dyr}}%</text>
+                <text>市值 </text>
+                <text>{{item.mc}}亿</text>
+                <text>成交量 </text>
+                <text>{{item.tv}}万</text>
+            </view>
+        </view>
+    </scroll-view>
+
+    <scroll-view scroll-y enable-back-to-top wx:if="{{(market.name === '美股') && market.enable}}">
+        <view class='pannel'>
+            <view class='stock' wx:for="{{USStock}}" wx:key="{{item.code}}">
+                <text class='stock-name' data-stock='{{item}}' bindtap='onStockNameClicked'>{{item.name}}</text>
+                <text>{{item.lastestpri}}美元</text>
+                <text>前收盘价 </text>
+                <text>{{item.formpri}}美元</text>
+                <text>开盘价 </text>
+                <text>{{item.openpri}}美元</text>
+                <text>成交量 </text>
+                <text>{{item.traAmount}}万股</text>
+                <text>市值 </text>
+                <text>{{item.markValue}}亿</text>
+                <text>股本 </text>
+                <text>{{item.capital}}亿</text>
+                <text>每股收益 </text>
+                <text>{{item.EPS}}美元</text>
+                <text>市盈率 </text>
+                <text>{{item.priearn}}</text>
+                <text wx:if="{{item.beta}}">贝塔系数 </text>
+                <text wx:if="{{item.beta}}">{{item.beta}}</text>
+                <text>股息 </text>
+                <text>{{item.divident}}</text>
+                <text>更新时间 </text>
+                <text class='date'>{{item.ustime}}</text>
+            </view>
+        </view>
+    </scroll-view>
+
 </block>
 
 <view class='markets'>
-  <view class='market' wx:for="{{markets}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onMarketClicked'>
-    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
-    <text>{{item.name}}</text>
-  </view>
+    <view class='market' wx:for="{{markets}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onMarketClicked'>
+        <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+        <text>{{item.name}}</text>
+    </view>
 </view>

@@ -22,7 +22,7 @@ Page({
      */
     onLoad: function(options) {
         // console.log('======== 	onLoad	========')
-		console.log(options);
+        console.log(options);
         this.stockCode = options.code;
         this.setData({
             displayedTags: [{
@@ -57,9 +57,9 @@ Page({
                 enable: false
             }]
         })
-		wx.setNavigationBarTitle({
-			title: options.title
-		})
+        wx.setNavigationBarTitle({
+            title: options.title
+        })
     },
 
     /**
@@ -120,7 +120,8 @@ Page({
     onAnnouncementClicked: function(evt) {
         console.log(evt);
         wx.downloadFile({
-            url: evt.currentTarget.dataset.url,
+            // url: evt.currentTarget.dataset.url,
+            url: 'https://www.pusudo.cn/oss/online/pdf',
             success: function(res) {
                 const filePath = res.tempFilePath
                 wx.openDocument({
@@ -129,6 +130,9 @@ Page({
                         console.log('打开文档成功')
                     }
                 })
+            },
+            fail: function(err) {
+                console.error(err);
             }
         })
     },

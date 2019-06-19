@@ -237,17 +237,52 @@ const getStockRestrictedListDate = (code) => {
 }
 
 /**
- * 	获取A股基本面数据，如PE、PB等	- API网关
+ * 	个股报告期资产负债表 - API网关
+ */
+const getStockBalanceSheet = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/balance/${code}`;
+}
+
+/**
+ * 	个股报告期利润表 - API网关
+ */
+const getStockIncomeStatement = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/income/${code}`;
+}
+
+/**
+ * 	个股报告期现金流表 - API网关
+ */
+const getStockCashFlowStatement = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/cash/date/${code}`;
+}
+
+/**
+ * 	个股报告期指标表 - API网关
+ */
+const getStockIndicators = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/indicators/${code}`;
+}
+
+/**
+ * 	获取A股基本面数据，如PE、PB等（理杏仁）	- API网关
  */
 const getStockFundmental = () => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/fundmental`;
 }
 
 /**
- * 	获取港股基本面数据，如PE、PB等	- API网关
+ * 	获取港股基本面数据，如PE、PB等（理杏仁）- API网关
  */
 const getHKStockFundmental = () => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/hk/fundmental`;
+}
+
+/**
+ * 	获取美股基本面数据（聚合数据）- API网关
+ */
+const getUSAStockFundmental = (code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/usa/${code}`;
 }
 
 module.exports = {
@@ -298,7 +333,12 @@ module.exports = {
     getStockFreeze: getStockFreeze,
     getStockLiftingDate: getStockLiftingDate,
     getStockRestrictedListDate: getStockRestrictedListDate,
+    getStockBalanceSheet: getStockBalanceSheet,
+    getStockIncomeStatement: getStockIncomeStatement,
+    getStockCashFlowStatement: getStockCashFlowStatement,
+    getStockIndicators: getStockIndicators,
     //	基本面
     getStockFundmental: getStockFundmental,
-    getHKStockFundmental: getHKStockFundmental
+    getHKStockFundmental: getHKStockFundmental,
+    getUSAStockFundmental: getUSAStockFundmental
 }

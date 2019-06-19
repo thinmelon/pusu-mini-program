@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -79,6 +79,13 @@
 					"name": "公司公告",
 					"pathName": "pages/stock/announcement",
 					"query": "code=002281",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "资产负债",
+					"pathName": "pages/stock/balance",
+					"query": "code=002281&title=光迅科技",
 					"scene": null
 				}
 			]

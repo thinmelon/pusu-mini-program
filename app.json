@@ -10,7 +10,9 @@
 		"pages/gold/gold",
 		"pages/stock/pannel",
 		"pages/stock/announcement",
-		"pages/stock/pledge"
+		"pages/stock/pledge",
+		"pages/stock/balance",
+		"pages/stock/k.line"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

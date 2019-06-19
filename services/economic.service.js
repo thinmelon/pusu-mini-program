@@ -185,6 +185,34 @@ const getStockRestrictedListDate = (code) => {
 }
 
 /**
+ * 	个股报告期资产负债表 - API网关
+ */
+const getStockBalanceSheet = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockBalanceSheet(code), {});
+}
+
+/**
+ * 	个股报告期利润表 - API网关
+ */
+const getStockIncomeStatement = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockIncomeStatement(code), {});
+}
+
+/**
+ * 	个股报告期现金流表 - API网关
+ */
+const getStockCashFlowStatement = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockCashFlowStatement(code), {});
+}
+
+/**
+ * 	个股报告期指标表 - API网关
+ */
+const getStockIndicators = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockIndicators(code), {});
+}
+
+/**
  * 	获取A股基本面数据，如PE、PB等
  */
 const getStockFundmental = (request) => {
@@ -200,6 +228,13 @@ const getHKStockFundmental = (request) => {
     return __WX_API_PROMISE__.postRequest(__URI__.getHKStockFundmental(), {
         package: JSON.stringify(request)
     });
+}
+
+/**
+ * 	获取美股基本面数据
+ */
+const getUSAStockFundmental = (code) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getUSAStockFundmental(code), {});
 }
 
 
@@ -240,7 +275,12 @@ module.exports = {
     getStockFreeze: getStockFreeze,
     getStockLiftingDate: getStockLiftingDate,
     getStockRestrictedListDate: getStockRestrictedListDate,
+    getStockBalanceSheet: getStockBalanceSheet,
+    getStockIncomeStatement: getStockIncomeStatement,
+    getStockCashFlowStatement: getStockCashFlowStatement,
+    getStockIndicators: getStockIndicators,
     //	基本面
     getStockFundmental: getStockFundmental,
-    getHKStockFundmental: getHKStockFundmental
+    getHKStockFundmental: getHKStockFundmental,
+    getUSAStockFundmental: getUSAStockFundmental
 }

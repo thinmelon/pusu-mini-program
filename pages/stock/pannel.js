@@ -27,7 +27,19 @@ Page({
             name: '景旺电子',
             code: '603228'
         }],
-        USStock: [],
+        USStock: [{
+            name: '特斯拉',
+            code: 'tsla'
+        }, {
+            name: '蔚来',
+            code: 'nio'
+        }, {
+            name: '阿里巴巴',
+            code: 'baba'
+        }, {
+            name: '京东',
+            code: 'jd'
+        }],
         HKStock: [{
             name: '京信通信',
             code: '02342'
@@ -56,7 +68,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-        // this.paintStockMarket();
+        this.paintStockMarket();
     },
 
     /**
@@ -177,6 +189,50 @@ Page({
     },
 
     /**
+     * 	获取美股基本面数据
+     */
+    getUSAStockFundmental: function(code) {
+        const that = this;
+
+        economic.getUSAStockFundmental(code)
+            .then(res => {
+                console.log(res);
+                if (res.data.error_code === 0) {
+                    that.data.USStock = that.data.USStock.map(stock => {
+                        for (let i = 0; i < res.data.result.length; i++) {
+                            const target = res.data.result[i];
+                            if (stock.code === target.data.gid) {
+                                return Object.assign(stock, {
+                                    lastestpri: parseFloat(target.data.lastestpri).toFixed(2), //	最新价
+                                    formpri: parseFloat(target.data.formpri).toFixed(2), //	前收盘价
+                                    openpri: parseFloat(target.data.openpri).toFixed(2), //	开盘价
+                                    traAmount: (parseFloat(target.data.traAmount) / 10000).toFixed(0), //	成交量
+                                    markValue: (parseFloat(target.data.markValue) / 100000000).toFixed(2), //	市值
+                                    capital: (parseFloat(target.data.capital) / 100000000).toFixed(2), //	股本
+                                    EPS: target.data.EPS, //	每股收益
+                                    ROR: target.data.ROR, //	收益率
+                                    priearn: target.data.priearn, //	市盈率
+                                    beta: parseFloat(target.data.beta), //	贝塔系数
+                                    divident: target.data.divident, //	股息
+                                    ustime: target.data.ustime, //	美国当前更新时间
+                                    chtime: target.data.chtime, //	中国时间
+                                    gopicture: target.gopicture
+                                });
+                            }
+                        } /**	end of for */
+                        return stock;
+                    }); /**	end of that.data.USStock.map */
+                    that.setData({
+                        USStock: that.data.USStock
+                    })
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    },
+
+    /**
      *  初始化各股票基础元信息
      */
     initializeStocksFundmental: function(stockArray, metrics, apiFunc) {
@@ -205,6 +261,11 @@ Page({
                     this.data.HKStock, ['pe_ttm', 'pb', 'ps_ttm', 'pcf_ttm', 'dyr', 'sp', 'mc', 'tv', 'ah_shm'],
                     this.getHKStockFundmental);
             }
+            if ((market.name === '美股') && market.enable) {
+                for (let i = 0; i < this.data.USStock.length; i++) {
+                    this.getUSAStockFundmental(this.data.USStock[i].code);
+                }
+            }
         })
     },
 
@@ -212,32 +273,35 @@ Page({
      *  点击股票名称
      */
     onStockNameClicked: function(evt) {
-        // this.data.markets.map(market =>{
+        let itemList = [],
+            target;
 
-        // })
         console.log(evt);
-        wx.showActionSheet({
-            itemList: ['公司资讯', '股权结构', '资产负债'],
-            success(res) {
-                switch (res.tapIndex) {
-                    case 0:
-                        wx.navigateTo({
-                            url: '/pages/stock/announcement?code=' + evt.currentTarget.dataset.stock.code + '&title=' + evt.currentTarget.dataset.stock.name
-                        })
-                        break;
-                    case 1:
-                        wx.navigateTo({
-                            url: '/pages/stock/pledge?code=' + evt.currentTarget.dataset.stock.code + '&title=' + evt.currentTarget.dataset.stock.name
-                        })
-                        break;
-                    case 2:
-                        break;
-                }
-            },
-            fail(res) {
-                console.log(res.errMsg)
+        this.data.markets.map(market => {
+            if (market.enable) {
+                target = market;
+                itemList = market.properties.map(item => {
+                    return item.name;
+                })
             }
         })
+        if (itemList.length > 0) {
+            wx.showActionSheet({
+                itemList: itemList,
+                success(res) {
+                    target.properties.map(item => {
+                        if (item.tapIndex === res.tapIndex && item.url) {
+                            wx.navigateTo({
+                                url: item.url + '&code=' + evt.currentTarget.dataset.stock.code + '&title=' + evt.currentTarget.dataset.stock.name
+                            })
+                        }
+                    })
+                },
+                fail(res) {
+                    console.log(res.errMsg)
+                }
+            })
+        }
     },
 
     /**
