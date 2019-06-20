@@ -87,18 +87,23 @@ Page({
                 console.log(res);
                 if (res.data.error_code === 0) {
                     this.data.kLines.push({
+                        name: '日K线图',
                         src: res.data.result[0].gopicture.dayurl
                     });
                     this.data.kLines.push({
+                        name: '5日K线图',
                         src: res.data.result[0].gopicture.min_weekpic
                     });
                     this.data.kLines.push({
+                        name: '分时K线图',
                         src: res.data.result[0].gopicture.minurl
                     });
                     this.data.kLines.push({
+                        name: '月K线图',
                         src: res.data.result[0].gopicture.monthurl
                     });
                     this.data.kLines.push({
+                        name: '周K线图',
                         src: res.data.result[0].gopicture.weekurl
                     });
                     this.setData({

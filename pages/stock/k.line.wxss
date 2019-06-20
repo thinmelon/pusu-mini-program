@@ -1,1 +1,8 @@
 /* pages/stock/k.line.wxss */
+
+.k-line {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

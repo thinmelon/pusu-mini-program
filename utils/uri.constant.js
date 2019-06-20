@@ -254,7 +254,7 @@ const getStockIncomeStatement = (code) => {
  * 	个股报告期现金流表 - API网关
  */
 const getStockCashFlowStatement = (code) => {
-    return `${PREFIX_FINANCE_SERVER_LESS}/stock/cash/date/${code}`;
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/cash/${code}`;
 }
 
 /**

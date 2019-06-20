@@ -143,7 +143,7 @@ Page({
     getStockAnnouncement: function(request) {
         economic.getStockAnnouncement(request.code)
             .then(res => {
-                this.resultHandler('announcements', res);
+                this.resultHandler('announcements', res, this.getStockAnnouncement, request);
             })
             .catch(err => {
                 console.error(err);
@@ -156,7 +156,7 @@ Page({
     getStockDividends: function(request) {
         economic.getStockDividends(request.code)
             .then(res => {
-                this.resultHandler('dividends', res);
+                this.resultHandler('dividends', res, this.getStockDividends, request);
             })
             .catch(err => {
                 console.error(err);
@@ -169,7 +169,7 @@ Page({
     getStockSecondaryPublicOffering: function(request) {
         economic.getStockSecondaryPublicOffering(request.code)
             .then(res => {
-                this.resultHandler('spo', res);
+                this.resultHandler('spo', res, this.getStockSecondaryPublicOffering, request);
             })
             .catch(err => {
                 console.error(err);
@@ -182,7 +182,7 @@ Page({
     getStockRationedShare: function(request) {
         economic.getStockRationedShare(request.code)
             .then(res => {
-                this.resultHandler('rationed', res);
+                this.resultHandler('rationed', res, this.getStockRationedShare, request);
             })
             .catch(err => {
                 console.error(err);
@@ -195,7 +195,7 @@ Page({
     getStockRaisingFundUsage: function(request) {
         economic.getStockRaisingFundUsage(request.code)
             .then(res => {
-                this.resultHandler('raising', res);
+                this.resultHandler('raising', res, this.getStockRaisingFundUsage, request);
             })
             .catch(err => {
                 console.error(err);
@@ -205,7 +205,7 @@ Page({
     /**
      * 处理返回结果
      */
-    resultHandler: function(key, res) {
+    resultHandler: function(key, res, callback, params) {
         console.log(res);
         if (res.statusCode === 200) {
             const data = JSON.parse(res.data);
@@ -226,6 +226,10 @@ Page({
                     icon: 'none'
                 })
             }
+        } else if (res.statusCode === 503) {
+            setTimeout(() => {
+                callback(params);
+            }, getApp().timeOut); //	如果是503错误（服务器在忙），1秒后发起重试
         } else { //  网络出错
             wx.showToast({
                 title: '服务器开小差~~',

@@ -6,6 +6,7 @@ const __RESOURCE__ = require('./services/resource.service.js');
 App({
     isLogIn: true,
     environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
+    timeOut: 1000, //	超时重试：1000毫秒
     markets: [{ //	股票市场
         name: 'A股',
         icon: '/icons/stock/China.png',
@@ -21,7 +22,7 @@ App({
         }, {
             tapIndex: 2,
             name: '资产负债',
-            url: ''
+            url: '/pages/stock/balance?market=a'
         }],
         enable: true
     }, {

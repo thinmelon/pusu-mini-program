@@ -148,7 +148,7 @@ Page({
     getStockHolder: function(request) {
         economic.getStockHolder(request.code)
             .then(res => {
-                this.resultHandler('holder', res);
+                this.resultHandler('holder', res, this.getStockHolder, request);
             })
             .catch(err => {
                 console.error(err);
@@ -161,7 +161,7 @@ Page({
     getStockFloatHolder: function(request) {
         economic.getStockFloatHolder(request.code)
             .then(res => {
-                this.resultHandler('float', res);
+                this.resultHandler('float', res, this.getStockFloatHolder, request);
             })
             .catch(err => {
                 console.error(err);
@@ -174,7 +174,7 @@ Page({
     getStockHolderNumber: function(request) {
         economic.getStockHolderNumber(request.code)
             .then(res => {
-                this.resultHandler('number', res);
+                this.resultHandler('number', res, this.getStockHolderNumber, request);
             })
             .catch(err => {
                 console.error(err);
@@ -187,7 +187,7 @@ Page({
     getStockHolderConcentration: function(request) {
         economic.getStockHolderConcentration(request.code)
             .then(res => {
-                this.resultHandler('concentration', res);
+                this.resultHandler('concentration', res, this.getStockHolderConcentration, request);
             })
             .catch(err => {
                 console.error(err);
@@ -200,7 +200,7 @@ Page({
     getStockHolderController: function(request) {
         economic.getStockHolderController(request.code)
             .then(res => {
-                this.resultHandler('controller', res);
+                this.resultHandler('controller', res, this.getStockHolderController, request);
             })
             .catch(err => {
                 console.error(err);
@@ -213,7 +213,7 @@ Page({
     getStockHolderChange: function(request) {
         economic.getStockHolderChange(request.code)
             .then(res => {
-                this.resultHandler('change', res);
+                this.resultHandler('change', res, this.getStockHolderChange, request);
             })
             .catch(err => {
                 console.error(err);
@@ -226,7 +226,7 @@ Page({
     getStockHolderManagerChange: function(request) {
         economic.getStockHolderManagerChange(request.code)
             .then(res => {
-                this.resultHandler('manager', res);
+                this.resultHandler('manager', res, this.getStockHolderManagerChange, request);
             })
             .catch(err => {
                 console.error(err);
@@ -239,7 +239,7 @@ Page({
     getStockHolderChangeDate: function(request) {
         economic.getStockHolderChangeDate(request.code)
             .then(res => {
-                this.resultHandler('date', res);
+                this.resultHandler('date', res, this.getStockHolderChangeDate, request);
             })
             .catch(err => {
                 console.error(err);
@@ -252,7 +252,7 @@ Page({
     getStockSharePledge: function(request) {
         economic.getStockSharePledge(request.code)
             .then(res => {
-                this.resultHandler('pledges', res);
+                this.resultHandler('pledges', res, this.getStockSharePledge, request);
             })
             .catch(err => {
                 console.error(err);
@@ -265,7 +265,7 @@ Page({
     getStockFreeze: function(request) {
         economic.getStockFreeze(request.code)
             .then(res => {
-                this.resultHandler('freeze', res);
+                this.resultHandler('freeze', res, this.getStockFreeze, request);
             })
             .catch(err => {
                 console.error(err);
@@ -278,7 +278,7 @@ Page({
     getStockLiftingDate: function(request) {
         economic.getStockLiftingDate(request.code)
             .then(res => {
-                this.resultHandler('lifting', res);
+                this.resultHandler('lifting', res, this.getStockLiftingDate, request);
             })
             .catch(err => {
                 console.error(err);
@@ -291,7 +291,7 @@ Page({
     getStockRestrictedListDate: function(request) {
         economic.getStockRestrictedListDate(request.code)
             .then(res => {
-                this.resultHandler('restricted', res);
+                this.resultHandler('restricted', res, this.getStockRestrictedListDate, request);
             })
             .catch(err => {
                 console.error(err);
@@ -301,7 +301,7 @@ Page({
     /**
      * 	处理返回结果
      */
-    resultHandler: function(key, res) {
+    resultHandler: function(key, res, callback, params) {
         console.log(res);
         if (res.statusCode === 200) {
             const data = JSON.parse(res.data);
@@ -322,6 +322,10 @@ Page({
                     icon: 'none'
                 })
             }
+        } else if (res.statusCode === 503) {
+            setTimeout(() => {
+                callback(params);
+            }, getApp().timeOut); //	如果是503错误（服务器在忙），1秒后发起重试
         } else { //  网络出错
             wx.showToast({
                 title: '服务器开小差~~',
