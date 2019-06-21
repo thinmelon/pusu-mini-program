@@ -10,23 +10,16 @@ Page({
         kLines: []
     },
 
-    stockCode: '',
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
         console.log(options);
-        this.stockCode = options.code;
-        switch (options.market) {
-            case 'a':
-                break;
-            case 'hk':
-                break;
-            case 'usa':
-                this.getUSAStockFundmental(options.code);
-                break;
-        }
+        this.getStockKLine(options);
+        wx.setNavigationBarTitle({
+            title: options.title
+        });
     },
 
     /**
@@ -81,34 +74,40 @@ Page({
     /**
      * 	获取美股基本面数据
      */
-    getUSAStockFundmental: function(code) {
-        economic.getUSAStockFundmental(code)
+    getStockKLine: function(request) {
+        economic.getStockKLine(request)
             .then(res => {
                 console.log(res);
-                if (res.data.error_code === 0) {
-                    this.data.kLines.push({
-                        name: '日K线图',
-                        src: res.data.result[0].gopicture.dayurl
-                    });
-                    this.data.kLines.push({
-                        name: '5日K线图',
-                        src: res.data.result[0].gopicture.min_weekpic
-                    });
-                    this.data.kLines.push({
-                        name: '分时K线图',
-                        src: res.data.result[0].gopicture.minurl
-                    });
-                    this.data.kLines.push({
-                        name: '月K线图',
-                        src: res.data.result[0].gopicture.monthurl
-                    });
-                    this.data.kLines.push({
-                        name: '周K线图',
-                        src: res.data.result[0].gopicture.weekurl
-                    });
-                    this.setData({
-                        kLines: this.data.kLines
-                    });
+                if (res.statusCode === 200) {
+                    if (res.data.hasOwnProperty('resultcode') && res.data.resultcode === "200") {
+                        this.data.kLines.push({
+                            name: '日K线图',
+                            src: res.data.result[0].gopicture.dayurl
+                        });
+                        this.data.kLines.push({
+                            name: '5日K线图',
+                            src: res.data.result[0].gopicture.min_weekpic
+                        });
+                        this.data.kLines.push({
+                            name: '分时K线图',
+                            src: res.data.result[0].gopicture.minurl
+                        });
+                        this.data.kLines.push({
+                            name: '月K线图',
+                            src: res.data.result[0].gopicture.monthurl
+                        });
+                        this.data.kLines.push({
+                            name: '周K线图',
+                            src: res.data.result[0].gopicture.weekurl
+                        });
+                        this.setData({
+                            kLines: this.data.kLines
+                        });
+                    }
+                } else {
+                    setTimeout(() => {
+                        this.getStockKLine(request);
+                    }, getApp().timeOut);
                 }
             })
             .catch(err => {

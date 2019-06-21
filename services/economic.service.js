@@ -237,6 +237,19 @@ const getUSAStockFundmental = (code) => {
     return __WX_API_PROMISE__.getRequest(__URI__.getUSAStockFundmental(code), {});
 }
 
+/**
+ * 	获取K线图
+ */
+const getStockKLine = (request) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.getStockKLine(request.market, request.code), {});
+}
+
+/**
+ * 	搜索
+ */
+const searchStock = (request) => {
+    return __WX_API_PROMISE__.getRequest(__URI__.searchStock(request.market, request.keyword), {});
+}
 
 module.exports = {
     /**
@@ -282,5 +295,7 @@ module.exports = {
     //	基本面
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental,
-    getUSAStockFundmental: getUSAStockFundmental
+    getUSAStockFundmental: getUSAStockFundmental,
+    getStockKLine: getStockKLine,
+    searchStock: searchStock
 }

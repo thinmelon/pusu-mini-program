@@ -68,7 +68,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-        this.paintStockMarket();
+        // this.paintStockMarket();
     },
 
     /**
@@ -232,6 +232,29 @@ Page({
             })
     },
 
+    searchStock: function(keyword) {
+        let market = 'hs';
+        this.data.markets.map(market => {
+            if (market.enable) {
+                market = market.abbreviation;
+            }
+        })
+
+        economic.searchStock({
+                market: market,
+                keyword: keyword
+            })
+            .then(res => {
+                console.log(res);
+                if (res.statusCode === 200) {} else {
+                    this.searchStock(keyword);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    },
+
     /**
      *  初始化各股票基础元信息
      */
@@ -315,5 +338,14 @@ Page({
             })
         });
         this.paintStockMarket();
+    },
+
+    onInputKeyword: function(evt) {
+        console.log(evt);
+        this.searchStock(evt.detail.value);
+    },
+
+    onInputFinished: function(evt) {
+        console.log(evt);
     }
 })

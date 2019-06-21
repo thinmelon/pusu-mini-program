@@ -9,30 +9,41 @@ App({
     timeOut: 1000, //	超时重试：1000毫秒
     markets: [{ //	股票市场
         name: 'A股',
+        abbreviation: 'hs',
         icon: '/icons/stock/China.png',
         disabledIcon: '/icons/stock/Grey.png',
         properties: [{
             tapIndex: 0,
             name: '公司资讯',
-            url: '/pages/stock/announcement?market=a'
+            url: '/pages/stock/announcement?market=hs'
         }, {
             tapIndex: 1,
             name: '股权结构',
-            url: '/pages/stock/pledge?market=a'
+            url: '/pages/stock/pledge?market=hs'
         }, {
             tapIndex: 2,
             name: '资产负债',
-            url: '/pages/stock/balance?market=a'
+            url: '/pages/stock/balance?market=hs'
+        }, {
+            tapIndex: 3,
+            name: 'K线',
+            url: '/pages/stock/k.line?market=hs'
         }],
         enable: true
     }, {
         name: '港股',
+        abbreviation: 'hk',
         icon: '/icons/stock/HongKong.png',
         disabledIcon: '/icons/stock/Grey.png',
-        properties: [],
+        properties: [{
+            tapIndex: 0,
+            name: 'K线',
+            url: '/pages/stock/k.line?market=hk'
+        }],
         enable: false
     }, {
         name: '美股',
+        abbreviation: 'usa',
         icon: '/icons/stock/UnitedStates.png',
         disabledIcon: '/icons/stock/Grey.png',
         properties: [{

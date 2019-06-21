@@ -1,4 +1,5 @@
 <!--pages/stock/pannel.wxml-->
+<input class='stock-search-input' confirm-type='search' placeholder='股票简称 | 代码 | 拼音首字母' bindinput="onInputKeyword" bindconfirm="onInputFinished"></input>
 <block wx:for="{{markets}}" wx:key="{{item.name}}" wx:for-item="market">
     <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">
         <view class='pannel'>

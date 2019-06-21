@@ -285,6 +285,20 @@ const getUSAStockFundmental = (code) => {
     return `${PREFIX_FINANCE_SERVER_LESS}/stock/usa/${code}`;
 }
 
+/**
+ * 	K线图
+ */
+const getStockKLine = (market, code) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/kline/${market}?code=${code}`;
+}
+
+/**
+ * 	搜索
+ */
+const searchStock = (market, keyword) => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/stock/relevant/${market}?keyword=${keyword}`;
+}
+
 module.exports = {
     checkTemplateValidity: checkTemplateValidity,
     userLogin: userLogin,
@@ -340,5 +354,8 @@ module.exports = {
     //	基本面
     getStockFundmental: getStockFundmental,
     getHKStockFundmental: getHKStockFundmental,
-    getUSAStockFundmental: getUSAStockFundmental
+    getUSAStockFundmental: getUSAStockFundmental,
+    //	短线
+    getStockKLine: getStockKLine,
+    searchStock: searchStock
 }
