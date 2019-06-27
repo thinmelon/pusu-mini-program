@@ -28,12 +28,12 @@
             <view class='restaurant'>
                 <text class='restaurant-name'>{{item.name}}</text>
                 <view class='restaurant-location' wx:if="{{item.location !== null}}">
-                    <image src='/icons/steering.png'></image>
-                    <text>去这里</text>
+                    <image src='/icons/direction.png'></image>
                 </view>
             </view>
             <view>
                 <view wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{article.title}}" class='restaurant-article' data-article='{{ article }}' catchtap='catchTapArticle'>
+                    <image src='{{article.thumbnail}}' wx:if="{{article.thumbnail}}" mode='aspectFit'></image>
                     <text class='restaurant-article-title'>{{article.title}}</text>
                     <text class='restaurant-article-source'>来源：{{article.source}}</text>
                     <text class='restaurant-article-publish' wx:if="{{article.publishTime}}">发布时间：{{article.publishTime}}</text>

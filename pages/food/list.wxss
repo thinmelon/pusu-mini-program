@@ -7,10 +7,11 @@
 
 .restaurant {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
+    padding: 0 9px;
 }
 
 .restaurant-location {
@@ -31,11 +32,13 @@
 }
 
 .restaurant-basic {
-    display: grid;
+    /* display: grid;
     grid-template-columns: 30% 70%;
     grid-column-gap: 3px;
     padding: 7px;
-    font-size: 11pt;
+    font-size: 11pt; */
+    display: flex;
+    flex-direction: column;
 }
 
 .restaurant-name {
@@ -45,7 +48,7 @@
 }
 
 .restaurant-article {
-    padding: 7px;
+    padding: 7px 0;
     font-size: 10pt;
     display: flex;
     flex-direction: column;
