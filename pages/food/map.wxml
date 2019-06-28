@@ -2,8 +2,9 @@
 <map class="restaurants-map" longitude="{{centerLongitude}}" latitude="{{centerLatitude}}" scale="{{scale}}" markers="{{markers}}" bindmarkertap="bindMarkerTap">
     <cover-view class='container' wx:if="{{ chosenMarker.attach }}" bindtap='closeCoverView'>
         <cover-view class='info'>
-            <cover-view class='restaurant-name'>{{ chosenMarker.attach.name }}</cover-view>
-            <cover-view class="article" catchtap='catchTapArticle' data-article='{{ item }}' wx:for="{{ chosenMarker.attach.articles }}" wx:key="{{ item.title }}">
+            <!-- <cover-view class='restaurant-name'>{{ chosenMarker.attach.name }}</cover-view> -->
+            <cover-view class="article" catchtap='catchTapArticle' data-article='{{ item }}' wx:for="{{ chosenMarker.attach.articles }}" wx:key="{{ item.title }}" wx:for-index="idx">
+                <cover-image src='{{item.thumbnail}}' wx:if="{{item.thumbnail && idx === 0 }}" mode='aspectFit'></cover-image>
                 <cover-view class='title'>{{item.title}}</cover-view>
                 <cover-view class='source'>来源：{{item.source}}</cover-view>
             </cover-view>
@@ -16,6 +17,3 @@
         <text>{{item.name}}</text>
     </view>
 </view>
-<!-- <view class='list' bindtap='changeStyle'>
-  <image src='/icons/list.png'></image>
-</view> -->

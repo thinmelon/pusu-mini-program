@@ -10,7 +10,7 @@ Page({
                 src: '/icons/meishi.png',
                 mode: 'aspectFit',
                 text: '餐馆',
-                url: '/pages/food/index'
+                url: '/pages/food/list'
             },
             {
                 index: 1,

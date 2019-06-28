@@ -187,6 +187,7 @@ Page({
                         this.data.markers.push({
                             id: index++,
                             iconPath: tag.icon,
+                            // iconPath: '/icons/food/position.png',
                             latitude: item.location.lat,
                             longitude: item.location.lng,
                             width: 25,
@@ -200,6 +201,15 @@ Page({
                     } /** end of if */
                 }); /** end of this.data.displayedTags.map */
             }); /** end of result.map */
+
+            this.data.markers.push({
+                id: -1,
+                iconPath: '/icons/food/position.png',
+                latitude: this.data.centerLatitude,
+                longitude: this.data.centerLongitude,
+                width: 25,
+                height: 25
+            });
             this.setData({
                 markers: this.data.markers
             })
@@ -211,9 +221,11 @@ Page({
      */
     bindMarkerTap: function(evt) {
         console.log(evt);
-        this.setData({
-            chosenMarker: this.data.markers[evt.markerId]
-        });
+        if (evt.markerId >= 0) {
+            this.setData({
+                chosenMarker: this.data.markers[evt.markerId]
+            });
+        }
     },
 
     /**

@@ -31,12 +31,7 @@
     color: #888;
 }
 
-.restaurant-basic {
-    /* display: grid;
-    grid-template-columns: 30% 70%;
-    grid-column-gap: 3px;
-    padding: 7px;
-    font-size: 11pt; */
+.restaurant-basic, .restaurant-article-brief {
     display: flex;
     flex-direction: column;
 }
@@ -49,14 +44,12 @@
 
 .restaurant-article {
     padding: 7px 0;
-    font-size: 10pt;
     display: flex;
     flex-direction: column;
 }
 
-.restaurant-article-title {
-    text-decoration: underline;
-    color: blue;
+.restaurant-article-brief {
+    padding: 7px 24px;
 }
 
 .restaurant-article-source, .restaurant-article-publish {
@@ -67,4 +60,11 @@
 .picker {
     font-size: 11pt;
     color: blueviolet;
+}
+
+.modal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

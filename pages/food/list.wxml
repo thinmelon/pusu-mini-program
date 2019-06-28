@@ -1,6 +1,10 @@
 <!--pages/food/list.wxml-->
 <!-- <wxs src="../../services/tags.config.wxs" module="tags" /> -->
+
 <scroll-view scroll-y enable-back-to-top class='restaurants' bindscrolltolower='onScrollToButtom'>
+    <view class='modal'>
+        <button size='mini' bindtap='onModalChanged'>美食地图</button>
+    </view>
     <block wx:for="{{restaurants}}" wx:key="{{item._id}}">
         <view class='restaurant-basic' wx:if="{{environment === 'DEBUG'}}">
             <text class='restaurant-name'>{{item.name}}</text>
@@ -26,17 +30,19 @@
 
         <view class='restaurant-basic' wx:if="{{environment === 'PRODUCTION'}}" data-restaurant='{{item}}' bindtap='onRestaurantClicked'>
             <view class='restaurant'>
-                <text class='restaurant-name'>{{item.name}}</text>
+                <text class='restaurant-name'></text>
                 <view class='restaurant-location' wx:if="{{item.location !== null}}">
                     <image src='/icons/direction.png'></image>
                 </view>
             </view>
             <view>
-                <view wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{article.title}}" class='restaurant-article' data-article='{{ article }}' catchtap='catchTapArticle'>
-                    <image src='{{article.thumbnail}}' wx:if="{{article.thumbnail}}" mode='aspectFit'></image>
-                    <text class='restaurant-article-title'>{{article.title}}</text>
-                    <text class='restaurant-article-source'>来源：{{article.source}}</text>
-                    <text class='restaurant-article-publish' wx:if="{{article.publishTime}}">发布时间：{{article.publishTime}}</text>
+                <view wx:for="{{item.articles}}" wx:for-item="article" wx:for-index="idx" wx:key="{{article.title}}" class='restaurant-article' data-article='{{ article }}' catchtap='catchTapArticle'>
+                    <image src='{{article.thumbnail}}' wx:if="{{article.thumbnail && idx === 0 }}" mode='aspectFit' style='width: 100%;'></image>
+                    <view class='restaurant-article-brief'>
+                        <text class='restaurant-article-title'>{{article.title}}</text>
+                        <text class='restaurant-article-source'>来源：{{article.source}}</text>
+                        <text class='restaurant-article-publish' wx:if="{{article.publishTime}}">发布时间：{{article.publishTime}}</text>
+                    </view>
                 </view>
             </view>
         </view>

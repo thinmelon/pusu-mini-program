@@ -1,7 +1,6 @@
 {
 	"pages": [
 		"pages/index/index",
-		"pages/food/index",
 		"pages/food/map",
 		"pages/food/article",
 		"pages/food/list",

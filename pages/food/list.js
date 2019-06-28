@@ -173,13 +173,21 @@ Page({
             }
         })
         // console.log('category:', category)
-        this.getRestaurants({
-            package: JSON.stringify({
-                tags: category
-            }),
-            skip: this.offset,
-            limit: this.itemsPerTime
-        });
+
+        if (this.data.environment === 'PRODUCTION') {
+            this.getRestaurants({
+                package: JSON.stringify({
+                    tags: category
+                }),
+                skip: this.offset,
+                limit: this.itemsPerTime
+            });
+        } else {
+            this.getRestaurants({
+                skip: this.offset
+            });
+        }
+
     },
 
     /**
@@ -193,6 +201,8 @@ Page({
             displayedTags: this.data.displayedTags.map(tag => {
                 if (tag.name === evt.currentTarget.dataset.name) {
                     tag.enable = !tag.enable;
+                } else {
+                    tag.enable = false;
                 }
                 return tag;
             })
@@ -227,6 +237,12 @@ Page({
         const url = evt.currentTarget.dataset.article.url;
         wx.navigateTo({
             url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32) + '&source=' + evt.currentTarget.dataset.article.source
+        })
+    },
+
+    onModalChanged: function(evt) {
+        wx.navigateTo({
+            url: '/pages/food/map'
         })
     }
 })
