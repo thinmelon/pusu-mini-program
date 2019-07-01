@@ -5,39 +5,33 @@ Page({
      * 页面的初始数据
      */
     data: {
-        sections: [{
-                index: 0,
-                src: '/icons/meishi.png',
-                mode: 'aspectFit',
-                text: '餐馆',
-                url: '/pages/food/list'
-            },
+        sections: [
             {
                 index: 1,
                 src: '/icons/currency.png',
                 mode: 'aspectFit',
-                text: '汇率',
+                text: '汇',
                 url: '/pages/currency/exchange'
             },
             {
                 index: 2,
                 src: '/icons/treasury.png',
                 mode: 'aspectFit',
-                text: '国债',
+                text: '债',
                 url: '/pages/treasury/yields'
             },
             {
                 index: 3,
                 src: '/icons/gold.png',
                 mode: 'aspectFit',
-                text: '黄金',
+                text: '金',
                 url: '/pages/gold/gold'
             },
             {
                 index: 4,
                 src: '/icons/stock.png',
                 mode: 'aspectFit',
-                text: '股票',
+                text: '股',
                 url: '/pages/stock/pannel'
             }
         ]

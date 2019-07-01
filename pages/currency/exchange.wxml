@@ -1,10 +1,4 @@
 <!--pages/currency/exchange.wxml-->
-<!-- <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiCurrencyList}}" range-key="name">
-    <view class="picker">
-        当前选择：{{multiCurrencyList[0][multiIndex[0]].name}}，{{multiCurrencyList[1][multiIndex[1]].name}}
-    </view>
-</picker> -->
-
 <view class='update-time font-smaller'>更新：{{updateTime}}</view>
 
 <view class='currency'>

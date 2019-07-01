@@ -1,6 +1,5 @@
 <!--pages/stock/pannel.wxml-->
-<input class='stock-search-input' confirm-type='search' placeholder='股票简称 | 代码 | 拼音首字母' bindinput="onInputKeyword" bindfocus='onInputFocus' bindblur='onInputBlur' focus='{{focus}}' value='{{keyword}}'></input>
-<view class='search-result-pannel' wx:if='{{show}}'>
+<search inputPlaceHolder='股票简称 | 代码 | 拼音首字母' bind:inputkeyword="onInputKeyword" bind:inputblur="onInputBlur">
   <block wx:for="{{searchResult}}" wx:key="{{item.SECCODE}}">
     <view class='search-result' data-stock='{{item}}' bindtap='onSearchResultClicked'>
       <view>{{item.SECNAME}}</view>
@@ -8,7 +7,7 @@
     </view>
     <view class='div-line'></view>
   </block>
-</view>
+</search>
 
 <block wx:for="{{markets}}" wx:key="{{item.name}}" wx:for-item="market">
   <scroll-view class='scroll' scroll-y enable-back-to-top wx:if="{{(market.name === 'A股') && market.enable}}">

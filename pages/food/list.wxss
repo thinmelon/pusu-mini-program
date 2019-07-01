@@ -1,70 +1,17 @@
 /* pages/food/list.wxss */
 
 .restaurants {
-    width: 100%;
-    height: 80vh;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(250, 250, 250, 0.90);
 }
 
-.restaurant {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    padding: 0 9px;
-}
-
-.restaurant-location {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.restaurant-location image {
-    width: 24px;
-    height: 24px;
-}
-
-.restaurant-location text {
-    font-size: 9pt;
-    color: #888;
-}
-
-.restaurant-basic, .restaurant-article-brief {
-    display: flex;
-    flex-direction: column;
-}
-
-.restaurant-name {
-    padding: 7px 0;
-    font-size: 13pt;
-    color: brown;
-}
-
-.restaurant-article {
-    padding: 7px 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.restaurant-article-brief {
-    padding: 7px 24px;
-}
-
-.restaurant-article-source, .restaurant-article-publish {
-    /* padding: 0 17px; */
-    color: #888;
+.restaurant-basic {
+  display: flex;
+  flex-direction: column;
 }
 
 .picker {
-    font-size: 11pt;
-    color: blueviolet;
-}
-
-.modal {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  font-size: 11pt;
+  color: blueviolet;
 }

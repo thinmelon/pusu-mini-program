@@ -1,5 +1,6 @@
 {
-	"navigationBarTitleText": "餐馆",
-	"enablePullDownRefresh": true,
-	"usingComponents": {}
+  "navigationBarTitleText": "餐馆",
+  "usingComponents": {
+    "card": "/components/restaurant.card"
+  }
 }

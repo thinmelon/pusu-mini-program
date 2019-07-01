@@ -1,9 +1,9 @@
 {
 	"pages": [
-		"pages/index/index",
+    "pages/food/list",
 		"pages/food/map",
 		"pages/food/article",
-		"pages/food/list",
+    "pages/food/search",
 		"pages/treasury/yields",
 		"pages/currency/exchange",
 		"pages/gold/gold",
@@ -11,7 +11,8 @@
 		"pages/stock/announcement",
 		"pages/stock/pledge",
 		"pages/stock/balance",
-		"pages/stock/k.line"
+		"pages/stock/k.line",
+    "pages/index/index"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

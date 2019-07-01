@@ -53,9 +53,6 @@ Page({
       name: '中国有赞',
       code: '08083'
     }],
-    show: false,
-    focus: false,
-    keyword: '',
     searchResult: []
   },
 
@@ -348,36 +345,30 @@ Page({
     this.paintStockMarket();
   },
 
-  onInputFocus: function(evt) {
+  /**
+   *  搜索组件
+   *  输入关键词后触发事件
+   *  通知页面开始搜索
+   */
+  onInputKeyword: function(evt) {
     console.log(evt);
-    this.setData({
-      show: true
-    });
-
+    this.searchStock(evt.detail.keyword);
   },
 
+  /**
+   *  搜索组件
+   *  输入框失去光标后触发事件
+   */
   onInputBlur: function(evt) {
     console.log(evt);
-    setTimeout(() => {
-      this.setData({
-        show: false,
-        keyword: '',
-        searchResult: []
-      });
-    }, 500)
-
+    this.setData({
+      searchResult: []
+    })
   },
 
-  onInputKeyword: function(evt) {
-    if (evt.detail.value && evt.detail.value.length > 0) {
-      this.searchStock(evt.detail.value);
-    } else {
-      // this.setData({
-      //   focus: false
-      // })
-    }
-  },
-
+  /**
+   *  选择搜索结果后加入股票市场的面板中
+   */
   onSearchResultClicked: function(evt) {
     console.log(evt);
     let target;

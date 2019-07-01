@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "搜索",
+  "usingComponents": {
+    "search": "/components/search.input",
+    "card": "/components/restaurant.card"
+  }
+}

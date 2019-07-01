@@ -1,0 +1,26 @@
+/* components/search.input.wxss */
+
+/*  搜索输入框  */
+
+.search-input {
+  position: fixed;
+  top: 0;
+  width: 93%;
+  height: 36px;
+  padding-left: 9px;
+  margin: 0 9px;
+  z-index: 99;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  font-size: 13pt;
+}
+
+.search-result-pannel {
+  position: fixed;
+  top: 39px;
+  width: 93%;
+  height: 100vh;
+  z-index: 98;
+  background-color: #fff;
+  padding: 0 11px;
+}

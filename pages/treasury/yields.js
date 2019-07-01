@@ -27,7 +27,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getChinaBondYieldRateWrapper();
+    this.getChinaBondYieldRate();
   },
 
   /**
@@ -78,19 +78,7 @@ Page({
   onShareAppMessage: function() {
 
   },
-  /**
-   * 	中债国债收益率曲线API的Wrapper
-   *  判断用户是否已登录
-   */
-  getChinaBondYieldRateWrapper: function() {
-    if (getApp().isLogIn) {
-      this.getChinaBondYieldRate();
-    } else {
-      setTimeout(() => {
-        this.getChinaBondYieldRateWrapper();
-      }, 1000);
-    }
-  },
+  
   /**
    * 获取中债国债数据
    */
@@ -117,6 +105,7 @@ Page({
         })
       });
   },
+
   /**
    * 更换加载提示内容
    */
@@ -135,24 +124,28 @@ Page({
 
     });
   },
+
   /**
    * 触碰开始
    */
   bindTouchStart: function(e) {
     this.showIndexLine(e);
   },
+  
   /**
    * 滑动
    */
   bindTouchMove: function(e) {
     this.showIndexLine(e);
   },
+
   /**
    * 触碰结束
    */
   bindTouchEnd: function(e) {
     chart.clearIndexLine(this.maskerCanvasCtx);
   },
+
   /**
    *   设置myCanvas的样式 
    */
@@ -167,6 +160,7 @@ Page({
       resolve();
     });
   },
+
   /**
    *   显示拆线图
    */
@@ -224,6 +218,7 @@ Page({
 
     });
   },
+  
   /**	
    * 	显示辅助线
    */

@@ -20,7 +20,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.1",
+	"libVersion": "2.7.2",
 	"appid": "wx0a72bd7d41e0b066",
 	"projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
 	"isGameTourist": false,
@@ -44,19 +44,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
 					"name": "美食地图",
 					"pathName": "pages/food/map",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "餐馆列表",
-					"pathName": "pages/food/list",
 					"query": "",
 					"scene": null
 				},
@@ -86,6 +79,19 @@
 					"name": "资产负债",
 					"pathName": "pages/stock/balance",
 					"query": "code=002281&title=光迅科技",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索餐馆",
+					"pathName": "pages/food/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "更多内容",
+					"pathName": "pages/index/index",
 					"scene": null
 				}
 			]
