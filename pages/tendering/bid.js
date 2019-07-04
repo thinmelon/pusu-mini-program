@@ -1,44 +1,29 @@
-// pages/index/index.js
+// pages/tendering/bid.js
+const __ECONOMIC__ = require('../../services/economic.service.js');
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        sections: [
-            {
-                index: 1,
-                text: '汇',
-                url: '/pages/currency/exchange'
-            },
-            {
-                index: 2,
-                text: '债',
-                url: '/pages/treasury/yields'
-            },
-            {
-                index: 3,
-                text: '金',
-                url: '/pages/gold/gold'
-            },
-            {
-                index: 4,
-                text: '股',
-                url: '/pages/stock/pannel'
-            },
-			{
-				index: 5,
-				text: '标',
-				url: '/pages/tendering/bid'
-			}
-        ]
+
     },
+
+    offset: 0, //	偏移量
+    itemsPerTime: 10, //	每次获取数量
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        this.searchTenderings({
+            name: '福建广电网络集团股份有限公司莆田分公司',
+            min: 50,
+            max: 100,
+            skip: this.offset,
+            limit: this.itemsPerTime
+        });
     },
 
     /**
@@ -73,7 +58,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        console.log("======= onPullDownRefresh =======");
+
     },
 
     /**
@@ -89,13 +74,19 @@ Page({
     onShareAppMessage: function() {
 
     },
+
     /**
-     * 	点击图标
+     * 	获取餐馆列表
      */
-    onClick: function(evt) {
-        // console.log(evt);
-        wx.navigateTo({
-            url: evt.currentTarget.dataset.url
-        })
-    }
+    searchTenderings: function(request) {
+        console.log('>>>>>>>>>>>>> searchTenderings');
+        __ECONOMIC__.searchTenderings(request)
+            .then(res => {
+                console.log(res.data);
+
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    },
 })

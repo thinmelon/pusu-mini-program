@@ -251,6 +251,14 @@ const searchStock = (request) => {
     return __WX_API_PROMISE__.getRequest(__URI__.searchStock(request.market, request.keyword), {});
 }
 
+/**
+ * 	搜索中标公告
+ */
+const searchTenderings = (request) => {
+    return __WX_API_PROMISE__.postRequest(__URI__.searchTenderings(), request);
+}
+
+
 module.exports = {
     /**
      * 	债券
@@ -297,5 +305,7 @@ module.exports = {
     getHKStockFundmental: getHKStockFundmental,
     getUSAStockFundmental: getUSAStockFundmental,
     getStockKLine: getStockKLine,
-    searchStock: searchStock
+    searchStock: searchStock,
+    //  招投标
+    searchTenderings: searchTenderings
 }

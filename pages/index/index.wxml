@@ -3,7 +3,6 @@
   <view class='cube' wx:for="{{sections}}" wx:for-item="item" wx:key='item.index'>
     <view class="section_wrapper" data-url='{{item.url}}' bindtap='onClick'>
       <view class="section_ctn">
-        <!-- <image mode="{{item.mode}}" src="{{item.src}}"></image> -->
         <view class="section_title">{{item.text}}</view>
       </view>
     </view>
