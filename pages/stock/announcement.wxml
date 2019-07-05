@@ -1,7 +1,6 @@
 <!--pages/stock/announcement.wxml-->
 <block wx:for="{{displayedTags}}" wx:key="{{item.name}}" wx:for-item="tag">
     <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '公告') && tag.enable}}">
-        <text>近一月公告</text>
         <view class='section' wx:for="{{announcements}}" wx:key="{{item.RECID}}" data-url='{{item.F003V}}' bindtap='onAnnouncementClicked'>
             <text class='title'>{{item.F002V}}</text>
             <text class='date'>{{item.F001D}}</text>
@@ -9,7 +8,6 @@
     </scroll-view>
 
     <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '分红') && tag.enable}}">
-        <text>历史分红</text>
         <view class='section' wx:for="{{dividends}}" wx:key="{{item.F002D}}">
 
             <text class='date'>{{item.F002D}}</text>
@@ -90,7 +88,6 @@
     </scroll-view>
 
     <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '增发') && tag.enable}}">
-        <text>历史增发实施方案</text>
         <view class='section' wx:for="{{spo}}" wx:key="{{item.DECLAREDATE}}">
 
             <text class='date'>{{item.DECLAREDATE}}</text>
@@ -231,7 +228,6 @@
     </scroll-view>
 
     <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '配股') && tag.enable}}">
-        <text>公司配股实施方案</text>
         <view class='section' wx:for="{{rationed}}" wx:key="{{item.DECLAREDATE}}">
             <text class='date'>{{item.DECLAREDATE}}</text>
             <view class='field' wx:if="{{item.F002V}}">
@@ -419,7 +415,6 @@
     </scroll-view>
 
     <scroll-view scroll-y enable-back-to-top class='pannel' wx:if="{{(tag.name === '募集') && tag.enable}}">
-        <text>募集资金投资项目计划</text>
         <view class='section' wx:for="{{raising}}" wx:key="{{item.DECLAREDATE}}">
             <text class='date'>{{item.DECLAREDATE}}</text>
             <view class='field' wx:if="{{item.F002V}}">
