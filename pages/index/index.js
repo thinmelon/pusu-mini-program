@@ -5,8 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        sections: [
-            {
+        sections: [{
                 index: 1,
                 text: '汇',
                 url: '/pages/currency/exchange'
@@ -26,11 +25,16 @@ Page({
                 text: '股',
                 url: '/pages/stock/pannel'
             },
-			{
-				index: 5,
-				text: '标',
-				url: '/pages/tendering/bid'
-			}
+            {
+                index: 5,
+                text: '标',
+                url: '/pages/tendering/bid'
+            },
+            {
+                index: 6,
+                text: '房',
+                url: '/pages/estate/statistics'
+            }
         ]
     },
 

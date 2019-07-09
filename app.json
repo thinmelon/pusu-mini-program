@@ -12,6 +12,7 @@
 		"pages/stock/pledge",
 		"pages/stock/balance",
 		"pages/stock/k.line",
+		"pages/estate/statistics",
 		"pages/tendering/bid",
 		"pages/index/index"
 	],
