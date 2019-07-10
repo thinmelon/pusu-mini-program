@@ -287,6 +287,13 @@ const searchTenderings = () => {
     return `${PREFIX_FINANCE_SERVER_LESS}/tenderings`;
 }
 
+/**
+ * 	搜索房地产投资统计数据
+ */
+const searchRealEstateStatistics = () => {
+    return `${PREFIX_FINANCE_SERVER_LESS}/estate/statistics`;
+}
+
 module.exports = {
     /**
      * 	生活
@@ -345,5 +352,7 @@ module.exports = {
     getStockKLine: getStockKLine,
     searchStock: searchStock,
     //	招投标
-    searchTenderings: searchTenderings
+    searchTenderings: searchTenderings,
+    //	房地产
+    searchRealEstateStatistics: searchRealEstateStatistics
 }

@@ -98,6 +98,9 @@ function createLineChart(options) {
 	};
 }
 
+/**
+ * 	
+ */
 function showIndexLine(canvasid, spacing, length, rate, label, locationX) {
 	const context = wx.createCanvasContext(canvasid)
 	context.beginPath();

@@ -1,2 +1,4 @@
 <!--pages/estate/statistics.wxml-->
-<text>pages/estate/statistics.wxml</text>
+<canvas canvas-id='{{ canvasId }}' style='width: {{ canvasWidth }}px; height: {{ canvasHeight }}px;' />
+<canvas canvas-id='{{ maskerCanvasId }}' class='maskerCanvas' style='left: {{ maskerLeft }}px; top: {{ maskerTop }}px; width: {{ maskerWidth }}px; height: {{ maskerHeight }}px;' bindtouchstart="bindTouchStart" bindtouchmove="bindTouchMove" bindtouchend="bindTouchEnd"
+/>

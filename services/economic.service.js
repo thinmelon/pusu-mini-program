@@ -258,6 +258,12 @@ const searchTenderings = (request) => {
     return __WX_API_PROMISE__.postRequest(__URI__.searchTenderings(), request);
 }
 
+/**
+ * 	搜索房地产投资统计数据
+ */
+const searchRealEstateStatistics = (request) => {
+    return __WX_API_PROMISE__.postRequest(__URI__.searchRealEstateStatistics(), request);
+}
 
 module.exports = {
     /**
@@ -307,5 +313,7 @@ module.exports = {
     getStockKLine: getStockKLine,
     searchStock: searchStock,
     //  招投标
-    searchTenderings: searchTenderings
+    searchTenderings: searchTenderings,
+    //	房地产
+    searchRealEstateStatistics: searchRealEstateStatistics
 }
