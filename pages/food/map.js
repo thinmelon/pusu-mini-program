@@ -1,9 +1,6 @@
 // pages/food/map.js
-// 引入QQ MAP SDK核心类
-const QQMapWXJSSDK = require('../../lib/qqmap-wx-jssdk.min.js');
 const __LIFE__ = require('../../services/life.service.js');
 const wxApiPromise = require('../../utils/wx.api.promise.js');
-let QQMapInstance;
 
 Page({
 
@@ -58,9 +55,7 @@ Page({
             centerLatitude: this.data.centerLatitude,
             chosenMarker: this.data.chosenMarker
         });
-        // QQMapInstance = new QQMapWXJSSDK({ // 实例化API核心类
-        //     key: this.data.key
-        // });
+        
     },
 
     /**
@@ -74,19 +69,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        // 调用接口
-        // QQMapInstance.geocoder({
-        //     address: '莆田华天金叶',
-        //     success: function(res) {
-        //         console.log(res);
-        //     },
-        //     fail: function(res) {
-        //         console.log(res);
-        //     },
-        //     complete: function(res) {
-        //         console.log(res);
-        //     }
-        // });
+        
     },
 
     /**
