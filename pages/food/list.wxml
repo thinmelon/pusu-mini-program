@@ -2,37 +2,40 @@
 
 
 <scroll-view scroll-y enable-back-to-top class='restaurants' bindscrolltolower='onScrollToButtom' bindscrolltoupper='onScrollToTop' bindscroll='onScroll'>
-  <block wx:for="{{restaurants}}" wx:key="{{item._id}}">
-    <!-- DEBUG 环境 -->
-    <view class='restaurant-basic' wx:if="{{environment === 'DEBUG'}}">
-      <text>{{item.name}}</text>
-      <text>{{item.consumptionPerPerson}}</text>
-      <text>地址：</text>
-      <text>{{item.address}}</text>
-      <text>营业时间：</text>
-      <text>{{item.open}}</text>
-      <text>电话：</text>
-      <text>{{item.phone}}</text>
-      <text>标签</text>
-      <view>
-        <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
-          <button size='mini' bindtap='removeTag' data-restaurantid='{{item._id}}' data-tag='{{tag}}'>{{tag}}</button>
-        </block>
-      </view>
-      <picker bindchange="bindPickerChange" data-restaurantid='{{item._id}}' range="{{tags}}">
-        <view class="picker">
-          添加标签
+    <block wx:for="{{restaurants}}" wx:key="{{item._id}}">
+        <!-- DEBUG 环境 -->
+        <view class='restaurant-basic' wx:if="{{environment === 'DEBUG'}}">
+            <text>{{item.name}}</text>
+            <text>人均：{{item.consumptionPerPerson}}</text>
+            <text>地址：</text>
+            <text>{{item.address}}</text>
+            <text>营业时间：</text>
+            <text>{{item.open}}</text>
+            <text>电话：</text>
+            <text>{{item.phone}}</text>
+            <view class='restaurant-article' wx:for="{{item.articles}}" wx:for-item="article" wx:key="{{ article.url }}"  data-article='{{ article }}' catchtap='catchTapArticle'>
+                <text class='restaurant-article-title'>{{article.title}}</text>
+            </view>
+            <text>标签</text>
+            <view>
+                <block wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+                    <button size='mini' bindtap='removeTag' data-restaurantid='{{item._id}}' data-tag='{{tag}}'>{{tag}}</button>
+                </block>
+            </view>
+            <picker bindchange="bindPickerChange" data-restaurantid='{{item._id}}' range="{{tags}}">
+                <view class="picker">
+                    添加标签
+                </view>
+            </picker>
         </view>
-      </picker>
-    </view>
-    <!-- PRODUCTION 环境 -->
-    <card wx:if="{{environment === 'PRODUCTION'}}" restaurant='{{item}}'></card>
-  </block>
+        <!-- PRODUCTION 环境 -->
+        <card wx:if="{{environment === 'PRODUCTION'}}" restaurant='{{item}}'></card>
+    </block>
 </scroll-view>
 
 <view class='bar' wx:if="{{showBar}}">
-  <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{displayedTags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
-    <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
-    <text>{{item.name}}</text>
-  </view>
+    <view class='tag' style="background-color: {{ item.enable ? '#FAFAFA' : '#FFF' }};" wx:for="{{displayedTags}}" wx:key="{{item.name}}" data-name='{{item.name}}' bindtap='onTagClicked'>
+        <image src='{{ item.enable ? item.icon : item.disabledIcon }}'></image>
+        <text>{{item.name}}</text>
+    </view>
 </view>

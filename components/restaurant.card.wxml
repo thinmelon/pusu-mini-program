@@ -1,26 +1,27 @@
 <!--components/restaurant.card.wxml-->
 <view class='restaurant-wrapper' wx:if="{{restaurant}}">
-  <block wx:for="{{restaurant.articles}}" wx:for-item="article" wx:for-index="idx" wx:key="{{article.title}}">
+    <block wx:for="{{restaurant.articles}}" wx:for-item="article" wx:for-index="idx" wx:key="{{article.title}}">
 
-    <view class='restaurant' wx:if="{{ idx === 0 }}">
-      <view class='restaurant-thumbnail'>
-        <image src='{{article.thumbnail}}' mode='widthFix' style='width: 100%;'></image>
-      </view>
-      <view class='restaurant-basic'>
-        <text class='restaurant-name'>{{restaurant.name}}</text>
-        <text wx:if="{{restaurant.phone}}" class='restaurant-extra'>{{restaurant.phone}}</text>
-        <text wx:if="{{restaurant.consumptionPerPerson}}" class='restaurant-extra'>{{restaurant.consumptionPerPerson}}</text>
-      </view>
-      <view class='restaurant-location' wx:if="{{restaurant.location !== null}}" data-restaurant='{{restaurant}}' bindtap='onRestaurantClicked'>
-        <image src='/icons/direction.png'></image>
-      </view>
-    </view>
+        <view class='restaurant' wx:if="{{ idx === 0 }}">
+            <view class='restaurant-thumbnail'>
+                <image src='{{article.thumbnail}}' mode='widthFix' style='width: 100%;'></image>
+            </view>
+            <view class='restaurant-basic'>
+                <text class='restaurant-name'>{{restaurant.name}}</text>
+                <text wx:if="{{restaurant.phone}}" class='restaurant-extra'>{{restaurant.phone}}</text>
+                <text wx:if="{{restaurant.consumptionPerPerson}}" class='restaurant-extra'>人均：{{restaurant.consumptionPerPerson}}</text>
+            </view>
+            <view class='restaurant-location' wx:if="{{restaurant.location !== null}}" data-restaurant='{{restaurant}}' bindtap='onRestaurantClicked'>
+                <image src='/icons/direction.png'></image>
+            </view>
+        </view>
 
-    <view class='restaurant-article' data-article='{{ article }}' catchtap='catchTapArticle'>
-      <image wx:if="{{article.source === '莆田吃货团'}}" src='/icons/food/chihuotuan.png'></image>
-      <image wx:if="{{article.source === '逛莆田'}}" src='/icons/food/guangputian.png'></image>
-      <image wx:if="{{article.source === '食惑啦娘'}}" src='/icons/food/laniang.png'></image>
-      <text class='restaurant-article-title'>{{article.title}}</text>
-    </view>
-  </block>
+        <view class='restaurant-article' data-article='{{ article }}' catchtap='catchTapArticle'>
+            <image wx:if="{{article.source === '莆田吃货团'}}" src='/icons/food/chihuotuan.png'></image>
+            <image wx:if="{{article.source === '逛莆田'}}" src='/icons/food/guangputian.png'></image>
+            <image wx:if="{{article.source === '食惑啦娘'}}" src='/icons/food/laniang.png'></image>
+            <image wx:if="{{article.source === '福州吃货团'}}" src='/icons/food/fuzhou-chihuotuan.png'></image>
+            <text class='restaurant-article-title'>{{article.title}}</text>
+        </view>
+    </block>
 </view>

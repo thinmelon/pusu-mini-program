@@ -1,5 +1,4 @@
 const Promise = require('../lib/es6-promise.js').Promise;
-const __QQ_MAP_WX_JSSDK__ = require('../lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
 
 /**
  *  封装
@@ -140,16 +139,6 @@ function wxGetLocationPromise() {
     return Promisify(wx.getLocation)();
 }
 
-/**
- *  由经纬度反向映射至地级市
- */
-function qqMapReverseGeocoderPromise(options) {
-    let instance = new __QQ_MAP_WX_JSSDK__({ // 实例化API核心类
-        key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U'
-    });
-    return Promisify(instance.reverseGeocoder)(options);
-}
-
 module.exports = {
     login: wxLoginPromise,
     getRequest: wxGetRequestPromise,
@@ -161,6 +150,5 @@ module.exports = {
     showLoading: wxShowLoadingPromise,
     hideLoading: wxHideLoadingPromise,
     getExtConfig: wxGetExtConfigPromise,
-    getLocation: wxGetLocationPromise,
-    reverseGeocoder: qqMapReverseGeocoderPromise
+    getLocation: wxGetLocationPromise
 }

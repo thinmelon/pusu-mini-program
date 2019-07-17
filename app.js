@@ -4,6 +4,7 @@ const __FUN_DEBUG__ = require('./lib/fundebug.1.3.1.min.js');
 __FUN_DEBUG__.init({
     apikey: '5deb327332863618ddb0691554c9febfc1ae98db0266ba7620a33d97e258dbd3'
 })
+const __QQ_MAP_WX_JSSDK__ = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
 
 App({
     environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
@@ -113,5 +114,30 @@ App({
         disabledIcon: '/icons/food/tags/jiuba_grey.png',
         category: ['酒吧'],
         enable: false
-    }]
+    }],
+    region: '莆田', //  地市	默认莆田
+    /**
+     * 	由坐标到坐标所在位置的文字描述的转换
+     * 	输入坐标返回地理位置信息和附近poi列表
+     */
+    reverseGeocoder: function(options) {
+        let qqMapInstance = new __QQ_MAP_WX_JSSDK__({ // 实例化API核心类
+            key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U'
+        });
+        const that = this;
+        return new Promise((resolve, reject) => {
+            options.success = function(result) {
+                console.log('reverseGeocoder	>>>	', result)
+                if (result.status === 0 && result.message === "query ok") {
+                    that.region = result.result.ad_info.city.substr(0, result.result.ad_info.city.indexOf('市'));
+                }
+                resolve(result);
+            }
+            options.fail = function(reason) {
+                console.error(reason)
+                reject(reason);
+            }
+            qqMapInstance.reverseGeocoder(options);
+        });
+    }
 })

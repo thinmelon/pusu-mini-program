@@ -35,18 +35,18 @@ Page({
                 }
             };
         } else { //	如果未传入指定餐馆的地理信息，则获取当前位置
-            const that = this;
-            wx.getLocation({
-                success: function(res) {
-                    console.log(res);
-                    if (res.errMsg === "getLocation:ok") {
-                        that.setData({
-                            centerLongitude: res.longitude,
-                            centerLatitude: res.latitude
-                        })
-                    }
-                }
-            })
+            // const that = this;
+            // wx.getLocation({
+            //     success: function(res) {
+            //         console.log(res);
+            //         if (res.errMsg === "getLocation:ok") {
+            //             that.setData({
+            //                 centerLongitude: res.longitude,
+            //                 centerLatitude: res.latitude
+            //             })
+            //         }
+            //     }
+            // })
         }
 
         this.setData({
@@ -55,21 +55,50 @@ Page({
             centerLatitude: this.data.centerLatitude,
             chosenMarker: this.data.chosenMarker
         });
-        
+
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-        this.paintMarkers(); //	绘制Marker
+        console.log('======== onReady ========');
+        //  1. 获取当前位置 2. 转换成地级市
+        const that = this;
+        wxApiPromise.getLocation()
+            .then(result => {
+                // console.log(result);
+                return new Promise((resolve, reject) => {
+                    if (result.errMsg === "getLocation:ok") {
+                        that.setData({
+                            centerLongitude: result.longitude,
+                            centerLatitude: result.latitude
+                        })
+
+                        resolve({
+                            location: {
+                                latitude: result.latitude,
+                                longitude: result.longitude
+                            }
+                        });
+                    } else {
+                        reject('获取当前位置失败')
+                    }
+                });
+            })
+            .then(getApp().reverseGeocoder)
+            .then(that.paintMarkers) //	绘制Marker
+            .catch(exception => {
+                console.error(exception)
+                that.paintMarkers();
+            })
     },
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        
+
     },
 
     /**
@@ -150,7 +179,10 @@ Page({
                 category = category.concat(item.category)
             }
         })
+
+        console.log(getApp().region)
         this.getRestaurants({
+            region: getApp().region,
             package: JSON.stringify({
                 tags: category
             })

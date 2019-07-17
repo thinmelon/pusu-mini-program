@@ -2,6 +2,7 @@
 const __LIFE__ = require('../../services/life.service.js');
 const wxApiPromise = require('../../utils/wx.api.promise.js');
 
+
 Page({
 
     /**
@@ -15,7 +16,6 @@ Page({
         showBar: true
     },
 
-    region: '福州', //  地市
     waitingForResult: false, //  等待返回餐馆数据
     offset: 0, //	偏移量
     itemsPerTime: 10, //	每次获取数量
@@ -64,7 +64,7 @@ Page({
         const that = this;
         wxApiPromise.getLocation()
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 return new Promise((resolve, reject) => {
                     if (result.errMsg === "getLocation:ok") {
                         resolve({
@@ -78,7 +78,7 @@ Page({
                     }
                 });
             })
-            .then(wxApiPromise.reverseGeocoder)
+            .then(getApp().reverseGeocoder)
             .then(this.showRestaurants)
             .catch(exception => {
                 console.error(exception)
@@ -277,9 +277,8 @@ Page({
             }
         })
         // console.log('category:', category)
-
         const params = {
-            region: this.region,
+            region: getApp().region,
             skip: this.offset,
             limit: this.itemsPerTime
         }
@@ -312,5 +311,16 @@ Page({
             title: '',
         });
         this.showRestaurants();
+    },
+
+    /**
+     *  跳转至微信公众号文章链接
+     */
+    catchTapArticle: function(evt) {
+        console.log(evt);
+        const url = evt.currentTarget.dataset.article.url;
+        wx.navigateTo({
+            url: '/pages/food/article?collection=' + url.substr('http://oss.pusudo.cn/life/'.length, 32) + '&source=' + evt.currentTarget.dataset.article.source
+        })
     }
 })
