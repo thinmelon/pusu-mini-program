@@ -67,7 +67,7 @@ App({
      * 
      */
     tags: [{
-        name: '中餐',
+        name: '港式中餐',
         icon: '/icons/food/tags/zhongcan.png',
         disabledIcon: '/icons/food/tags/zhongcan_grey.png',
         category: ['中餐'],
@@ -91,7 +91,7 @@ App({
         category: ['日料', '韩餐'],
         enable: false
     }, {
-        name: '甜点茶饮',
+        name: '甜品茶饮',
         icon: '/icons/food/tags/tiandian.png',
         disabledIcon: '/icons/food/tags/tiandian_grey.png',
         category: ['甜点', '茶饮'],
@@ -129,13 +129,28 @@ App({
             options.success = function(result) {
                 console.log('reverseGeocoder	>>>	', result)
                 if (result.status === 0 && result.message === "query ok") {
-                    that.region = result.result.ad_info.city.substr(0, result.result.ad_info.city.indexOf('市'));
+                    let target = result.result.ad_info.city.substr(0, result.result.ad_info.city.indexOf('市'));
+                    if (that.region !== target) { //  检测所在城市与当前位置不一致，提示用户是否切换
+                        __WX_API_PROMISE__.showModal({
+                                title: "提示",
+                                content: "检测当前所在城市是" + target + "，是否切换？"
+                            })
+                            .then(res => {
+                                if (res.confirm) {
+                                    that.region = target;
+                                }
+                                resolve(res.confirm); //  需要等待用户确定操作
+                            });
+                    } else {
+                        resolve(true); //  一致则直接返回结果
+                    }
+                } else {
+                    reject(false);
                 }
-                resolve(result);
             }
             options.fail = function(reason) {
                 console.error(reason)
-                reject(reason);
+                reject(false);
             }
             qqMapInstance.reverseGeocoder(options);
         });

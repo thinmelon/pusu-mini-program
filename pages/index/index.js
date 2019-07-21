@@ -27,12 +27,12 @@ Page({
             },
             {
                 index: 5,
-                text: '标',
+                text: '工',
                 url: '/pages/tendering/bid'
             },
             {
                 index: 6,
-                text: '房',
+                text: '住',
                 url: '/pages/estate/statistics'
             }
         ]

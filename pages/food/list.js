@@ -2,7 +2,6 @@
 const __LIFE__ = require('../../services/life.service.js');
 const wxApiPromise = require('../../utils/wx.api.promise.js');
 
-
 Page({
 
     /**
@@ -20,28 +19,35 @@ Page({
     offset: 0, //	偏移量
     itemsPerTime: 10, //	每次获取数量
     currentScrollTop: 0, //  当前滚动条距离顶部位置
-    actionSheetItemList: [{
-            index: 0,
-            name: '地图',
-            url: '/pages/food/map'
-        },
-        {
-            index: 1,
-            name: '搜索',
-            url: '/pages/food/search'
-        },
-        {
-            index: 0,
-            name: '更多内容',
-            url: '/pages/index/index'
-        }
-    ],
+    actionSheetItemList: [],
+    cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
         console.log('======== onLoad ========');
+        this.actionSheetItemList = [{
+                index: 0,
+                name: '地图',
+                url: '/pages/food/map'
+            },
+            {
+                index: 1,
+                name: '搜索',
+                url: '/pages/food/search'
+            },
+            {
+                index: 2,
+                name: '切换城市',
+                callback: this.switchCity
+            },
+            {
+                index: 3,
+                name: '更多',
+                url: '/pages/index/index'
+            }
+        ];
         this.setData({
             environment: getApp().environment,
             displayedTags: getApp().tags
@@ -56,10 +62,11 @@ Page({
         if (this.data.environment === 'DEBUG') {
             this.getTags();
         }
-        //  显示加载框
-        wx.showLoading({
+
+        wx.showLoading({ //  显示加载框
             title: '',
         });
+        // this.showRestaurants();
         //  1. 获取当前位置 2. 转换成地级市 3. 当前地级市所有餐馆
         const that = this;
         wxApiPromise.getLocation()
@@ -82,7 +89,6 @@ Page({
             .then(this.showRestaurants)
             .catch(exception => {
                 console.error(exception)
-                // wx.hideLoading(); //  关闭loading对话框
                 this.showRestaurants();
             })
     },
@@ -91,7 +97,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        console.log('======== onShow ========');
+        console.log('======== onShow ========', getApp().region);
     },
 
     /**
@@ -142,9 +148,14 @@ Page({
                 }),
                 success: result => {
                     console.log(result);
-                    wx.navigateTo({
-                        url: this.actionSheetItemList[result.tapIndex].url
-                    })
+                    if (this.actionSheetItemList[result.tapIndex].url) {
+                        wx.navigateTo({
+                            url: this.actionSheetItemList[result.tapIndex].url
+                        })
+                    }
+                    if (this.actionSheetItemList[result.tapIndex].callback) {
+                        this.actionSheetItemList[result.tapIndex].callback();
+                    }
                 }
             })
 
@@ -238,7 +249,7 @@ Page({
      * 	获取餐馆列表
      */
     getRestaurants: function(request) {
-        console.log('>>>>>>>>>>>>> getRestaurants');
+        console.log('>>>>>>>>>>>>> getRestaurants >>>>>>>>>>>>>', getApp().region);
         __LIFE__.getRestaurants(request)
             .then(res => {
                 console.log(res.data);
@@ -248,7 +259,7 @@ Page({
                     this.offset += res.data.data.restaurants.length; //	下次获取数据时起点位置
                     this.setData({
                         restaurants: this.data.restaurants.concat(res.data.data.restaurants.map(restaurant => {
-                            restaurant.articles = restaurant.articles.reverse();
+                            restaurant.articles = restaurant.articles.reverse().slice(0, 3);
                             return restaurant;
                         }))
                     })
@@ -311,6 +322,29 @@ Page({
             title: '',
         });
         this.showRestaurants();
+    },
+
+    /**
+     *      切换城市
+     */
+    switchCity: function(options) {
+        console.log('======== switchCity ========', getApp().region)
+        wx.showActionSheet({
+            itemList: this.cities,
+            success: result => {
+                console.log(result);
+                getApp().region = this.cities[result.tapIndex];
+                this.offset = 0;
+                this.setData({
+                    restaurants: [],
+                });
+                wx.showLoading({
+                    title: '',
+                });
+                this.showRestaurants();
+            }
+        })
+
     },
 
     /**

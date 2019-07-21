@@ -126,6 +126,13 @@ function wxHideLoadingPromise() {
 }
 
 /**
+ *    显示模态对话框
+ */
+function wxShowModalPromise(options) {
+    return Promisify(wx.showModal)(options);
+}
+
+/**
  * 	获取第三方平台自定义的数据字段
  */
 function wxGetExtConfigPromise(options) {
@@ -148,6 +155,7 @@ module.exports = {
     setStorage: wxSetStoragePromise,
     getStorage: wxGetStoragePromise,
     showLoading: wxShowLoadingPromise,
+    showModal: wxShowModalPromise,
     hideLoading: wxHideLoadingPromise,
     getExtConfig: wxGetExtConfigPromise,
     getLocation: wxGetLocationPromise

@@ -8,14 +8,35 @@ Page({
      * 页面的初始数据
      */
     data: {
-        key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U',
-        centerLongitude: 119.003326,
         centerLatitude: 25.43034,
+        centerLongitude: 119.003326,
         scale: 15,
         markers: [],
         chosenMarker: {},
         displayedTags: [] //	 显示标签数组
     },
+
+    cities: [{
+        name: '福州',
+        latitude: 26.074231,
+        longitude: 119.296869
+    }, {
+        name: '厦门',
+        latitude: 24.479627,
+        longitude: 118.089201
+    }, {
+        name: '莆田',
+        latitude: 25.454210,
+        longitude: 119.007670
+    }, {
+        name: '泉州',
+        latitude: 24.874050,
+        longitude: 118.675830
+    }, {
+        name: '漳州',
+        latitude: 24.513140,
+        longitude: 117.647360
+    }],
 
     /**
      * 生命周期函数--监听页面加载
@@ -34,20 +55,14 @@ Page({
                     articles: restaurant.articles
                 }
             };
-        } else { //	如果未传入指定餐馆的地理信息，则获取当前位置
-            // const that = this;
-            // wx.getLocation({
-            //     success: function(res) {
-            //         console.log(res);
-            //         if (res.errMsg === "getLocation:ok") {
-            //             that.setData({
-            //                 centerLongitude: res.longitude,
-            //                 centerLatitude: res.latitude
-            //             })
-            //         }
-            //     }
-            // })
         }
+
+        this.cities.map(city => {
+            if (city.name === getApp().region) {
+                this.data.centerLongitude = city.longitude;
+                this.data.centerLatitude = city.latitude;
+            }
+        });
 
         this.setData({
             displayedTags: getApp().tags,
@@ -65,21 +80,19 @@ Page({
         console.log('======== onReady ========');
         //  1. 获取当前位置 2. 转换成地级市
         const that = this;
+        let location = null;
         wxApiPromise.getLocation()
             .then(result => {
                 // console.log(result);
                 return new Promise((resolve, reject) => {
                     if (result.errMsg === "getLocation:ok") {
-                        that.setData({
-                            centerLongitude: result.longitude,
-                            centerLatitude: result.latitude
-                        })
+                        location = {
+                            latitude: result.latitude,
+                            longitude: result.longitude
+                        };
 
                         resolve({
-                            location: {
-                                latitude: result.latitude,
-                                longitude: result.longitude
-                            }
+                            location: location
                         });
                     } else {
                         reject('获取当前位置失败')
@@ -87,6 +100,17 @@ Page({
                 });
             })
             .then(getApp().reverseGeocoder)
+            .then(change => {
+                if (change && location) {
+                    that.setData({
+                        centerLongitude: location.longitude,
+                        centerLatitude: location.latitude,
+                    });
+                }
+                return new Promise((resolve, reject) => {
+                    resolve('DONE');
+                });
+            })
             .then(that.paintMarkers) //	绘制Marker
             .catch(exception => {
                 console.error(exception)
@@ -156,7 +180,7 @@ Page({
      * 		获取餐馆列表
      */
     getRestaurants: function(request, callback) {
-        console.log('>>>>>>>>>>>>> getRestaurants');
+        console.log('>>>>>>>>>>>>> getRestaurants >>>>>>>>>>>>>', getApp().region);
         __LIFE__.getRestaurants(request)
             .then(res => {
                 console.log(res.data);
@@ -180,7 +204,6 @@ Page({
             }
         })
 
-        console.log(getApp().region)
         this.getRestaurants({
             region: getApp().region,
             package: JSON.stringify({
