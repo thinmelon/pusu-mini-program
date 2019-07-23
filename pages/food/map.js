@@ -18,24 +18,24 @@ Page({
 
     cities: [{
         name: '福州',
-        latitude: 26.074231,
-        longitude: 119.296869
+        latitude: 26.086036,
+        longitude: 119.299284
     }, {
         name: '厦门',
-        latitude: 24.479627,
-        longitude: 118.089201
+        latitude: 24.467581,
+        longitude: 118.115937
     }, {
         name: '莆田',
         latitude: 25.454210,
         longitude: 119.007670
     }, {
         name: '泉州',
-        latitude: 24.874050,
-        longitude: 118.675830
+        latitude: 24.907450,
+        longitude: 118.586850
     }, {
         name: '漳州',
-        latitude: 24.513140,
-        longitude: 117.647360
+        latitude: 24.512060,
+        longitude: 117.666070
     }],
 
     /**
@@ -185,7 +185,11 @@ Page({
             .then(res => {
                 console.log(res.data);
                 if (callback && res.data.code === 0 && res.data.data.restaurants.length > 0) {
-                    callback(res.data.data.restaurants);
+                    // callback(res.data.data.restaurants);
+                    callback(res.data.data.restaurants.map(restaurant => {
+                        restaurant.articles = restaurant.articles.reverse().slice(0, 1);
+                        return restaurant;
+                    }))
                 }
             })
             .catch(err => {
@@ -260,6 +264,7 @@ Page({
     bindMarkerTap: function(evt) {
         console.log(evt);
         if (evt.markerId >= 0) {
+            console.log(this.data.markers[evt.markerId])
             this.setData({
                 chosenMarker: this.data.markers[evt.markerId]
             });

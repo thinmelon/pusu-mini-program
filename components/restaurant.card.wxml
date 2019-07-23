@@ -22,6 +22,8 @@
             <image wx:if="{{article.source === '食惑啦娘'}}" src='/icons/food/laniang.png'></image>
             <image wx:if="{{article.source === '福州吃货团'}}" src='/icons/food/fuzhou-chihuotuan.png'></image>
             <image wx:if="{{article.source === '厦门美食团'}}" src='/icons/food/xiamen-meishituan.png'></image>
+			<image wx:if="{{article.source === '泉州舌尖美食'}}" src='/icons/food/quanzhou_meishi.png'></image>
+			<image wx:if="{{article.source === '漳州吃货团'}}" src='/icons/food/zhangzhou_chihuotuan.png'></image>
             <text class='restaurant-article-title'>{{article.title}}</text>
         </view>
     </block>

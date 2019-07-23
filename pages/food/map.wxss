@@ -13,20 +13,28 @@
 }
 
 .info {
-    width: 77%;
-    height: 38vh;
+    width: 88%;
+    height: 52vh;
     background-color: #fafafa;
     border-color: #888;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    overflow: scroll;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurant-name {
-    padding: 1rem;
+    height: 50px;
+}
+
+.restaurant-thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(250, 250, 250, 0.90);
+    border-radius: 3px;
+    overflow: hidden;
 }
 
 /*  微信公众号文章列表  */
@@ -34,7 +42,6 @@
 .article {
     padding: 7px;
     width: 95%;
-    overflow: scroll;
 }
 
 .article .title {
