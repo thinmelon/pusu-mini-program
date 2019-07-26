@@ -1,7 +1,7 @@
 /* components/restaurant.card.wxss */
 
 .restaurant-wrapper {
-  padding: 17px 7px;
+  padding: 7px;
   margin: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -10,7 +10,8 @@
 
 .restaurant {
   display: grid;
-  grid-template-columns: 30% 55% 15%;
+  /* grid-template-columns: 30% 55% 15%; */
+  grid-template-columns: 75% 25%;
   grid-column-gap: 7px;
   margin-bottom: 8px;
 }
@@ -19,7 +20,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  /* height: 100px; */
+  height: 270px;
   background-color: rgba(250, 250, 250, 0.90);
   border-radius: 3px;
   overflow: hidden;
