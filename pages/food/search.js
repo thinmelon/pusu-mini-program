@@ -90,7 +90,8 @@ Page({
 
   searchRestaurants: function(keyword) {
     life.searchRestaurants({
-        name: keyword
+        name: keyword,
+        region: getApp().region
       })
       .then(res => {
         console.log(res);

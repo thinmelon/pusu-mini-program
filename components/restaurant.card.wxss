@@ -1,72 +1,72 @@
 /* components/restaurant.card.wxss */
 
 .restaurant-wrapper {
-  padding: 7px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+    /* padding: 7px; */
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
 .restaurant {
-  display: grid;
-  /* grid-template-columns: 30% 55% 15%; */
-  grid-template-columns: 75% 25%;
-  grid-column-gap: 7px;
-  margin-bottom: 8px;
+    display: grid;
+    /* grid-template-columns: 30% 55% 15%; */
+    grid-template-columns: 75% 25%;
+    grid-column-gap: 7px;
+    margin-bottom: 8px;
+    padding: 0 7px;
 }
 
 .restaurant-thumbnail {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* height: 100px; */
-  height: 270px;
-  background-color: rgba(250, 250, 250, 0.90);
-  border-radius: 3px;
-  overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100px; */
+    height: 270px;
+    background-color: rgba(250, 250, 250, 0.90);
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
 }
 
 .restaurant-location {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurant-location image {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 .restaurant-basic {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .restaurant-name {
-  padding: 7px 0;
-  font-size: 17pt;
-  color: #353535;
+    padding: 7px 0;
+    font-size: 17pt;
+    color: #353535;
 }
 
 .restaurant-extra {
-  font-size: 11pt;
-  color: #888;
+    font-size: 11pt;
+    color: #888;
 }
 
 .restaurant-article {
-  padding: 15px 7px 8px 7px;
-  /* background-color: #eee; */
-  display: grid;
-  grid-template-columns: 10% 90%;
-  grid-column-gap: 7px;
-  font-size: 13pt;
-  color: #576b95;
+    padding: 15px 7px;
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-column-gap: 7px;
+    font-size: 13pt;
+    color: #576b95;
 }
 
 .restaurant-article image {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
