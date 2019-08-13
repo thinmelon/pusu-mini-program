@@ -7,7 +7,7 @@ __FUN_DEBUG__.init({
 const __QQ_MAP_WX_JSSDK__ = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
 
 App({
-	environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
+    environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
     timeOut: 1000, //	超时重试：1000毫秒
     /**
      *  股票市场

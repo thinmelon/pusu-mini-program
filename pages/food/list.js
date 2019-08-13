@@ -16,6 +16,7 @@ Page({
     },
 
     waitingForResult: false, //  等待返回餐馆数据
+    showActionSheet: false, //  显示更多内容
     offset: 0, //	偏移量
     itemsPerTime: 10, //	每次获取数量
     currentScrollTop: 0, //  当前滚动条距离顶部位置
@@ -141,7 +142,8 @@ Page({
      */
     onScrollToTop: function(evt) {
         console.log('======== onScrollToTop ========')
-        if (this.data.restaurants.length > 0) {
+        if (this.data.restaurants.length > 0 && !this.showActionSheet) {
+            this.showActionSheet = true;
             wx.showActionSheet({
                 itemList: this.actionSheetItemList.map(item => {
                     return item.name
@@ -156,6 +158,10 @@ Page({
                     if (this.actionSheetItemList[result.tapIndex].callback) {
                         this.actionSheetItemList[result.tapIndex].callback();
                     }
+                },
+                complete: data => {
+                    // console.log('complete >>> ', data);
+                    this.showActionSheet = false;
                 }
             })
 

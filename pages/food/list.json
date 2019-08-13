@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "吃了没",
+  "navigationBarTitleText": "哎好吃",
   "usingComponents": {
     "card": "/components/restaurant.card"
   }
