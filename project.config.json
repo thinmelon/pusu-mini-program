@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -92,6 +92,20 @@
 					"id": -1,
 					"name": "更多内容",
 					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "汇率兑换",
+					"pathName": "pages/currency/exchange",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "莆田房产",
+					"pathName": "pages/estate/statistics",
 					"scene": null
 				}
 			]

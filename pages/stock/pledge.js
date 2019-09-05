@@ -28,6 +28,7 @@ Page({
     },
 
     stockCode: '',
+    retry: 0,
 
     /**
      * 生命周期函数--监听页面加载
@@ -304,6 +305,7 @@ Page({
     resultHandler: function(key, res, callback, params) {
         console.log(res);
         if (res.statusCode === 200) {
+            this.retry = 0;
             const data = JSON.parse(res.data);
             if (data.hasOwnProperty('resultcode') && data.resultcode === 200) {
                 if (data.records.length > 0) {
@@ -322,11 +324,14 @@ Page({
                     icon: 'none'
                 })
             }
-        } else if (res.statusCode === 503) {
+        } else if (res.statusCode === 503 && this.retry < getApp().maxRetry) {
+            console.log('RETRY >>> ', this.retry);
+            this.retry++;
             setTimeout(() => {
                 callback(params);
             }, getApp().timeOut); //	如果是503错误（服务器在忙），1秒后发起重试
         } else { //  网络出错
+            this.retry = 0;
             wx.showToast({
                 title: '服务器开小差~~',
                 icon: 'none'

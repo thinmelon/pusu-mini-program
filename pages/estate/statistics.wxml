@@ -1,4 +1,5 @@
 <!--pages/estate/statistics.wxml-->
-<canvas canvas-id='{{ canvasId }}' style='width: {{ canvasWidth }}px; height: {{ canvasHeight }}px;' />
-<canvas canvas-id='{{ maskerCanvasId }}' class='maskerCanvas' style='left: {{ maskerLeft }}px; top: {{ maskerTop }}px; width: {{ maskerWidth }}px; height: {{ maskerHeight }}px;' bindtouchstart="bindTouchStart" bindtouchmove="bindTouchMove" bindtouchend="bindTouchEnd"
-/>
+<view class="container">
+    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler"></canvas>
+    <button type="primary" bindtap="updateData">更新数据</button>
+</view>

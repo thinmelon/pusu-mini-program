@@ -1,14 +1,11 @@
 //app.js
 const __WX_API_PROMISE__ = require('./utils/wx.api.promise.js');
-const __FUN_DEBUG__ = require('./lib/fundebug.1.3.1.min.js');
-__FUN_DEBUG__.init({
-    apikey: '5deb327332863618ddb0691554c9febfc1ae98db0266ba7620a33d97e258dbd3'
-})
 const __QQ_MAP_WX_JSSDK__ = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
 
 App({
     environment: 'PRODUCTION', //	测试环境：DEBUG		生产环境：PRODUCTION
     timeOut: 1000, //	超时重试：1000毫秒
+	maxRetry: 2, //	最大重试次数
     /**
      *  股票市场
      *  
