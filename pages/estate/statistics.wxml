@@ -1,5 +1,11 @@
 <!--pages/estate/statistics.wxml-->
-<view class="container">
-    <canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler"></canvas>
-    <button type="primary" bindtap="updateData">更新数据</button>
-</view>
+<picker bindchange="bindCharactersPickerChange" value="{{index}}" range-key="name" range="{{characters}}">
+  <view class='field-content'>
+    <label class='sub-title'>近一年房地产开发投资</label>
+    <view class="supplementary picker-content">
+      {{characters[index].name}}
+    </view>
+  </view>
+</picker>
+
+<canvas canvas-id="lineCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler"></canvas>
