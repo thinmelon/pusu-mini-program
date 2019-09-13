@@ -1,0 +1,10 @@
+<!--components/navigation.bar.wxml-->
+<view class="navbar" style='height:{{navbarHeight}}px; background-color:{{bgColor}}'>
+  <view wx:if="{{showNav}}" class="navbar-action-wrap navbar-action-group row item-center" style='top:{{navbarTop}}px;background-color:rgba(255,255,255,.6)'>
+    <image src="/icons/food/search.png" class="navbar-action-item" data-tapIndex="0" bindtap="onNavbarBtnClicked"></image>
+    <image src="/icons/food/map.png" class="navbar-action-item" data-tapIndex="1" bindtap="onNavbarBtnClicked"></image>
+  </view>
+  <view class='navbar-title' style='top:{{navbarTop}}px'>
+    {{pageName}}
+  </view>
+</view>

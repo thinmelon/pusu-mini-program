@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "食莆",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "card": "/components/restaurant.card"
+    "card": "/components/restaurant.card",
+    "navbar": "/components/navigation.bar"
   }
 }
