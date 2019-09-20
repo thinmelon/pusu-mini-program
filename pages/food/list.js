@@ -25,7 +25,7 @@ Page({
   itemsPerTime: 10, //	每次获取数量
   currentScrollTop: 0, //  当前滚动条距离顶部位置
   actionSheetItemList: [],
-  cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
+//   cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
 
   /**
    * 生命周期函数--监听页面加载
@@ -345,10 +345,10 @@ Page({
   switchCity: function(options) {
     console.log('======== switchCity ========', getApp().region)
     wx.showActionSheet({
-      itemList: this.cities,
+      itemList: getApp().cities,
       success: result => {
         console.log(result);
-        getApp().region = this.cities[result.tapIndex];
+        getApp().region = getApp().cities[result.tapIndex];
         this.offset = 0;
         this.setData({
           restaurants: [],
