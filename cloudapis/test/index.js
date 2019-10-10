@@ -9,10 +9,17 @@ exports.main = (event, context) => {
     console.log(event)
     console.log(context)
 
-    const { ENV, OPENID, APPID } = cloud.getWXContext()
+    const {
+        ENV,
+        OPENID,
+        APPID
+    } = cloud.getWXContext()
     console.log(OPENID)
 
     return {
-        sum: event.a + event.b
+        sum: event.a + event.b,
+        appid: APPID,
+        openid: OPENID,
+        env: ENV
     }
 };
