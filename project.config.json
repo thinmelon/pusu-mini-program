@@ -1,4 +1,6 @@
 {
+	"miniprogramRoot": "src/",
+	"cloudfunctionRoot": "cloudapis/",
 	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
@@ -10,6 +12,7 @@
 		"minified": true,
 		"newFeature": true,
 		"nodeModules": true,
+		"autoAudits": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -17,15 +20,17 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.2",
+	"libVersion": "2.8.3",
 	"appid": "wx0a72bd7d41e0b066",
 	"projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
