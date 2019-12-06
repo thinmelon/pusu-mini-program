@@ -109,28 +109,6 @@ Page({
      */
     onShow: function() {
         console.log('======== onShow ========', getApp().region);
-        /**
-         *  执行小程序端的初始化
-         *  接受一个可选的 options 参数
-         *      env：注意传入字符串形式的环境 ID，而不是名称
-         *          设置只会决定小程序端 API 调用的云环境，并不会决定云函数中的 API 调用的环境
-         *          在云函数中需要通过 wx-server-sdk 的 init 方法重新设置环境
-         *      traceUser：是否在将用户访问记录到用户管理中，在控制台中可见
-         */
-        wx.cloud.init({
-            env: "diandi-software-cloud",
-            traceUser: true
-        })
-
-        wx.cloud.callFunction({
-                name: "test",
-                data: {
-                    a: 4,
-                    b: 5
-                }
-            })
-            .then(console.log)
-            .catch(console.error)
     },
 
     /**

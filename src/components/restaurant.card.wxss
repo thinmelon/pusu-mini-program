@@ -35,7 +35,7 @@
     align-items: center;
 }
 
-.restaurant-location image {
+.restaurant-location-image {
     width: 24px;
     height: 24px;
 }
@@ -65,7 +65,7 @@
     color: #576b95;
 }
 
-.restaurant-article image {
+.restaurant-article-source {
     width: 32px;
     height: 32px;
     border-radius: 50%;
