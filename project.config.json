@@ -21,10 +21,11 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"enhance": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
+	"libVersion": "2.9.4",
 	"appid": "wx0a72bd7d41e0b066",
 	"projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
 	"isGameTourist": false,
