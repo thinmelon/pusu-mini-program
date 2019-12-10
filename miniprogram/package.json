@@ -1,0 +1,16 @@
+{
+    "name": "pusu-statistic",
+    "version": "1.0.0",
+    "description": "Support NPM",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Thinmelon",
+    "private": true,
+    "license": "ISC",
+    "dependencies": {
+        "miniprogram-api-promise": "latest",
+        "weui-miniprogram": "latest"
+    }
+}
