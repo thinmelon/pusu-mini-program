@@ -1,0 +1,29 @@
+/* pages/stock/principle/principle.wxss */
+@import "../../../style/guide.wxss";
+
+.field-addminus {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding-left: 120rpx;
+}
+
+.addminus-input {
+    width: 240rpx;
+    height: 120rpx;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.addminus {
+    width: 23px;
+    height: 23px;
+}
+
+.current-page {
+    width: 120rpx;
+    text-align: center;
+    font-size: 11pt;
+    font-weight: bolder;
+}

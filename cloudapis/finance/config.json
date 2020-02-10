@@ -3,7 +3,7 @@
         {
             "name": "Crawler",
             "type": "timer",
-            "config": "*/30 * * * * * *"
+            "config": "*/20 * * * * * *"
         }
     ]
 }

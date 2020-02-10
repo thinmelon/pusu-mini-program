@@ -1,6 +1,7 @@
 <!--pages/food/list.wxml-->
 
-<navbar page-name="{{pageName}}" navbar-height="{{navbarHeight}}" navbar-top="{{navbarTop}}"></navbar>
+<navbar page-name="{{pageName}}" navbar-height="{{navbarHeight}}" navbar-top="{{navbarTop}}" navbar-buttons="{{navbarButtons}}"></navbar>
+
 <scroll-view scroll-y enable-back-to-top class='restaurants' bindscrolltolower='onScrollToButtom' bindscrolltoupper='onScrollToTop' bindscroll='onScroll'>
     <block wx:for="{{restaurants}}" wx:key="_id">
         <!-- DEBUG 环境 -->

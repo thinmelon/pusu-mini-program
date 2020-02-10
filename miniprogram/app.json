@@ -1,31 +1,32 @@
 {
-	"pages": [
-		"pages/food/list",
-		"pages/food/map",
-		"pages/food/article",
-		"pages/food/search",
-		"pages/treasury/yields",
-		"pages/currency/exchange",
-		"pages/gold/gold",
-		"pages/stock/pannel",
-		"pages/stock/announcement",
-		"pages/stock/pledge",
-		"pages/stock/balance",
-		"pages/stock/k.line",
-		"pages/estate/statistics",
-		"pages/tendering/bid",
-		"pages/index/index"
-	],
-	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#FFFFFF",
-		"navigationBarTitleText": "指南针",
-		"navigationBarTextStyle": "black"
-	},
-	"permission": {
-		"scope.userLocation": {
-			"desc": "你的位置信息将用于小程序位置接口的效果展示"
-		}
-	},
-	"sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/estates/estates",
+        "pages/estates/map/map",
+        "pages/estates/search/search",
+        "pages/estates/project/project",
+        "pages/estates/building/building",
+        "pages/food/list",
+        "pages/food/map",
+        "pages/food/article",
+        "pages/food/search",
+        "pages/stock/note/note",
+        "pages/stock/principle/principle",
+        "pages/stock/search/search",
+        "pages/stock/stock",
+        "pages/tendering/bid",
+        "pages/knowledge/knowledge",
+        "pages/index/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#FFFFFF",
+        "navigationBarTitleText": "指南针",
+        "navigationBarTextStyle": "black"
+    },
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序位置接口的效果展示"
+        }
+    },
+    "sitemapLocation": "sitemap.json"
 }

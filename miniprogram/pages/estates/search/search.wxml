@@ -1,0 +1,38 @@
+<!--pages/estates/search/search.wxml-->
+<mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+<view class="guide">
+    <text class="headline">热门楼盘Top{{top}}</text>
+</view>
+<mp-cells title="" footer="">
+    <mp-cell link hover wx:for="{{topMonthSell}}" wx:key="id" data-id="{{item.id}}" bindtap="onCellTap">
+        <view class="top-cell">{{item.project}}</view>
+        <view class="top-cell" slot="footer">{{item.deal}}套</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 可售房产排行 -->
+<picker bindchange="onPickerChange" bindcolumnchange="onPickerColumnChange" mode="multiSelector" value="{{multiIndex}}" range="{{availableEstates}}" range-key="name">
+    <view class="guide top-estates-selector">
+        <text class="headline">{{availableEstates[1][multiIndex[1]].name}}Top{{top}}</text>
+        <text class="headline">{{availableEstates[0][multiIndex[0]].name}}</text>
+    </view>
+</picker>
+<mp-cells title="" footer="">
+    <mp-cell link hover wx:for="{{topAvailableEstates}}" wx:key="_id" data-id="{{item._id}}" bindtap="onCellTap">
+        <view class="top-cell">{{item.name}}</view>
+        <view class="top-cell" slot="footer">{{item.value}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 商品房预售许可公示 -->
+<view class="guide top-estates-selector">
+    <text class="headline">商品房预售许可公示Top{{top}}</text>
+    <text class="headline">{{availableEstates[0][multiIndex[0]].name}}</text>
+</view>
+<mp-cells title="" footer="">
+    <!-- <mp-cell link hover wx:for="{{topPreSell}}" wx:key="id" data-id="{{item.id}}" bindtap="onCellTap"> -->
+    <mp-cell hover wx:for="{{topPreSell}}" wx:key="id">
+        <view class="top-cell">{{item.project}}</view>
+        <view class="top-cell" slot="footer">{{item.date}}</view>
+    </mp-cell>
+</mp-cells>

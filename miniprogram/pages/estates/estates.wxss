@@ -1,0 +1,15 @@
+/* pages/estates/estates.wxss */
+@import "../../style/guide.wxss";
+
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: 230rpx;
+}
+
+.district{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -11,6 +11,7 @@
     "license": "ISC",
     "dependencies": {
         "miniprogram-api-promise": "latest",
+        "miniprogram-recycle-view": "latest",
         "weui-miniprogram": "latest"
     }
 }

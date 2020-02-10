@@ -1,5 +1,0 @@
-<!--pages/stock/k.line.wxml-->
-<view class='k-line' wx:for="{{kLines}}" wx:key="{{item.name}}" wx:if="{{item.src}}">
-    <text>{{item.name}}</text>
-    <image src='{{item.src}}'></image>
-</view>

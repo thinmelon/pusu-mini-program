@@ -1,5 +1,0 @@
-/* pages/estate/statistics.wxss */
-
-.maskerCanvas {
-    position: absolute;
-}

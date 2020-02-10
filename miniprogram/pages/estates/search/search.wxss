@@ -1,0 +1,12 @@
+/* pages/estates/search/search.wxss */
+@import "../../../style/guide.wxss";
+
+.top-cell {
+    font-size: 9pt;
+}
+
+.top-estates-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

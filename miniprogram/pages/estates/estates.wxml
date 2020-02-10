@@ -1,0 +1,181 @@
+<!--pages/estates/estates.wxml-->
+<navbar page-name="{{navigationBarTitleText}}" navbar-height="{{navbarHeight}}" navbar-top="{{navbarTop}}" navbar-buttons="{{navbarButtons}}"></navbar>
+
+<view class="guide">
+    <text class="headline">商品房日签约（套）</text>
+</view>
+
+<canvas canvas-id="housingConstractNumber" disable-scroll="true" class="canvas" data-category="contractCanvas" data-id="housingConstractNumber" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide">
+    <text class="headline">住宅成交均价（元/平方米）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.averagePriceHousing}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 住宅成交均价走势图 -->
+<!-- <view class="guide">
+    <text class="headline">近一月住宅成交均价</text>
+</view> -->
+<!-- <canvas canvas-id="averagePriceHousing" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="averagePriceHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">车库成交均价（元/平方米）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.averagePriceGarage}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 车库成交均价走势图 -->
+<!-- <view class="guide">
+    <text class="headline">近一月车库成交均价</text>
+</view>
+<canvas canvas-id="averagePriceGarage" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceGarage" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">店铺成交均价（元/平方米）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.averagePriceBusiness}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 店铺成交均价走势图 -->
+<!-- <view class="guide">
+    <text class="headline">近一月店铺成交均价</text>
+</view>
+<canvas canvas-id="averagePriceBusiness" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceBusiness" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">写字楼成交均价（元/平方米）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.averagePriceOffice}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 写字楼成交均价走势图 -->
+<!-- <view class="guide">
+    <text class="headline">近一月写字楼成交均价</text>
+</view>
+<canvas canvas-id="averagePriceOffice" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceOffice" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">可售住宅（套）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.availableNumberHousing}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 可售住宅数量走势图 -->
+<view class="guide">
+    <text class="headline">近一月可售住宅数量</text>
+</view>
+<canvas canvas-id="historyAvailableNumberHousing" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="historyAvailableNumberHousing" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide"></view>
+
+<!-- 各县区可售住宅数量 -->
+<canvas canvas-id="availableNumberHousing" disable-scroll="true" class="canvas" data-category="ring"></canvas>
+
+<view class="guide"></view>
+
+<!-- 各县区可售住宅面积 -->
+<!-- <canvas canvas-id="availableAreaHousing" disable-scroll="true" class="canvas" data-category="ring" data-id="availableAreaHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">已售住宅（套）</text>
+    <view class="wrapper">
+        <view class="district" wx:for="{{districts}}" wx:key="id">
+            <text class="important">{{item.today.soldNumberHousing}}</text>
+            <text class="p">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+
+<!-- 已售住宅数量走势图 -->
+<view class="guide">
+    <text class="headline">近一月已售住宅数量</text>
+</view>
+<canvas canvas-id="historySoldNumberHousing" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="historySoldNumberHousing" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide"></view>
+
+<!-- 各县区已售住宅数量 -->
+<canvas canvas-id="soldNumberHousing" disable-scroll="true" class="canvas" data-category="ring"></canvas>
+
+<view class="guide"></view>
+
+<!-- 各县区已售住宅面积 -->
+<!-- <canvas canvas-id="soldAreaHousing" disable-scroll="true" class="canvas" data-category="ring" data-id="soldAreaHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
+
+<view class="guide">
+    <text class="headline">长期看人口、中期看土地、短期看金融</text>
+</view>
+<canvas canvas-id="genderResidentPopulation" disable-scroll="false" class="canvas" data-category="populationCanvas" data-id="genderResidentPopulation" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide"></view>
+<canvas canvas-id="regionalResidentPopulation" disable-scroll="false" class="canvas" data-category="populationCanvas" data-id="regionalResidentPopulation" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide">
+    <text class="headline"></text>
+</view>
+<canvas canvas-id="birthRate" disable-scroll="false" class="canvas" data-category="populationCanvas" data-id="birthRate" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide">
+    <text class="headline">住宅开发面积</text>
+</view>
+<canvas canvas-id="houseConstructionArea" disable-scroll="true" class="canvas"></canvas>
+
+<view class="guide">
+    <text class="headline">住宅销售面积</text>
+</view>
+<canvas canvas-id="houseSaleArea" disable-scroll="true" class="canvas"></canvas>
+
+<view class="guide">
+    <text class="headline">土地购置面积</text>
+</view>
+<canvas canvas-id="landAcquisitionArea" disable-scroll="true" class="canvas"></canvas>
+
+<view class="guide">
+    <text class="headline">房地产开发投资完成额</text>
+</view>
+<canvas canvas-id="realEstateInvestment" disable-scroll="true" class="canvas"></canvas>
+
+<view class="guide">
+    <text class="headline">贷款市场报价利率（LPR）</text>
+</view>
+<canvas canvas-id="loanPrimeRate" disable-scroll="true" class="canvas" data-category="rateCanvas" data-id="loanPrimeRate" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide">
+    <text class="headline">房贷利率趋势</text>
+</view>
+<canvas canvas-id="mortgageRate" disable-scroll="true" class="canvas" data-category="rateCanvas" data-id="mortgageRate" bindtouchstart="canvasTouchHandler"></canvas>
+
+
+<!-- 相关知识点汇总 -->
+<view class="guide">
+</view>
+<mp-cells title="" footer="文章出自公众号《很帅的投资客》">
+    <mp-cell link hover wx:for="{{articles.Estates}}" wx:key="*this" data-subject="Estates" data-title="{{item}}" bindtap="onCellTap">
+        <view>{{item}}</view>
+    </mp-cell>
+</mp-cells>
+
+<view class="guide">
+    <button size="mini" type="default" bindtap="onMoreIndexTap">更多指标</button>
+</view>

@@ -13,18 +13,18 @@
                 <text wx:if="{{restaurant.consumptionPerPerson}}" class='restaurant-extra'>人均：{{restaurant.consumptionPerPerson}}</text>
             </view>
             <view class='restaurant-location' wx:if="{{restaurant.location !== null}}" data-restaurant='{{restaurant}}' bindtap='onRestaurantClicked'>
-                <image class="restaurant-location-image" lazy-load="true" src='/icons/direction.png'></image>
+                <image class="restaurant-location-image" lazy-load="true" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/direction.png'></image>
             </view>
         </view>
 
-        <view data-article='{{ article }}' catchtap='catchTapArticle'>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '莆田吃货团'}}" src='/icons/food/chihuotuan.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '逛莆田'}}" src='/icons/food/guangputian.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '食惑啦娘'}}" src='/icons/food/laniang.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '福州吃货团'}}" src='/icons/food/fuzhou-chihuotuan.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '厦门美食团'}}" src='/icons/food/xiamen-meishituan.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '泉州舌尖美食'}}" src='/icons/food/quanzhou_meishi.png'></image>
-            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '漳州吃货团'}}" src='/icons/food/zhangzhou_chihuotuan.png'></image>
+        <view class="restaurant-article" data-article='{{ article }}' catchtap='catchTapArticle'>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '莆田吃货团'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/chihuotuan.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '逛莆田'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/guangputian.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '食惑啦娘'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/laniang.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '福州吃货团'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/fuzhou-chihuotuan.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '厦门美食团'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/xiamen-meishituan.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '泉州舌尖美食'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/quanzhou_meishi.png'></image>
+            <image class='restaurant-article-source' lazy-load="true" wx:if="{{article.source === '漳州吃货团'}}" src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/zhangzhou_chihuotuan.png'></image>
             <text class='restaurant-article-title'>{{article.title}}</text>
         </view>
     </block>

@@ -229,7 +229,6 @@ Page({
                         this.data.markers.push({
                             id: index++,
                             iconPath: tag.icon,
-                            // iconPath: '/icons/food/position.png',
                             latitude: item.location.lat,
                             longitude: item.location.lng,
                             width: 25,
@@ -246,7 +245,7 @@ Page({
 
             this.data.markers.push({
                 id: -1,
-                iconPath: '/icons/food/position.png',
+                iconPath: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/position.png',
                 latitude: this.data.centerLatitude,
                 longitude: this.data.centerLongitude,
                 width: 25,

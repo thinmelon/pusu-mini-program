@@ -1,6 +1,11 @@
 //app.js
-const __WX_API_PROMISE__ = require('./utils/wx.api.promise.js');
-const __QQ_MAP_WX_JSSDK__ = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
+import {
+    promisifyAll,
+    promisify
+} from 'miniprogram-api-promise';
+
+const WX_API_PROMISE = require('./utils/wx.api.promise.js');
+const QQ_MAP_WX_JSSDK = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
 
 App({
     /**
@@ -10,6 +15,8 @@ App({
     environment: 'DEBUG', //	测试环境：DEBUG		生产环境：PRODUCTION
     timeOut: 1000, //	超时重试：1000毫秒
     maxRetry: 2, //	最大重试次数
+    windowWidth: 320, //  设备窗口宽度
+    windowHeight: 270, //  设备窗口高度
 
     /**
      *  股票市场
@@ -18,9 +25,9 @@ App({
     markets: [{
         name: 'A股', //  名称
         abbreviation: 'hs', //  缩写
-        icon: '/icons/stock/China.png', //  启用图标
-        disabledIcon: '/icons/stock/Grey.png', //  禁用图标
-        
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/China.png', //  启用图标
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/Grey.png', //  禁用图标
+
         /**
          *  点击股票弹出的ActionSheet显示内容荐
          */
@@ -45,8 +52,8 @@ App({
     }, {
         name: '港股',
         abbreviation: 'hk',
-        icon: '/icons/stock/HongKong.png',
-        disabledIcon: '/icons/stock/Grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/HongKong.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/Grey.png',
         properties: [{
             tapIndex: 0,
             name: 'K线',
@@ -56,8 +63,8 @@ App({
     }, {
         name: '美股',
         abbreviation: 'usa',
-        icon: '/icons/stock/UnitedStates.png',
-        disabledIcon: '/icons/stock/Grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/UnitedStates.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/Grey.png',
         properties: [{
             tapIndex: 0,
             name: 'K线',
@@ -72,50 +79,50 @@ App({
      */
     tags: [{
         name: '港式中餐',
-        icon: '/icons/food/tags/zhongcan.png',
-        disabledIcon: '/icons/food/tags/zhongcan_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/zhongcan.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/zhongcan_grey.png',
         category: ['中餐'],
         enable: true
     }, {
         name: '烧烤串串',
-        icon: '/icons/food/tags/shaokao.png',
-        disabledIcon: '/icons/food/tags/shaokao_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/shaokao.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/shaokao_grey.png',
         category: ['烧烤', '串串'],
         enable: false
     }, {
         name: '火锅自助',
-        icon: '/icons/food/tags/huoguo.png',
-        disabledIcon: '/icons/food/tags/huoguo_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/huoguo.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/huoguo_grey.png',
         category: ['火锅', '自助'],
         enable: false
     }, {
         name: '日韩料理',
-        icon: '/icons/food/tags/riliao.png',
-        disabledIcon: '/icons/food/tags/riliao_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/riliao.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/riliao_grey.png',
         category: ['日料', '韩餐'],
         enable: false
     }, {
         name: '甜品茶饮',
-        icon: '/icons/food/tags/tiandian.png',
-        disabledIcon: '/icons/food/tags/tiandian_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/tiandian.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/tiandian_grey.png',
         category: ['甜点', '茶饮'],
         enable: false
     }, { //	餐馆标签
         name: '小吃简餐',
-        icon: '/icons/food/tags/xiaochi.png',
-        disabledIcon: '/icons/food/tags/xiaochi_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xiaochi.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xiaochi_grey.png',
         category: ['小吃', '简餐'],
         enable: false
     }, {
         name: '西餐',
-        icon: '/icons/food/tags/xican.png',
-        disabledIcon: '/icons/food/tags/xican_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xican.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xican_grey.png',
         category: ['西餐'],
         enable: false
     }, {
         name: '酒吧',
-        icon: '/icons/food/tags/jiuba.png',
-        disabledIcon: '/icons/food/tags/jiuba_grey.png',
+        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/jiuba.png',
+        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/jiuba_grey.png',
         category: ['酒吧'],
         enable: false
     }],
@@ -123,11 +130,108 @@ App({
     cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
 
     /**
+     *  知识体系（很帅的投资客）
+     * 
+     */
+    hierarchy: [{
+        subject: "Bond",
+        articles: [{
+            title: "什么是收益率曲线倒挂？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/yield-curve-inversion/",
+            num: 11
+        }]
+    }, {
+        subject: "Currency",
+        articles: [{
+            title: "什么是中间价？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/RMB-exchange-rate/",
+            num: 8
+        }, {
+            title: "什么是不可能三角？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/impossible-trinity/",
+            num: 10
+        }]
+    }, {
+        subject: "Estates",
+        articles: [{
+            title: "什么是交易方程式？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/equation-of-exchange/",
+            num: 13
+        }, {
+            title: "什么是通货紧缩？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Deflation/",
+            num: 7
+        }, {
+            title: "央行是怎么印钱的？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/M2/",
+            num: 13
+        }, {
+            title: "利率的本质是什么？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/interest-rate/",
+            num: 17
+        }, {
+            title: "央行的货币政策工具有哪些？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/monetary-policy-instruments/",
+            num: 19
+        }, {
+            title: "什么是棚改货币化？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/pledged-supplementary-lending/",
+            num: 9
+        }, {
+            title: "房价涨幅多少合适？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/increasement/",
+            num: 7
+        }]
+    }, {
+        subject: "Stock",
+        articles: [{
+            title: "什么是商誉减值？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/GoodWill/",
+            num: 8
+        }, {
+            title: "如何避开股权质押这颗雷？",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/pledge-of-stock-right/",
+            num: 12
+        }]
+    }],
+
+
+    onLaunch: function() {
+        const systemInfo = wx.getSystemInfoSync()
+        this.windowWidth = systemInfo.windowWidth
+
+        if (!wx.cloud) {
+            console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+        } else {
+            wx.cloud.init({
+                // env 参数说明：
+                //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
+                //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
+                //   如不填则使用默认环境（第一个创建的环境）
+                env: 'diandi-software-cloud',
+                traceUser: true,
+            })
+        }
+
+        // 扩展微信小程序api支持promise
+        this.wxp = {}
+        promisifyAll(wx, this.wxp)
+        // promisify all wx's api
+        // wxp.getSystemInfo().then(console.log)
+        // promisify single api
+        // promisify(wx.getSystemInfo)().then(console.log)
+    },
+
+    getRandomColor: function() {
+        return "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
+    },
+
+    /**
      * 	由坐标到坐标所在位置的文字描述的转换
      * 	输入坐标返回地理位置信息和附近poi列表
      */
     reverseGeocoder: function(options) {
-        let qqMapInstance = new __QQ_MAP_WX_JSSDK__({ // 实例化API核心类
+        let qqMapInstance = new QQ_MAP_WX_JSSDK({ // 实例化API核心类
             key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U'
         });
         const that = this;
@@ -144,7 +248,7 @@ App({
                     })
 
                     if (found && that.region !== target) { //  检测所在城市与当前位置不一致，提示用户是否切换
-                        __WX_API_PROMISE__.showModal({
+                        WX_API_PROMISE.showModal({
                                 title: "提示",
                                 content: "检测当前所在城市是" + target + "，是否切换？"
                             })

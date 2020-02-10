@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "莆田房产",
+    "navigationStyle": "custom",
+    "usingComponents": {
+        "navbar": "/components/navigation.bar",
+        "mp-cells": "/weui-miniprogram/cells/cells",
+        "mp-cell": "/weui-miniprogram/cell/cell"
+    }
+}

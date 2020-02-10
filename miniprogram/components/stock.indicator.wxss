@@ -1,0 +1,17 @@
+/* components/stock.indicator.wxss */
+
+.audit-opinion {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+.cashflow {
+    display: grid;
+    grid-template-columns: repeat(3, 15%) 20% 35%;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 13px;
+}

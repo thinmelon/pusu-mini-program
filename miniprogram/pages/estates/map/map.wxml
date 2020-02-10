@@ -1,0 +1,4 @@
+<!--pages/estates/map/map.wxml-->
+<map class="map-estates" longitude="{{centerLongitude}}" latitude="{{centerLatitude}}" scale="{{scale}}" markers="{{markers}}" show-scale="{{true}}" enable-satellite="{{true}}" enable-traffic="{{true}}" bindmarkertap="onMarkerTap" bindlabeltap="onLabelTap">
+    
+</map>

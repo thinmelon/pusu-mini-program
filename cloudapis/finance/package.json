@@ -12,6 +12,7 @@
         "wx-server-sdk": "latest",
         "moment": "latest",
         "cheerio": "latest",
-        "axios": "latest"
+        "axios": "latest",
+        "iconv-lite": "latest"
     }
 }

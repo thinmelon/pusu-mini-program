@@ -1,6 +1,9 @@
 {
-  "permissions": {
-    "openapi": [
+    "triggers": [
+        {
+            "name": "Task",
+            "type": "timer",
+            "config": "0 0 8,14,20 * * * *"
+        }
     ]
-  }
 }

@@ -1,0 +1,46 @@
+<!--pages/stock/note/note.wxml-->
+<mp-cells title="类别">
+    <mp-checkbox-group prop="noteType" multi="{{false}}" bindchange="onRadioChange">
+        <mp-checkbox wx:for="{{noteTypes}}" wx:key="value" label="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"></mp-checkbox>
+    </mp-checkbox-group>
+</mp-cells>
+
+<view class="weui-cells__title">摘要</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+        <view class="weui-cell__bd">
+            <textarea data-field="summary" bindinput="onInputChange" class="weui-textarea" placeholder="说点什么" style="height: 5.3em" value="{{note.summary}}" />
+            <view class="weui-textarea-counter">0/200</view>
+        </view>
+    </view>
+</view>
+
+<mp-cells title="交易" footer="" wx:if="{{note.type === 0}}">
+    <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd" style="width: 105px">
+            <picker bindchange="onTransactionTypeChange" value="{{note.transaction}}" range="{{transactionTypes}}">
+                <view class="weui-select">{{transactionTypes[note.transaction || 0]}}</view>
+            </picker>
+        </view>
+        <view class="weui-cell__bd weui-cell__bd_in-select-before">
+            <input type="number" data-field="count" bindinput="onInputChange" class="weui-input" placeholder="交易数量（股）" value="{{note.count}}" />
+        </view>
+    </view>
+    <mp-cell title="价格" footer="元" ext-class="">
+        <input type="number" data-field="price" bindinput="onInputChange" class="weui-input field-input" placeholder="成本价" value="{{note.price}}" />
+    </mp-cell>
+    <mp-cell title="持有至" ext-class="">
+        <picker mode="date" value="{{note.expiration}}" start="{{startDate}}" end="{{endDate}}" data-field="date" bindchange="onDateChange">
+            <view class="weui-input field-input">{{note.expiration}}</view>
+        </picker>
+    </mp-cell>
+    <mp-cell title="预计" footer="%" ext-class="">
+        <input type="number" bindinput="onInputChange" data-field="range" class="weui-input field-input" placeholder="涨/跌幅" value="{{note.range}}" />
+    </mp-cell>
+</mp-cells>
+
+<view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="submit">确定</button>
+</view>
+
+<view class="guide"></view>

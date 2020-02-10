@@ -1,38 +1,27 @@
 /* pages/index/index.wxss */
+@import "../../style/guide.wxss";
 
-.layer {
-  display: grid;
-  grid-template-columns: 50% 50%;
+.currency {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 13px;
 }
 
-.cube{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 17px;
+.index-group {
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
 
-.section_wrapper {
-  width: 111px;
-  height: 111px;
-  border: 1px solid #ccc;
+.index {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.section_ctn {
-  width: 101px;
-  height: 101px;
-  border: 2px solid #c02c38;
-}
-
-.section_wrapper, .section_ctn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-}
-
-.section_ctn image {
-  width: 48px;
-  height: 48px;
+.index-icon {
+    width: 48px;
+    height: 48px;
 }

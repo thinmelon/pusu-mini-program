@@ -1,0 +1,36 @@
+<!--pages/estates/project/project.wxml-->
+<view class="guide">
+    <view class="head">
+        <text class="headline">{{project.name}}</text>
+        <mp-icon type="{{project.follow ? 'field':'outline'}}" icon="star" color="gold" size="{{25}}" bindtap="onFollowTap"></mp-icon>
+    </view>
+    <text class="p">开发商：{{project.leader}}</text>
+    <text class="p">位置：{{project.address}}</text>
+    <text class="p">售楼电话：{{project.phone}}</text>
+    <text class="p">规划用途：{{project.use}}</text>
+    <text class="p">预售许可证：{{project.license}}</text>
+    <text class="p">容积率：{{project.plotRatio}}</text>
+    <text class="p">绿化率：{{project.greeningRate}}</text>
+    <text class="p">建筑密度：{{project.buildingDesity}}</text>
+</view>
+
+<view class="guide">
+    <text class="headline">房屋销售</text>
+    <text class="p">住宅可售：{{project.availableNumberHousing}}</text>
+    <text class="p">住宅已售：{{project.soldNumberHousing}}</text>
+    <text class="p">店铺可售：{{project.availableNumberBusiness}}</text>
+    <text class="p">店铺已售：{{project.soldNumberBusiness}}</text>
+    <text class="p">车库可售：{{project.availableNumberGarage}}</text>
+    <text class="p">车库已售：{{project.soldNumberGarage}}</text>
+    <text class="p">写字楼可售：{{project.availableNumberOffice}}</text>
+    <text class="p">写字楼已售：{{project.soldNumberOffice}}</text>
+    <text class="p">其它可售：{{project.availableNumberOther}}</text>
+    <text class="p">其它已售：{{project.soldNumberOther}}</text>
+</view>
+
+<mp-cells title="楼盘" footer="">
+    <mp-cell link hover wx:for="{{project.buildings}}" wx:key="name" data-building="{{item}}" bindtap="onCellTap">
+        <view class="building-id">{{item.name}}</view>
+        <view class="building-id" slot="footer">{{item.floors}}层</view>
+    </mp-cell>
+</mp-cells>

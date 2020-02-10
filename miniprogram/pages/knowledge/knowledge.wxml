@@ -1,0 +1,2 @@
+<!--pages/knowledge/knowledge.wxml-->
+<image style="width: 100%;" lazy-load="{{true}}" mode="widthFix" wx:for="{{article.num}}" wx:key="*this" src="{{article.href}}{{item+1}}.jpg"></image>

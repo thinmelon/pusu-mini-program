@@ -1,0 +1,76 @@
+/**
+ *  截取小数点后两位
+ */
+var toFixed = function(value) {
+    return value ? value.toFixed(2) : 0;
+};
+
+/**
+ *  求和    -   单位：亿元
+ */
+var sum = function(stock, category, index) {
+    var i = 0,
+        length = index.length,
+        total = 0;
+
+    for (; i < length; i++) {
+        total += parseInt(stock[category[i]][index[i]] || 0);
+    }
+    return (total / 100000000).toFixed(2);
+};
+
+/**
+ *  分子分母求和后相对，计算占比
+ */
+var proportion = function(stock, category1, index1, category2, index2) {
+    var i = 0,
+        length = index1.length,
+        total1 = 0,
+        total2 = 0;
+
+    for (; i < length; i++) {
+        total1 += parseInt(stock[category1[i]][index1[i]] || 0);
+    }
+
+    i = 0,
+        length = index2.length;
+
+    for (; i < length; i++) {
+        total2 += parseInt(stock[category2[i]][index2[i]] || 0);
+    }
+
+    return (total1 / total2).toFixed(2);
+}
+
+/**
+ *  分子求和，分母相减后相对，计算占比
+ */
+var substraction = function(stock, category1, index1, minuend, subtractor) {
+    var i = 0,
+        length = index1.length,
+        total1 = 0,
+        total2 = 0;
+
+    for (; i < length; i++) {
+        total1 += parseInt(stock[category1[i]][index1[i]] || 0);
+    }
+
+    total2 = minuend - (subtractor || 0);
+
+    return (total1 / total2).toFixed(2);
+};
+
+/**
+ *  同比涨幅
+ */
+var increase = function(minuend, subtractor) {
+    return ((minuend - subtractor) * 100 / subtractor).toFixed(2);
+}
+
+module.exports = {
+    toFixed: toFixed,
+    sum: sum,
+    proportion: proportion,
+    substraction: substraction,
+    increase: increase
+}

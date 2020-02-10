@@ -1,0 +1,184 @@
+<!--components/stock.indicator.wxml-->
+<wxs src="./../utils/math.wxs" module="Math" />
+
+<view class="guide" wx:if="{{principle.type === 'audit-opinion' && stock && print}}">
+    <view class="audit-opinion">
+        <text class="p">会计师出具意见</text>
+        <text class="p">真实意思对照</text>
+
+        <text class="p">标准无保留意见的审计报告</text>
+        <text class="p">造假迹象未被本人发现</text>
+
+        <text class="p">附带说明的无保留意见审计报告</text>
+        <text class="p">黑锅有人背，本人大胆收钱</text>
+
+        <text class="p">保留意见审计报告</text>
+        <text class="p">假报表，别看了</text>
+
+        <text class="p">无法出具意见审计报告</text>
+        <text class="p">本人拒绝和拙劣的骗子合作</text>
+
+        <text class="p">否定意见审计报告</text>
+        <text class="p">本人举报诈骗犯</text>
+    </view>
+
+    <mp-halfScreenDialog show="{{show}}" title="定期报告审计意见" desc="{{desc}}"></mp-halfScreenDialog>
+    <mp-cells title="定期报告审计意见" footer="" wx:if="{{stock.audit && stock.audit.length > 0}}">
+        <mp-cell link wx:for="{{stock.audit}}" wx:key="F001D" hover value="{{item.F001D}}" data-msg="事务所: {{item.F004V}} 注册会计师: {{item.F005V}} 审计意见: {{item.F007V}}" bindtap="onCellTap">
+            <view slot="footer">{{item.F007V}}</view>
+        </mp-cell>
+    </mp-cells>
+</view>
+
+<!--    现金流量表     -->
+<view class="guide" wx:if="{{principle.type === 'cashflow' && stock}}">
+    <view class="cashflow" wx:if="{{print}}">
+        <text class="p">经营</text>
+        <text class="p">投资</text>
+        <text class="p">筹款</text>
+        <text class="p">企业类型</text>
+        <text class="p">关注要点</text>
+
+        <text class="p">+</text>
+        <text class="p">+</text>
+        <text class="p">+</text>
+        <text class="p">妖精型</text>
+        <text class="p">计划投资项目情况</text>
+
+        <text class="p">+</text>
+        <text class="p">+</text>
+        <text class="p">-</text>
+        <text class="p">老母鸡型</text>
+        <text class="p">低PE高股息率</text>
+
+        <text class="p">+</text>
+        <text class="p">-</text>
+        <text class="p">+</text>
+        <text class="p">蛮牛型</text>
+        <text class="p">项目前景、资金支持</text>
+
+        <text class="p">+</text>
+        <text class="p">-</text>
+        <text class="p">-</text>
+        <text class="p">奶牛型</text>
+        <text class="p">可持续性</text>
+
+        <text class="p">-</text>
+        <text class="p">+</text>
+        <text class="p">+</text>
+        <text class="p">骗吃骗喝型</text>
+        <text class="p">不建议投资</text>
+
+        <text class="p">-</text>
+        <text class="p">+</text>
+        <text class="p">-</text>
+        <text class="p">混吃等死型</text>
+        <text class="p">不建议投资</text>
+
+        <text class="p">-</text>
+        <text class="p">-</text>
+        <text class="p">+</text>
+        <text class="p">赌徒型</text>
+        <text class="p">项目前景与管理层品性</text>
+
+        <text class="p">-</text>
+        <text class="p">-</text>
+        <text class="p">-</text>
+        <text class="p">大出血型</text>
+        <text class="p">拒绝参与</text>
+    </view>
+</view>
+
+<!--    指标陈列     -->
+<view class="guide" wx:if="{{principle.type === 'cashflow' && stock}}">
+    <text class="headline">{{stock.name}}</text>
+    <text class="p" wx:for="{{principle.numerator}}" wx:key="*this">{{principle.nState[index]}}：{{Math.toFixed(stock[principle.nCategory[index]][principle.numerator[index]]/100000000)}} 亿元</text>
+</view>
+<view class="guide" wx:if="{{principle.type === 'static' && stock}}">
+    <text class="headline">{{stock.name}}</text>
+    <text class="p" wx:for="{{principle.numerator}}" wx:key="*this">{{principle.nState[index]}}：{{stock[principle.nCategory[index]][principle.numerator[index]]}} </text>
+</view>
+
+<!--    同比增幅     -->
+<view class="guide" wx:if="{{principle.type === 'year-on-year' && history}}">
+    <text class="headline">{{history.name}}</text>
+    <!-- A股 -->
+    <block wx:for="{{principle.numerator}}" wx:key="*this" wx:if="{{history.market === 'SHEN ZHEN' || history.market === 'SHANG HAI'}}">
+        <view class="p">[{{history[principle.nCategory[index]][7]['F001D']}}] {{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory[index]][7][principle.numerator[index]]/100000000)}} 亿元</view>
+        <view class="p">[{{history[principle.nCategory[index]][11]['F001D']}}] {{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory[index]][11][principle.numerator[index]]/100000000)}} 亿元</view>
+        <view class="p">同比增幅：{{Math.increase(history[principle.nCategory[index]][11][principle.numerator[index]], history[principle.nCategory[index]][7][principle.numerator[index]])}}%</view>
+        <view class="div-line"></view>
+    </block>
+    <!-- 港股 -->
+    <block wx:for="{{principle.numerator}}" wx:key="*this" wx:if="{{history.market === 'HONG KONG'}}">
+        <view class="p">[{{history[principle.nCategory[index]][3]['F001D']}}] {{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory[index]][3][principle.numerator[index]]/100000000)}} 亿元</view>
+        <view class="p">[{{history[principle.nCategory[index]][7]['F001D']}}] {{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory[index]][7][principle.numerator[index]]/100000000)}} 亿元</view>
+        <view class="p">同比增幅：{{Math.increase(history[principle.nCategory[index]][7][principle.numerator[index]], history[principle.nCategory[index]][3][principle.numerator[index]])}}%</view>
+        <view class="div-line"></view>
+    </block>
+</view>
+
+<!--    等式（分子及分母求和后相除）     -->
+<view class="guide" wx:if="{{principle.type === 'equation' && stock}}">
+    <text class="headline">{{stock.name}}</text>
+    <text class="p" wx:for="{{principle.numerator}}" wx:key="*this"><text class="p" wx:if="{{index > 0}}">+</text> {{principle.nState[index]}}：{{Math.toFixed(stock[principle.nCategory[index]][principle.numerator[index]]/100000000)}} 亿元</text>
+    <text class="p"> = {{principle.nName}}：{{Math.sum(stock, principle.nCategory, principle.numerator)}} 亿元</text>
+    <view class="div-line"></view>
+    <text class="p" wx:for="{{principle.denominator}}" wx:key="*this"><text class="p" wx:if="{{index > 0}}">+</text> {{principle.dState[index]}}：{{Math.toFixed(stock[principle.dCategory[index]][principle.denominator[index]]/100000000)}} 亿元</text>
+    <text class="p"> = {{principle.dName}}：{{Math.sum(stock, principle.dCategory, principle.denominator)}} 亿元</text>
+    <view class="div-line"></view>
+    <text class="p">{{principle.nName}} / {{principle.dName}} = {{Math.proportion(stock, principle.nCategory, principle.numerator, principle.dCategory, principle.denominator)}}</text>
+    <text class="p" wx:if="{{principle.pnName && principle.pdName}}">{{principle.pnName}} / {{principle.pdName}} = {{Math.proportion(stock, principle.pnCategory, principle.pNumerator, principle.pdCategory, principle.pDenominator)}}</text>
+</view>
+
+<!--    费用率（分子求和，分母相减后相除）     -->
+<view class="guide" wx:if="{{principle.type === 'ratio' && stock}}">
+    <text class="headline">{{stock.name}}</text>
+    <text class="p" wx:for="{{principle.numerator}}" wx:key="*this"><text class="p" wx:if="{{index > 0}}">+</text> {{principle.nState[index]}}：{{Math.toFixed(stock[principle.nCategory[index]][principle.numerator[index]]/100000000)}} 亿元</text>
+    <text class="p"> = {{principle.nName}}：{{Math.sum(stock, principle.nCategory, principle.numerator)}} 亿元</text>
+    <view class="div-line"></view>
+    <text class="p" wx:for="{{principle.denominator}}" wx:key="*this"><text class="p" wx:if="{{index > 0}}">-</text> {{principle.dState[index]}}：{{Math.toFixed(stock[principle.dCategory[index]][principle.denominator[index]]/100000000)}} 亿元</text>
+    <text class="p"> = {{principle.dName}}：{{Math.toFixed((stock[principle.dCategory[0]][principle.denominator[0]] - (stock[principle.dCategory[1]][principle.denominator[1]] || 0))/100000000)}} 亿元</text>
+    <view class="div-line"></view>
+    <text class="p">{{principle.nName}} / {{principle.dName}} = {{Math.substraction(stock, principle.nCategory, principle.numerator, stock[principle.dCategory[0]][principle.denominator[0]], stock[principle.dCategory[1]][principle.denominator[1]])}}</text>
+</view>
+
+<!--    股权质押、对外担保、受处罚表     -->
+<view wx:if="{{principle.type === 'cells' && stock && print}}">
+    <mp-halfScreenDialog show="{{show}}" title="{{principle.title}}" desc="{{desc}}"></mp-halfScreenDialog>
+    <mp-cells title="{{principle.head}}" footer="" wx:if="{{stock[principle.property].length > 0}}">
+        <mp-cell link wx:for="{{stock[principle.property]}}" wx:key="DECLAREDATE" hover value="{{item[principle.field]}}" data-msg="{{item[principle.msg]}}" bindtap="onCellTap">
+            <view slot="footer">{{Math.toFixed(item[principle.value]/principle.divisor)}}（{{item[principle.attach]}}{{principle.unit}}）</view>
+        </mp-cell>
+    </mp-cells>
+    <view class="guide">
+        <text class="headline" wx:if="{{stock[principle.property].length === 0}}">{{principle.none}}</text>
+    </view>
+</view>
+
+<!--    募集资金计划投资项目    -->
+<view wx:if="{{principle.type === 'fund-raising' && stock && print}}">
+    <mp-cells title="募集资金来源" footer="" wx:if="{{stock.fund.length > 0}}">
+        <mp-cell wx:for="{{stock.fund}}" wx:key="SUBID" hover value="{{item.F004D}} {{item.F002V}}">
+            <view slot="footer">{{Math.toFixed(item.F003N/10000)}}亿元</view>
+        </mp-cell>
+    </mp-cells>
+
+    <mp-halfScreenDialog show="{{show}}" title="募集资金计划投资项目" desc="{{desc}}"></mp-halfScreenDialog>
+    <mp-cells title="募集资金计划投资项目" footer="" wx:if="{{stock.investment.length > 0}}">
+        <mp-cell link wx:for="{{stock.investment}}" wx:key="F002V" hover value="{{item.DECLAREDATE}} {{item.F006V}}" data-msg="项目名称: {{item.F002V}} 项目性质: {{item.F004V}} 项目类别: {{item.F006V}} 计划投资金额: {{item.F009N}}万元 计划投入募集资金: {{item.F010N}}万元" bindtap="onCellTap">
+            <view slot="footer">{{item.F008V}}</view>
+        </mp-cell>
+    </mp-cells>
+</view>
+
+<!--    投资资本回报率     -->
+<view class="guide" wx:if="{{principle.type === 'profit' && stock}}">
+    <text class="headline">{{stock.name}}</text>
+    <text class="p">税后营业净利润 = 营业利润（{{Math.toFixed(stock.profit.F018N/100000000)}}）*（1-25%）= {{Math.toFixed(stock.profit.F018N*0.75/100000000)}}亿元</text>
+    <text class="p">投资资本 = 股东权益 + 有息负债 = 股东权益（{{Math.toFixed(stock.balance.F070N/100000000)}}） + 短期借款（{{Math.toFixed(stock.balance.F039N/100000000)}}） + 一年内到期的非流动负债（{{Math.toFixed(stock.balance.F050N/100000000)}}） + 长期借款（{{Math.toFixed(stock.balance.F053N/100000000)}}） + 应付债券（{{Math.toFixed(stock.balance.F054N/100000000)}}） + 长期应付款（{{Math.toFixed(stock.balance.F055N/100000000)}}） = {{Math.sum(stock, principle.dCategory, principle.denominator)}}亿元</text>
+    <text class="p">投资资本回报率 = 税后营业净利润 / 投资资本 = {{Math.toFixed(stock.profit.F018N*75/Math.sum(stock, principle.dCategory, principle.denominator)/100000000)}}%</text>
+</view>
+
+<!--    趋势分析     -->
+<slot></slot>

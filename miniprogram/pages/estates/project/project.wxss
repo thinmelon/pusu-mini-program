@@ -1,0 +1,13 @@
+/* pages/estates/project/project.wxss */
+@import "../../../style/guide.wxss";
+
+.building-id {
+    font-size: 9pt;
+}
+
+.head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

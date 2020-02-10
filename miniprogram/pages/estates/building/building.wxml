@@ -1,0 +1,25 @@
+<!--pages/estates/building/building.wxml-->
+<view class="guide">
+    <text class="headline">{{building.name}}</text>
+    <text class="p">总面积：{{building.area}}</text>
+    <text class="p">总层数：{{building.floors}}</text>
+</view>
+
+<view class="guide">
+    <text class="headline">房屋销售</text>
+    <text class="p">住宅可售：{{building.availableNumberHousing}}</text>
+    <text class="p">住宅已售：{{building.soldNumberHousing}}</text>
+    <text class="p" wx:if="{{building.averagePriceHousing}}">住宅成交均价（元/平方米）：{{building.averagePriceHousing}}</text>
+    <text class="p">店铺可售：{{building.availableNumberBusiness}}</text>
+    <text class="p">店铺已售：{{building.soldNumberBusiness}}</text>
+    <text class="p" wx:if="{{building.averagePriceBusiness}}">店铺成交均价（元/平方米）：{{building.averagePriceBusiness}}</text>
+    <text class="p">车库可售：{{building.availableNumberGarage}}</text>
+    <text class="p">车库已售：{{building.soldNumberGarage}}</text>
+    <text class="p" wx:if="{{building.averagePriceGarage}}">车库成交均价（元/平方米）：{{building.averagePriceGarage}}</text>
+    <text class="p">写字楼可售：{{building.availableNumberOffice}}</text>
+    <text class="p">写字楼已售：{{building.soldNumberOffice}}</text>
+    <text class="p" wx:if="{{building.averagePriceOffice}}">写字楼成交均价（元/平方米）：{{building.averagePriceOffice}}</text>
+    <text class="p">其它可售：{{building.availableNumberOther}}</text>
+    <text class="p">其它已售：{{building.soldNumberOther}}</text>
+    <text class="p" wx:if="{{building.averagePriceOther}}">其它成交均价（元/平方米）：{{building.averagePriceOther}}</text>
+</view>

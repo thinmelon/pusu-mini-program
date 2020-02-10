@@ -12,6 +12,19 @@ Page({
         pageName: '食莆', //  当面页名称 
         navbarHeight: 0, //  导航栏高度
         navbarTop: 0, //  导航栏上边距
+        navbarButtons: [{ //  导航栏按钮
+                index: 0,
+                name: '搜索',
+                icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/search.png',
+                url: '/pages/food/search'
+            },
+            {
+                index: 1,
+                name: '地图',
+                icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/map.png',
+                url: '/pages/food/map'
+            }
+        ],
         restaurants: [], //	餐馆列表
         tags: [], //	标签数组、调试模式下使用
         displayedTags: [], //	 显示标签数组
@@ -25,7 +38,6 @@ Page({
     itemsPerTime: 10, //	每次获取数量
     currentScrollTop: 0, //  当前滚动条距离顶部位置
     actionSheetItemList: [],
-    //   cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
 
     /**
      * 生命周期函数--监听页面加载
@@ -102,41 +114,22 @@ Page({
                 console.error(exception)
                 this.showRestaurants();
             })
-    },
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-        console.log('======== onShow ========', getApp().region);
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function() {
-        console.log('======== onPullDownRefresh ========')
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-        // console.log('======== onReachBottom ========')
+        // this.recycleContext = CreateRecycleContext({
+        //     //  对应 recycle-view 的 id 属性的值
+        //     id: 'recycleId',
+        //     //  对应 recycle-item 的 wx:for 属性设置的绑定变量名
+        //     dataKey: 'projects',
+        //     //  recycle-view 所在的页面或者组件的实例，页面或者组件内可以直接传 this
+        //     page: this,
+        //     //  此参数用来生成recycle-item的宽和高
+        //     itemSize: this.itemSizeFunc,
+        //     //  是否整个页面只有recycle-view
+        //     //  主要是用在页面级别的长列表，并且需要用到onPullDownRefresh的效果
+        //     useInPage: true,
+        //     //  当前页面对象，可以通过getCurrentPages获取, 当useInPage为true必须提供
+        //     root: getCurrentPages()
+        // })
     },
 
     /**
@@ -202,6 +195,74 @@ Page({
     onShareAppMessage: function() {
 
     },
+
+    /**
+     *  用户点击标签
+     */
+    onTagClicked: function(evt) {
+        console.log(evt);
+        this.offset = 0;
+        this.setData({
+            restaurants: [],
+            displayedTags: this.data.displayedTags.map(tag => {
+                if (tag.name === evt.currentTarget.dataset.name) {
+                    tag.enable = !tag.enable;
+                } else {
+                    tag.enable = false;
+                }
+                return tag;
+            })
+        });
+        wx.showLoading({
+            title: '',
+        });
+        this.showRestaurants();
+    },
+
+    // onPageScroll: function () {
+
+    // },
+
+    // /**
+    //  *      recycle-item大小设置
+    //  *      
+    //  * itemSize可以为包含{width, height}的Object，所有数据只有一种宽高信息。
+    //  * 如果有多种，则可以提供一个函数，长列表组件会调用这个函数生成每条数据的宽高信息
+    //  * 
+    //  * 注意：
+    //  *  1.  recycle-item的宽高必须和itemSize设置的宽高一致，否则会出现跳动的bug。
+    //  *  2.  cycle-view设置的高度必须和其style里面设置的样式一致。
+    //  *  3.  当使用了useInPage参数的时候，必须在Page里面定义onPageScroll事件
+    //  */
+    // itemSizeFunc: function (item, idx) {
+    //     return {
+    //         width: 162,
+    //         height: 182
+    //     }
+    // },
+
+    // getProjects: function () {
+    //     app.wxp.cloud.callFunction({
+    //         name: 'finance',
+    //         data: {
+    //             action: 'available',
+    //             data: encodeURIComponent(JSON.stringify({
+    //                 where: {
+    //                     district: '荔城区'
+    //                 }
+    //             }))
+    //         }
+    //     })
+    //         .then(res => {
+    //             console.log(res)
+    //             if (res.result.data && res.result.data.length > 0) {
+    //                 this.recycleContext.append(res.result.data)
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.error(err)
+    //         })
+    // }
 
     /**
      * 	关联标签
@@ -314,29 +375,6 @@ Page({
             });
         }
         this.getRestaurants(params);
-    },
-
-    /**
-     *  用户点击标签
-     */
-    onTagClicked: function(evt) {
-        console.log(evt);
-        this.offset = 0;
-        this.setData({
-            restaurants: [],
-            displayedTags: this.data.displayedTags.map(tag => {
-                if (tag.name === evt.currentTarget.dataset.name) {
-                    tag.enable = !tag.enable;
-                } else {
-                    tag.enable = false;
-                }
-                return tag;
-            })
-        });
-        wx.showLoading({
-            title: '',
-        });
-        this.showRestaurants();
     },
 
     /**
