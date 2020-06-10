@@ -36,7 +36,7 @@ Page({
         }
 
         this.getStockInfo(options.code)
-        this.getStockNote(options.code)
+        // this.getStockNote(options.code)
     },
 
     /**

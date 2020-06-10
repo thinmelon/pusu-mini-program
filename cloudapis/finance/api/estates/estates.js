@@ -203,6 +203,7 @@ async function updateDayContractStatistic(day, statistic, ...districts) {
 
 /**
  *      更新商品房签约统计数据
+ *      每日任务中读取“莆田商品房信息公开专栏”的统计数据
  */
 async function updateContractStatistic() {
     try {
@@ -273,6 +274,7 @@ async function updateContractStatistic() {
 
 /**
  *      统计各县区成交量
+ *      在每日任务中提前统计好，显示图表时可直接读取数据
  */
 async function getDistrictDealStatistic() {
     return db
@@ -309,6 +311,7 @@ async function getDistrictDealStatistic() {
 
 /**
  *      统计各县区成交均价
+ *      在每日任务中提前统计好，显示图表时可直接读取数据
  */
 async function getDistrictAveragePriceStatistic() {
     return await db.collection('_project')
@@ -336,7 +339,9 @@ async function getDistrictAveragePriceStatistic() {
  *      合并各县区的成交量及成交均价数据
  */
 async function statistic() {
+    //  统计各县区住宅、商业、写字楼、车库及其它的成交量
     const markets = await getDistrictDealStatistic()
+    //  统计各县区住宅、商业、写字楼、车库及其它的成交均价
     const averagePrice = await getDistrictAveragePriceStatistic()
     //  合并返回数据
     return markets.list.map(market => {
@@ -351,17 +356,21 @@ async function statistic() {
 }
 
 /**
- *      更新每天县区统计数据
+ *      更新各县区的成交量及成交均价等统计数据
+ *      在每日任务中提前统计好，显示图表时可直接读取数据
  */
 async function updateDayDistrictStatistic(day) {
-    const today = day.format('YYYY-MM-DD')
-    const thisMonth = day.format('YYYY.MM')
+    const today = day.format('YYYY-MM-DD') //  今天
+    const thisMonth = day.format('YYYY.MM') //  本月
+    //  合并各县区的成交量及成交均价数据
     const market = await statistic()
+    //  筛选本月数据
     const ret1 = await db.collection('_daily')
         .where({
             "_id": thisMonth
         })
         .get()
+    //  构建数据
     const data = {
         "date": today,
         "chengxiang": market.find(item => {
@@ -381,6 +390,7 @@ async function updateDayDistrictStatistic(day) {
 
     let ret3;
     if (ret1.data && ret1.data.length > 0) {
+        //  筛选今天数据
         const ret2 = await db.collection('_daily')
             .where({
                 "_id": thisMonth,
@@ -388,7 +398,7 @@ async function updateDayDistrictStatistic(day) {
             })
             .get()
 
-
+        //  今天数据已存在，更新；否则，添加进数组
         if (ret2.data && ret2.data.length > 0) {
             ret3 = await db.collection('_daily')
                 .where({
@@ -421,6 +431,7 @@ async function updateDayDistrictStatistic(day) {
                 })
         }
     } else {
+        //  本月数据不存在，新增
         ret3 = await db.collection('_daily')
             .doc(thisMonth)
             .set({
@@ -436,11 +447,11 @@ async function updateDayDistrictStatistic(day) {
 }
 
 /**
- *      历史数据
+ *      商品房日签约
  */
 async function history() {
     const oneMonthAgo = MOMENT().subtract(1, 'months')
-    const twentyDaysAgo = MOMENT().subtract(20, 'days')
+    const twentyDaysAgo = MOMENT().subtract(19, 'days')
     const monthRange = []
     const dayRange = []
 
@@ -458,8 +469,8 @@ async function history() {
         day = day.subtract(1, 'days')
     }
 
-    console.log(monthRange)
-    console.log(dayRange)
+    // console.log(monthRange)
+    // console.log(dayRange)
 
     return await db.collection('_daily')
         .aggregate()
@@ -475,6 +486,21 @@ async function history() {
             })
         })
         .unwind('$day')
+        .end()
+}
+
+/**
+ *      商品房月签约
+ */
+async function month(request) {
+    return await db.collection('_daily')
+        .aggregate()
+        .project({
+            day: 0
+        })
+        // .sort({
+        //     _id: -1
+        // })
         .end()
 }
 
@@ -495,5 +521,6 @@ module.exports = {
     updateContractStatistic,
     updateDayDistrictStatistic,
     history,
+    month,
     follow
 }

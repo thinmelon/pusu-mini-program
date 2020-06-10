@@ -1,0 +1,7 @@
+<!--miniprogram/pages/order/list/list.wxml-->
+<mp-cells title="创建时间：{{item.createTime}}" wx:for="{{orders}}" wx:key="_id" bindtap="onCellsTap" data-id="{{item._id}}">
+    <mp-cell value="剧团名称">
+        <view slot="footer" class="troupe-name">{{item.troupeName}}</view>
+    </mp-cell>
+    <mp-cell value="订单金额" footer="{{item.totalFee/100}}"></mp-cell>
+</mp-cells>

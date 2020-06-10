@@ -74,62 +74,6 @@ App({
     }],
 
     /**
-     *  美食地图
-     * 
-     */
-    tags: [{
-        name: '港式中餐',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/zhongcan.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/zhongcan_grey.png',
-        category: ['中餐'],
-        enable: true
-    }, {
-        name: '烧烤串串',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/shaokao.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/shaokao_grey.png',
-        category: ['烧烤', '串串'],
-        enable: false
-    }, {
-        name: '火锅自助',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/huoguo.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/huoguo_grey.png',
-        category: ['火锅', '自助'],
-        enable: false
-    }, {
-        name: '日韩料理',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/riliao.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/riliao_grey.png',
-        category: ['日料', '韩餐'],
-        enable: false
-    }, {
-        name: '甜品茶饮',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/tiandian.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/tiandian_grey.png',
-        category: ['甜点', '茶饮'],
-        enable: false
-    }, { //	餐馆标签
-        name: '小吃简餐',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xiaochi.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xiaochi_grey.png',
-        category: ['小吃', '简餐'],
-        enable: false
-    }, {
-        name: '西餐',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xican.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/xican_grey.png',
-        category: ['西餐'],
-        enable: false
-    }, {
-        name: '酒吧',
-        icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/jiuba.png',
-        disabledIcon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/food/tag/jiuba_grey.png',
-        category: ['酒吧'],
-        enable: false
-    }],
-    region: '莆田', //  地市	默认莆田
-    cities: ['福州', '厦门', '莆田', '泉州', '漳州'],
-
-    /**
      *  知识体系（很帅的投资客）
      * 
      */

@@ -1,0 +1,60 @@
+/**
+ *          订单状态
+ * 
+ *      - INIT-创建订单                                        0
+ *      - CHECK - 剧团审核                                     1 
+ *      - NOTPAY — 未支付                                      2
+ *      - SUCCESS — 支付成功                                   3
+ *      - REFUND — 转入退款                                    4
+ *      - CLOSED — 已关闭                                      5
+ *      - REVOKED — 已撤销（刷卡支付）                          6
+ *      - USERPAYING — 用户支付中                              7
+ *      - PAYERROR — 支付失败(其他原因，如银行返回失败)          8
+ *      - ABNORMAL — 状态异常                                  9
+ */
+var __ENUM_ORDER_STATUS__ = {
+    INIT: 0,
+    CHECK: 1,
+    NOTPAY: 2,
+    SUCCESS: 3,
+    REFUND: 4,
+    CLOSE: 5,
+    REVOKED: 6,
+    USERPAYING: 7,
+    PAYERROR: 8,
+    ABNORMAL: 9
+};
+
+/**
+ *          审核状态
+ * 
+ *      -   AGREE - 同意        
+ *      -   REJECT - 拒绝
+ */
+var __ENUM_AUDIT_STATUS__ = {
+    AGREE: 0,
+    REJECT: 1
+};
+
+/**
+ *          退款订单状态
+ * 
+ *      -   APPLY       -   客户提交申请
+ *      -   REFUNDING   -   剧团发起退款
+ *      -   SUCCESS     -   退款成功
+ *      -   CHANGE      -   退款异常
+ *      -   CLOSED      -   退款关闭
+ */
+var __ENUM_REFUND_STATUS__ = {
+    APPLY: 0,
+    REFUNDING: 1,
+    SUCCESS: 2,
+    CHANGE: 3,
+    CLOSED: 4
+};
+
+module.exports = {
+    __ORDER_STATUS__: __ENUM_ORDER_STATUS__,
+    __AUDIT_STATUS__: __ENUM_AUDIT_STATUS__,
+    __REFUND_STATUS__: __ENUM_REFUND_STATUS__
+}

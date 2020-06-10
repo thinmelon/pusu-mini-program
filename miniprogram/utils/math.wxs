@@ -20,7 +20,7 @@ var sum = function(stock, category, index) {
 };
 
 /**
- *  分子分母求和后相对，计算占比
+ *  分子分母分别求和后两者相除，计算占比
  */
 var proportion = function(stock, category1, index1, category2, index2) {
     var i = 0,
@@ -43,7 +43,7 @@ var proportion = function(stock, category1, index1, category2, index2) {
 }
 
 /**
- *  分子求和，分母相减后相对，计算占比
+ *  分子求和，分母相减后两者相除，计算占比
  */
 var substraction = function(stock, category1, index1, minuend, subtractor) {
     var i = 0,
@@ -64,7 +64,57 @@ var substraction = function(stock, category1, index1, minuend, subtractor) {
  *  同比涨幅
  */
 var increase = function(minuend, subtractor) {
-    return ((minuend - subtractor) * 100 / subtractor).toFixed(2);
+    return subtractor ? ((minuend - subtractor) * 100 / subtractor).toFixed(2) : 0;
+}
+
+/**
+ *  单数组内计算同比净额变化，对结果求和
+ *      history - 数据源
+ *      category - 表格来源数组（如资产负债表、利润表、现金流量表、指标表）
+ *      index - 对应表格的科目数组
+ *      last    -   最近一期年报
+ *      offset  -   对比年报偏移量
+ *      addend - 额外值
+ */
+var singleOffset = function(history, category, index, last, offset, addend) {
+    var i = 0,
+        sum = 0;
+
+    for (; i < index.length; i++) {
+        sum += (history[category[i]][last][index[i]] - history[category[i]][last - offset][index[i]])
+    }
+
+    if (addend) {
+        sum += addend
+    }
+
+    return sum;
+}
+
+/**
+ *  两数组分别计算同比净额变化，分别对结果求和后相减
+ *      history - 数据源
+ *      category1 - （减数）资产负债表、利润表、现金流量表
+ *      index1 - 参数
+ *      category2 - （被减数）资产负债表、利润表、现金流量表
+ *      index2 - 参数
+ *      last    -   最近一期年报
+ *      offset  -   对比年报偏移量      
+ */
+var doubleOffset = function(history, category1, index1, category2, index2, last, offset) {
+    var sum1 = 0,
+        sum2 = 0,
+        i = 0;
+
+    for (; i < index1.length; i++) {
+        sum1 += (history[category1[i]][last][index1[i]] - history[category1[i]][last - offset][index1[i]])
+    }
+
+    for (i = 0; i < index2.length; i++) {
+        sum2 += (history[category2[i]][last][index2[i]] - history[category2[i]][last - offset][index2[i]])
+    }
+
+    return sum1 - sum2;
 }
 
 module.exports = {
@@ -72,5 +122,7 @@ module.exports = {
     sum: sum,
     proportion: proportion,
     substraction: substraction,
-    increase: increase
+    increase: increase,
+    singleOffset: singleOffset,
+    doubleOffset: doubleOffset
 }

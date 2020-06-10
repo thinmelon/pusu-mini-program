@@ -1,0 +1,11 @@
+<!--miniprogram/pages/scheduling.wxml-->
+<view class="container">
+    <calendar calendarConfig="{{calendarConfig}}" bind:afterTapDay="afterTapDay" bind:afterCalendarRender="afterCalendarRender">
+    </calendar>
+</view>
+
+<mp-cells title="已选择日期：">
+    <mp-slideview buttons="{{slideButtons}}" bindbuttontap="onSlideButtonTap" wx:for="{{selectedDays}}">
+        <mp-cell value="{{item.year}}-{{item.month}}-{{item.day}} {{item.lunar.IMonthCn}}{{item.lunar.IDayCn}}" footer="{{item.lunar.ncWeek}}"></mp-cell>
+    </mp-slideview>
+</mp-cells>

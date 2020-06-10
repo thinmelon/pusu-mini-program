@@ -1,0 +1,76 @@
+<!--pages/order/audit/audit.wxml-->
+<wxs src="../config.wxs" module="config" />
+
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+<view class="guide">
+    <text class="headline">订单详情：</text>
+    <text class="p">联系人：</text>
+    <text class="p">{{order.customer}}</text>
+    <text class="p">联系电话：</text>
+    <text class="p">{{order.mobile}}</text>
+    <text class="p">剧团名称：</text>
+    <text class="p">{{order.troupeName}}</text>
+    <text class="p">演出日期：</text>
+    <text class="p" wx:for="{{order.dramaDate}}" wx:key="day">{{item.year}}-{{item.month}}-{{item.day}}</text>
+    <text class="p">演出地点：</text>
+    <text class="p">{{order.dramaAddress}}</text>
+    <text class="p">心仪剧目：</text>
+    <text class="p" wx:for="{{order.preferred}}" wx:key="_id">{{item.name}}</text>
+    <text class="p">是否自有戏台：</text>
+    <text class="p" wx:if="{{order.stage}}">有</text>
+    <text class="p" wx:else>无</text>
+    <text class="p">基准金额：</text>
+    <text class="p">{{order.totalFee/100}}元</text>
+    <text class="p">订单编号：</text>
+    <text class="p">{{order._id}}</text>
+    <text class="p">创建时间：</text>
+    <text class="p">{{order.createTime}}</text>
+
+    <mp-form id="audit" rules="{{rules}}" models="{{formData}}" style="width: 100%;" wx:if="{{order.status === config.__ORDER_STATUS__.CHECK}}">
+        <mp-cells title="用户的支付金额将以此次输入为准" footer="">
+            <mp-cell prop="totalFee" title="金额" footer="元" ext-class="weui-cell_vcode">
+                <input bindblur="onAuditInputBlur" data-field="totalFee" type="digit" class="weui-input field-input" value="{{formData.totalFee/100}}" />
+            </mp-cell>
+        </mp-cells>
+        <view class="weui-cells__title">如果拒绝订单，请填写拒绝理由</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea prop="rejectMsg" bindblur="onAuditInputBlur" data-field="rejectMsg" class="weui-textarea" placeholder="拒绝理由应不少于10个字" style="height: 3.3em" value="{{formData.rejectMsg}}" />
+                    <view class="weui-textarea-counter">0/200</view>
+                </view>
+            </view>
+        </view>
+    </mp-form>
+
+    <mp-form id="refund" style="width: 100%;" wx:if="{{order.status === config.__ORDER_STATUS__.REFUND}}">
+        <mp-cells title="预计退款金额" footer="">
+            <mp-cell title="订单金额" footer="{{formData.totalFee/100}}元"></mp-cell>
+            <mp-cell title="违约金" footer="{{formData.penalty/100}}元"></mp-cell>
+            <mp-cell title="退款金额" footer="{{formData.refundFee/100}}元"></mp-cell>
+        </mp-cells>
+        <view class="weui-cells__title">如果拒绝退款申请，请填写拒绝理由</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea prop="rejectMsg" bindblur="onAuditInputBlur" data-field="rejectMsg" class="weui-textarea" placeholder="拒绝理由应不少于10个字" style="height: 3.3em" value="{{formData.rejectMsg}}" />
+                    <view class="weui-textarea-counter">0/200</view>
+                </view>
+            </view>
+        </view>
+    </mp-form>
+
+    <!-- 仅在订单状态为 CHECK 或者 REFUND 时有效 -->
+    <form bindsubmit="onTap" report-submit wx:if="{{order.status === config.__ORDER_STATUS__.CHECK || order.status === config.__ORDER_STATUS__.REFUND}}">
+        <view class="nav">
+            <button class="prev" type="warn" form-type="submit" data-answer="1">
+                <text>拒绝</text>
+            </button>
+            <button class="next" type="primary" form-type="submit" data-answer="0">
+                <text>同意</text>
+            </button>
+        </view>
+    </form>
+
+</view>

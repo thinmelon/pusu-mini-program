@@ -78,7 +78,6 @@ async function grabMortgageRate(request) {
                 secondAverageRate: response.data.second_avg_rate_list[i], //  二套平均利率
                 staticAverageRate: response.data.static_avg_rate_list[i] //  同期基准利率
             }
-            // console.log(rate)
 
             const record = await db.collection('_money').where({
                 "_id": month

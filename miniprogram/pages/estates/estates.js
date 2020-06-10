@@ -50,72 +50,112 @@ Page({
         }
     },
 
-    lineCanvases: [{
-            _id: "historyAvailableNumberHousing",
-            value: "availableNumberHousing",
-            name: "可售住宅数量走势",
-            unit: "套",
-            handler: null
+    //  商品房日签约趋势图
+    dayContractCanvas: [{
+        _id: "housingConstractNumber",
+        value: "housingConstractNumber",
+        name: "商品房日签约统计",
+        unit: "套",
+        subIndex: [{
+            name: "总数",
+            value: "dayTotalContract"
         }, {
-            _id: "historySoldNumberHousing",
-            value: "soldNumberHousing",
-            name: "已售住宅数量走势",
-            unit: "套",
-            handler: null
-        },
-        // {
-        //     _id: "averagePriceHousing",
-        //     value: "averagePriceHousing",
-        //     name: "住宅成交均价走势",
-        //     unit: "元",
-        //     handler: null
-        // }, {
-        //     _id: "averagePriceGarage",
-        //     value: "averagePriceGarage",
-        //     name: "车库成交均价走势",
-        //     unit: "元",
-        //     handler: null
-        // }, {
-        //     _id: "averagePriceBusiness",
-        //     value: "averagePriceBusiness",
-        //     name: "商业成交均价走势",
-        //     unit: "元",
-        //     handler: null
-        // }, {
-        //     _id: "averagePriceOffice",
-        //     value: "averagePriceOffice",
-        //     name: "写字楼成交均价走势",
-        //     unit: "元",
-        //     handler: null
-        // }
-    ],
+            name: "住宅",
+            value: "dayHousingContract"
+        }],
+        handler: null
+    }],
 
+    //  商品房月签约趋势图
+    monthContractCanvas: [{
+        _id: "monthConstractNumber",
+        value: "monthConstractNumber",
+        name: "商品房月签约统计",
+        unit: "套",
+        subIndex: [{
+            name: "总数",
+            value: "monthTotalContract"
+        }, {
+            name: "住宅",
+            value: "monthHousingContract"
+        }],
+        handler: null
+    }],
+
+    //  近20天可售及已售住宅数量走势
+    lineCanvases: [{
+        _id: "historyAvailableNumberHousing",
+        value: "availableNumberHousing",
+        name: "可售住宅数量走势",
+        unit: "套",
+        handler: null
+    }, {
+        _id: "historySoldNumberHousing",
+        value: "soldNumberHousing",
+        name: "已售住宅数量走势",
+        unit: "套",
+        handler: null
+    }],
+
+    //  昨天可售及已售住宅数量各县区占比图
     ringCanvases: [{
-            _id: "availableNumberHousing",
-            value: "availableNumberHousing",
-            name: "可售住宅数量",
-            handler: null
-        },
-        // {
-        //     _id: "availableAreaHousing",
-        //     value: "availableAreaHousing",
-        //     name: "可售住宅面积",
-        //     handler: null
-        // }, 
-        {
-            _id: "soldNumberHousing",
-            value: "soldNumberHousing",
-            name: "已售住宅数量",
-            handler: null
-        },
-        // {
-        //     _id: "soldAreaHousing",
-        //     value: "soldAreaHousing",
-        //     name: "已售住宅面积",
-        //     handler: null
-        // }
-    ],
+        _id: "availableNumberHousing",
+        value: "availableNumberHousing",
+        name: "可售住宅数量",
+        handler: null
+    }, {
+        _id: "soldNumberHousing",
+        value: "soldNumberHousing",
+        name: "已售住宅数量",
+        handler: null
+    }],
 
+    //  莆田市人口走势图
+    populationCanvas: [{
+        _id: "genderResidentPopulation",
+        value: "genderResidentPopulation",
+        name: "常住人口走势",
+        unit: "万人",
+        subIndex: [{
+            name: "常住总人口",
+            value: "resident"
+        }, {
+            name: "（男）",
+            value: "residentMale"
+        }, {
+            name: "（女）",
+            value: "residentFemale"
+        }],
+        handler: null
+    }, {
+        _id: "regionalResidentPopulation",
+        value: "regionalResidentPopulation",
+        name: "区域常住人口",
+        unit: "万人",
+        subIndex: [{
+            name: "城市",
+            value: "residentTown"
+        }, {
+            name: "农村",
+            value: "residentCountry"
+        }],
+        handler: null
+    }, {
+        _id: "birthRate",
+        value: "birthRate",
+        name: "出生率",
+        unit: "%",
+        subIndex: [{
+            name: "出生率",
+            value: "birthRate"
+        }, {
+            name: "死亡率",
+            value: "deathRate"
+        }],
+        handler: null
+    }],
+
+    //  莆田市房地产开发投资的面积图
     areaCanvases: [{
         _id: "houseConstructionArea",
         value: "houseConstructionArea",
@@ -166,65 +206,7 @@ Page({
         handler: null
     }],
 
-    contractCanvas: [{
-        _id: "housingConstractNumber",
-        value: "housingConstractNumber",
-        name: "商品房签约统计",
-        unit: "套",
-        subIndex: [{
-            name: "总数",
-            value: "dayTotalContract"
-        }, {
-            name: "住宅",
-            value: "dayHousingContract"
-        }],
-        handler: null
-    }],
-
-    populationCanvas: [{
-        _id: "genderResidentPopulation",
-        value: "genderResidentPopulation",
-        name: "常住人口走势",
-        unit: "万人",
-        subIndex: [{
-            name: "常住总人口",
-            value: "resident"
-        }, {
-            name: "（男）",
-            value: "residentMale"
-        }, {
-            name: "（女）",
-            value: "residentFemale"
-        }],
-        handler: null
-    }, {
-        _id: "regionalResidentPopulation",
-        value: "regionalResidentPopulation",
-        name: "区域常住人口",
-        unit: "万人",
-        subIndex: [{
-            name: "城市",
-            value: "residentTown"
-        }, {
-            name: "农村",
-            value: "residentCountry"
-        }],
-        handler: null
-    }, {
-        _id: "birthRate",
-        value: "birthRate",
-        name: "出生率",
-        unit: "%",
-        subIndex: [{
-            name: "出生率",
-            value: "birthRate"
-        }, {
-            name: "死亡率",
-            value: "deathRate"
-        }],
-        handler: null
-    }],
-
+    //  金融市场走势图
     rateCanvas: [{
         _id: "loanPrimeRate",
         value: "loanPrimeRate",
@@ -272,13 +254,17 @@ Page({
             console.error('获取设备系统信息失败 >>> ', e);
         }
 
-        this.getEstatesMarket()
+        this.getEstatesHistoryMarket() //  商品房签约日数据
+        this.getEstatesMonthMarket() //  商品房签约月数据
         this.getResidentPopulation() //  长期看人口需求
         this.getEstatesInvestment() //  中期看土地供应
         this.getMortgageRate() //  短期看金融
 
     },
 
+    /**
+     *  更多内容
+     */
     onMoreIndexTap: function() {
         wx.navigateTo({
             url: "/pages/index/index"
@@ -286,7 +272,7 @@ Page({
     },
 
     /**
-     *  知识点点击事件
+     *  知识点【很帅的投资客】
      */
     onCellTap: function(e) {
         console.log(e)
@@ -298,7 +284,7 @@ Page({
     /**
      *      获取房地产市场统计数据
      */
-    getEstatesMarket: function() {
+    getEstatesHistoryMarket: function() {
         app.wxp.cloud.callFunction({
                 name: 'finance',
                 data: {
@@ -308,10 +294,10 @@ Page({
             .then(res => {
                 console.log(res)
                 if (res.result.list && res.result.list.length > 0) {
-                    //  创建成交均价，可售、已售趋势图
-                    this.createContractCanvas(res.result.list)
-                    //  创建成交均价，可售、已售趋势图
-                    this.createLineChart(res.result.list)
+                    //  创建近20天日/月成交数量趋势图
+                    this.createDayContractCanvas(res.result.list)
+                    //  创建近一月可售、已售住宅数量趋势图
+                    this.createSoldHousingCanvas(res.result.list)
                     //  取昨天的数据
                     const target = res.result.list.find(item => {
                         return item.day.date === MOMENT().subtract(1, 'days').format('YYYY-MM-DD')
@@ -338,6 +324,28 @@ Page({
             })
     },
 
+    /**
+     *  获取商品房月签约数据
+     */
+    getEstatesMonthMarket: function() {
+        app.wxp.cloud.callFunction({
+                name: 'finance',
+                data: {
+                    action: 'month'
+                }
+            })
+            .then(res => {
+                console.log(res)
+                if (res.result.list && res.result.list.length > 0) {
+                    //  创建月成交数量趋势图
+                    this.createMonthContractCanvas(res.result.list)
+                }
+            })
+    },
+
+    /**
+     *  房地产投资
+     */
     getEstatesInvestment: function() {
         app.wxp.cloud.callFunction({
                 name: 'finance',
@@ -354,6 +362,9 @@ Page({
             })
     },
 
+    /**
+     *  人口
+     */
     getResidentPopulation: function() {
         app.wxp.cloud.callFunction({
                 name: 'finance',
@@ -372,6 +383,9 @@ Page({
             })
     },
 
+    /**
+     *  货款利率
+     */
     getMortgageRate: function() {
         app.wxp.cloud.callFunction({
                 name: 'finance',
@@ -408,10 +422,91 @@ Page({
         });
     },
 
+    createLineChart: function(canvas, categories, series) {
+        return new wxcharts({
+            canvasId: canvas._id,
+            type: 'line',
+            categories: categories,
+            series: series,
+            xAxis: {
+                disableGrid: true
+            },
+            yAxis: {
+                min: 0
+            },
+            animation: false,
+            width: app.windowWidth,
+            height: app.windowHeight,
+            dataLabel: false,
+            dataPointShape: false,
+            extra: {
+                lineStyle: 'curve'
+            }
+        });
+    },
+
+    createDayContractCanvas: function(target) {
+        this.dayContractCanvas = this.dayContractCanvas.map(canvas => {
+            const categories = [];
+            const series = [];
+
+            /** X坐标数据源 */
+            target.map(item => {
+                categories.push(item.day.date);
+            })
+            /** Y坐标数据源 */
+            canvas.subIndex.map(field => {
+                series.push({
+                    name: field.name,
+                    data: target.map(item => {
+                        return item.day[field.value] || 0
+                    }),
+                    format: function(val, name) {
+                        return val;
+                    }
+                })
+            })
+            // console.log(series)
+
+            /** 绘制图表 */
+            canvas.handler = this.createLineChart(canvas, categories, series)
+            return canvas
+        });
+    },
+
+    createMonthContractCanvas: function(target) {
+        this.monthContractCanvas = this.monthContractCanvas.map(canvas => {
+            const categories = [];
+            const series = [];
+
+            /** X坐标数据源 */
+            target.map(item => {
+                categories.push(item._id);
+            })
+            /** Y坐标数据源 */
+            canvas.subIndex.map(field => {
+                series.push({
+                    name: field.name,
+                    data: target.map(item => {
+                        return item[field.value] || 0
+                    }),
+                    format: function(val, name) {
+                        return val;
+                    }
+                })
+            })
+            // console.log(series)
+
+            /** 绘制图表 */
+            canvas.handler = this.createLineChart(canvas, categories, series)
+            return canvas
+        });
+    },
+
     /**
-     *  创建线形图表
+     *  创建可售及已售住宅数量趋势图
      */
-    createLineChart: function(target) {
+    createSoldHousingCanvas: function(target) {
         this.lineCanvases = this.lineCanvases.map(canvas => {
             const categories = [];
             const series = [];
@@ -434,27 +529,7 @@ Page({
             })
 
             /** 绘制图表 */
-            canvas.handler = new wxcharts({
-                canvasId: canvas._id,
-                type: 'line',
-                categories: categories,
-                series: series,
-                xAxis: {
-                    disableGrid: true
-                },
-                yAxis: {
-                    min: 0
-                },
-                animation: false,
-                width: app.windowWidth,
-                height: app.windowHeight,
-                dataLabel: false,
-                dataPointShape: false,
-                extra: {
-                    lineStyle: 'curve'
-                }
-            });
-
+            canvas.handler = this.createLineChart(canvas, categories, series)
             return canvas
         });
     },
@@ -529,55 +604,6 @@ Page({
         });
     },
 
-    createContractCanvas: function(target) {
-        this.contractCanvas = this.contractCanvas.map(canvas => {
-            const categories = [];
-            const series = [];
-
-            /** X坐标数据源 */
-            target.map(item => {
-                categories.push(item.day.date);
-            })
-            /** Y坐标数据源 */
-            canvas.subIndex.map(field => {
-                series.push({
-                    name: field.name,
-                    data: target.map(item => {
-                        return item.day[field.value] || 0
-                    }),
-                    format: function(val, name) {
-                        return val;
-                    }
-                })
-            })
-            // console.log(series)
-
-            /** 绘制图表 */
-            canvas.handler = new wxcharts({
-                canvasId: canvas._id,
-                type: 'line',
-                categories: categories,
-                series: series,
-                xAxis: {
-                    disableGrid: true
-                },
-                yAxis: {
-                    min: 0
-                },
-                animation: false,
-                width: app.windowWidth,
-                height: app.windowHeight,
-                dataLabel: false,
-                dataPointShape: false,
-                extra: {
-                    lineStyle: 'curve'
-                }
-            });
-
-            return canvas
-        });
-    },
-
     /**
      *      人口
      */
@@ -604,27 +630,7 @@ Page({
             })
 
             /** 绘制图表 */
-            canvas.handler = new wxcharts({
-                canvasId: canvas._id,
-                type: 'line',
-                categories: categories,
-                series: series,
-                xAxis: {
-                    disableGrid: true
-                },
-                yAxis: {
-                    min: 0
-                },
-                animation: false,
-                width: app.windowWidth,
-                height: app.windowHeight,
-                dataLabel: false,
-                dataPointShape: false,
-                extra: {
-                    lineStyle: 'curve'
-                }
-            });
-
+            canvas.handler = this.createLineChart(canvas, categories, series)
             return canvas
         });
     },
@@ -655,27 +661,7 @@ Page({
             })
 
             /** 绘制图表 */
-            canvas.handler = new wxcharts({
-                canvasId: canvas._id,
-                type: 'line',
-                categories: categories,
-                series: series,
-                xAxis: {
-                    disableGrid: true
-                },
-                yAxis: {
-                    min: 0
-                },
-                animation: false,
-                width: app.windowWidth,
-                height: app.windowHeight,
-                dataLabel: false,
-                dataPointShape: false,
-                extra: {
-                    lineStyle: 'curve'
-                }
-            });
-
+            canvas.handler = this.createLineChart(canvas, categories, series)
             return canvas
         });
     }

@@ -1,5 +1,0 @@
-/* pages/food/search.wxss */
-
-.restaurant-card {
-  margin-top: 48px;
-}

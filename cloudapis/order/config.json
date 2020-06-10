@@ -1,0 +1,9 @@
+{
+    "triggers": [
+        {
+            "name": "QA",
+            "type": "timer",
+            "config": "*/30 * * * * * *"
+        }
+    ]
+}

@@ -25,7 +25,7 @@
 		"enhance": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.5",
+	"libVersion": "2.10.2",
 	"appid": "wx0a72bd7d41e0b066",
 	"projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
 	"isGameTourist": false,
@@ -58,8 +58,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/food/list",
-					"pathName": "pages/food/list",
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
 					"query": "",
 					"scene": null
 				},
@@ -74,14 +74,14 @@
 					"id": 2,
 					"name": "pages/stock/stock",
 					"pathName": "pages/stock/stock",
-					"query": "code=002281",
+					"query": "code=603228",
 					"scene": null
 				},
 				{
 					"id": 3,
 					"name": "pages/stock/principle/principle",
 					"pathName": "pages/stock/principle/principle",
-					"query": "code=01810",
+					"query": "code=002475",
 					"scene": null
 				},
 				{
@@ -95,6 +95,27 @@
 					"id": -1,
 					"name": "更多内容",
 					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "剧团列表",
+					"pathName": "pages/order/troupe/troupe",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "审核",
+					"pathName": "pages/order/audit/audit",
+					"query": "_=%7B%22outTradeNo%22%3A%22h0yU2htV9n6quHdtHfHfnUdywrJc4tjP%22%2C%22outRefundNo%22%3A%22cCVzpvsr96ebh6c8tUWOk0OkBEiTDMuD%22%7D",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/order/list/list",
+					"pathName": "pages/order/list/list",
 					"query": "",
 					"scene": null
 				}

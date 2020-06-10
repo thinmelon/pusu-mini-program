@@ -1,0 +1,10 @@
+<!--miniprogram/pages/order/troupe.wxml-->
+<mp-searchbar bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+
+<mp-cells title="排行榜">
+    <mp-cell link wx:for="{{troupes}}" wx:key="_id" data-troupe="{{item}}" bindtap="onTroupeTap">
+        <view class="troupe-name">{{item.name}}</view>
+        <view slot="footer" class="troupe-footer">点赞数：{{item.like}}</view>
+        <mp-icon slot="icon" icon="star" color="black" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></mp-icon>
+    </mp-cell>
+</mp-cells>

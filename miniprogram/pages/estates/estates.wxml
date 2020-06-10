@@ -5,7 +5,13 @@
     <text class="headline">商品房日签约（套）</text>
 </view>
 
-<canvas canvas-id="housingConstractNumber" disable-scroll="true" class="canvas" data-category="contractCanvas" data-id="housingConstractNumber" bindtouchstart="canvasTouchHandler"></canvas>
+<canvas canvas-id="housingConstractNumber" disable-scroll="true" class="canvas" data-category="dayContractCanvas" data-id="housingConstractNumber" bindtouchstart="canvasTouchHandler"></canvas>
+
+<view class="guide">
+    <text class="headline">商品房月签约（套）</text>
+</view>
+
+<canvas canvas-id="monthConstractNumber" disable-scroll="true" class="canvas" data-category="monthContractCanvas" data-id="monthConstractNumber" bindtouchstart="canvasTouchHandler"></canvas>
 
 <view class="guide">
     <text class="headline">住宅成交均价（元/平方米）</text>
@@ -17,12 +23,6 @@
     </view>
 </view>
 
-<!-- 住宅成交均价走势图 -->
-<!-- <view class="guide">
-    <text class="headline">近一月住宅成交均价</text>
-</view> -->
-<!-- <canvas canvas-id="averagePriceHousing" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="averagePriceHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
-
 <view class="guide">
     <text class="headline">车库成交均价（元/平方米）</text>
     <view class="wrapper">
@@ -32,12 +32,6 @@
         </view>
     </view>
 </view>
-
-<!-- 车库成交均价走势图 -->
-<!-- <view class="guide">
-    <text class="headline">近一月车库成交均价</text>
-</view>
-<canvas canvas-id="averagePriceGarage" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceGarage" bindtouchstart="canvasTouchHandler"></canvas> -->
 
 <view class="guide">
     <text class="headline">店铺成交均价（元/平方米）</text>
@@ -49,33 +43,11 @@
     </view>
 </view>
 
-<!-- 店铺成交均价走势图 -->
-<!-- <view class="guide">
-    <text class="headline">近一月店铺成交均价</text>
-</view>
-<canvas canvas-id="averagePriceBusiness" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceBusiness" bindtouchstart="canvasTouchHandler"></canvas> -->
-
 <view class="guide">
     <text class="headline">写字楼成交均价（元/平方米）</text>
     <view class="wrapper">
         <view class="district" wx:for="{{districts}}" wx:key="id">
             <text class="important">{{item.today.averagePriceOffice}}</text>
-            <text class="p">{{item.name}}</text>
-        </view>
-    </view>
-</view>
-
-<!-- 写字楼成交均价走势图 -->
-<!-- <view class="guide">
-    <text class="headline">近一月写字楼成交均价</text>
-</view>
-<canvas canvas-id="averagePriceOffice" disable-scroll="true" class="canvas" data-category="lineCanvases" data-id="averagePriceOffice" bindtouchstart="canvasTouchHandler"></canvas> -->
-
-<view class="guide">
-    <text class="headline">可售住宅（套）</text>
-    <view class="wrapper">
-        <view class="district" wx:for="{{districts}}" wx:key="id">
-            <text class="important">{{item.today.availableNumberHousing}}</text>
             <text class="p">{{item.name}}</text>
         </view>
     </view>
@@ -92,21 +64,6 @@
 <!-- 各县区可售住宅数量 -->
 <canvas canvas-id="availableNumberHousing" disable-scroll="true" class="canvas" data-category="ring"></canvas>
 
-<view class="guide"></view>
-
-<!-- 各县区可售住宅面积 -->
-<!-- <canvas canvas-id="availableAreaHousing" disable-scroll="true" class="canvas" data-category="ring" data-id="availableAreaHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
-
-<view class="guide">
-    <text class="headline">已售住宅（套）</text>
-    <view class="wrapper">
-        <view class="district" wx:for="{{districts}}" wx:key="id">
-            <text class="important">{{item.today.soldNumberHousing}}</text>
-            <text class="p">{{item.name}}</text>
-        </view>
-    </view>
-</view>
-
 <!-- 已售住宅数量走势图 -->
 <view class="guide">
     <text class="headline">近一月已售住宅数量</text>
@@ -119,9 +76,6 @@
 <canvas canvas-id="soldNumberHousing" disable-scroll="true" class="canvas" data-category="ring"></canvas>
 
 <view class="guide"></view>
-
-<!-- 各县区已售住宅面积 -->
-<!-- <canvas canvas-id="soldAreaHousing" disable-scroll="true" class="canvas" data-category="ring" data-id="soldAreaHousing" bindtouchstart="canvasTouchHandler"></canvas> -->
 
 <view class="guide">
     <text class="headline">长期看人口、中期看土地、短期看金融</text>

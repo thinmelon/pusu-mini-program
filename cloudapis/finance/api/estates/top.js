@@ -39,12 +39,16 @@ async function grabTopMonthSell(request) {
             const topMonthSell = []
             for (let i = 1, length = request.top || TOP_NUM_MONTH_SELL; i <= length; i++) {
                 const target1 = $('table tr').eq(i).children()
-                topMonthSell.push({
-                    "id": target1.find('a').eq(0).attr('href').split('?')[1].split('=')[1],
-                    "project": target1.eq(2).text(),
-                    "deal": target1.eq(3).text(),
-                    "area": target1.eq(4).text()
-                })
+                if (target1.length > 0) {
+                    topMonthSell.push({
+                        "id": target1.find('a').eq(0).attr('href').split('?')[1].split('=')[1],
+                        "project": target1.eq(2).text(),
+                        "deal": target1.eq(3).text(),
+                        "area": target1.eq(4).text()
+                    })
+                } else {
+                    break;
+                }
             }
             return topMonthSell
         } else {

@@ -246,6 +246,7 @@ async function grabStockInfo(request, url, field) {
     const token = await getCNInfoAPIOauthToken()
     const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
     const data = {}
+    // console.log(response)
 
     if (response.status === 200 && response.data.resultcode === 200) {
         data[field] = response.data.records

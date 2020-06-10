@@ -23,7 +23,6 @@ button::after {
     box-sizing: border-box;
 }
 
-
 .font-smaller {
     font-size: 9pt;
     color: #888;
@@ -164,10 +163,6 @@ button::after {
     padding: 7px 3px;
 }
 
-.field-input {
-    padding-left: 120rpx;
-}
-
 .supplementary {
     color: #576b95;
 }
@@ -190,4 +185,10 @@ button::after {
 .canvas {
     width: 100%;
     height: 270px;
+}
+
+.field-input {
+    height: 120rpx;
+    padding-left: 100rpx;
+    text-align: center;
 }

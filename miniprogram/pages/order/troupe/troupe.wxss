@@ -1,0 +1,10 @@
+/* miniprogram/pages/order/troupe.wxss */
+
+.troupe-name {
+    font-size: 9pt;
+    width: 360rpx;
+}
+
+.troupe-footer {
+    font-size: 11pt;
+}

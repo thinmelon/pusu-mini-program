@@ -1,0 +1,18 @@
+/* pages/order/create/create.wxss */
+@import "../../../style/guide.wxss";
+
+.guide .counter {
+    margin-top: 50rpx;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+}
+
+.order-form {
+    width: 100%;
+}
+
+.drama-name, .drama-date, .drama-address {
+    font-size: 9pt;
+    width: 360rpx;
+}

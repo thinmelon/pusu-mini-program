@@ -1,0 +1,6 @@
+/* pages/order/refund/refund.wxss */
+@import "../../../style/guide.wxss";
+
+.btn {
+    padding-bottom: 48px;
+}

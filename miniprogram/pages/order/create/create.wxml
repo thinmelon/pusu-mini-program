@@ -1,0 +1,128 @@
+<!--pages/order/create/create.wxml-->
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<view class="container">
+
+    <!-- 导航 -->
+    <view class="list">
+        <view class="list-item">
+            <text class="request-text" wx:for="{{4}}" wx:key="*this" style="color: {{step === index + 1 ? 'red': 'black'}}">{{index + 1}}</text>
+        </view>
+    </view>
+
+    <!-- 预约剧团指引 -->
+
+    <!-- 联系人 -->
+    <view wx:if="{{step === 1}}" class="order-form">
+        <mp-form id="contact" rules="{{contactRules}}" models="{{formData}}">
+            <mp-cells title="联系人" footer="">
+                <mp-cell prop="customer" title="姓名" ext-class="weui-cell_vcode">
+                    <input bindblur="onContactInputBlur" type="text" data-field="customer" class="weui-input field-input" value="{{formData.customer}}" />
+                </mp-cell>
+                <!-- 验证手机号 -->
+                <self-vcode mobile="{{formData.mobile}}" bind:onReceiveVCode='onReceiveVCode'></self-vcode>
+            </mp-cells>
+
+            <checkbox-group bindchange="bindAgreeChange">
+                <label class="weui-agree" for="weuiAgree">
+                    <view class="weui-agree__text">
+                        <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}" />
+                        <view class="weui-agree__checkbox-icon">
+                            <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
+                        </view>
+                        阅读并同意
+                        <navigator url="" class="weui-agree__link">《相关条款》</navigator>
+                    </view>
+                </label>
+            </checkbox-group>
+        </mp-form>
+
+        <view class="guide">
+            <view class="nav">
+                <button class="next" size="mini" type="default" bindtap="nextStep">下一步</button>
+            </view>
+        </view>
+    </view>
+
+
+    <!-- 主要信息 -->
+    <view wx:if="{{step === 2}}" class="order-form">
+        <mp-form id="primary" rules="{{primaryRules}}" models="{{formData}}">
+            <mp-cells title="主要信息" footer="">
+                <mp-cell value="剧团名称">
+                    <view slot="footer" class="drama-name">{{formData.troupeName}}</view>
+                </mp-cell>
+                <mp-cell prop="dramaDate" link hover value="演出日期" data-name="{{formData.troupeName}}" bindtap="onDramaDateTap">
+                    <view slot="footer" class="drama-date">{{formData.dramaDate.length > 0 ?'已选'+ formData.dramaDate.length +'天': ''}}</view>
+                </mp-cell>
+                <mp-cell prop="dramaAddress" link hover value="演出地点" bindtap="onDramaAddressTap">
+                    <view slot="footer" class="drama-address">{{formData.dramaAddress}}</view>
+                </mp-cell>
+            </mp-cells>
+        </mp-form>
+
+        <view class="guide">
+            <view class="nav">
+                <button class="prev" size="mini" type="default" bindtap="prevStep">上一步</button>
+                <button class="next" size="mini" type="default" bindtap="nextStep">下一步</button>
+            </view>
+        </view>
+    </view>
+
+    <!-- 次要信息 -->
+    <view wx:if="{{step === 3}}" class="guide order-form">
+        <mp-form id="secondary" rules="{{secondaryRules}}" models="{{formData}}">
+            <mp-cells title="次要信息" footer="">
+                <mp-cell link hover value="心仪剧目" bindtap="onDramaListTap">
+                    <view slot="footer" class="drama-preferred">{{formData.preferred.length > 0 ? formData.preferred[0].name+"...": "选填"}}</view>
+                </mp-cell>
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell weui-cell_switch">
+                        <view class="weui-cell__bd">是否有戏台</view>
+                        <view class="weui-cell__ft">
+                            <switch checked="{{formData.stage}}" bindchange="onStageChanged" />
+                        </view>
+                    </view>
+                </view>
+            </mp-cells>
+        </mp-form>
+
+        <view class="nav">
+            <button class="prev" size="mini" type="default" bindtap="prevStep">上一步</button>
+            <button class="next" size="mini" type="default" bindtap="nextStep">下一步</button>
+        </view>
+    </view>
+
+    <!-- 确认后提交订单 -->
+    <view wx:if="{{step === 4}}" class="guide order-form">
+        <text class="headline">请再一次确认订单</text>
+        <text class="p">联系人：</text>
+        <text class="p">{{formData.customer}}</text>
+        <text class="p">联系电话：</text>
+        <text class="p">{{formData.mobile}}</text>
+        <text class="p">剧团名称：</text>
+        <text class="p">{{formData.troupeName}}</text>
+        <text class="p">演出日期：</text>
+        <text class="p" wx:for="{{formData.dramaDate}}" wx:key="day">{{item.year}}-{{item.month}}-{{item.day}}</text>
+        <text class="p">演出地点：</text>
+        <text class="p">{{formData.dramaAddress}}</text>
+        <text class="p">心仪剧目：</text>
+        <text class="p" wx:for="{{formData.preferred}}" wx:key="_id">{{item.name}}</text>
+        <text class="p">是否自有戏台：</text>
+        <text class="p" wx:if="{{formData.stage}}">有</text>
+        <text class="p" wx:else>无</text>
+        <text class="p">金额：</text>
+        <text class="p">{{formData.totalFee}}元</text>
+
+        <view class="nav">
+            <button class="prev" size="mini" type="default" bindtap="prevStep">返回修改</button>
+            <!-- <button class="next" bindtap="createOrder"> 提交订单 </button> -->
+            <button class="next" bindtap="submitSubscribeMessage" wx:if="{{messageType === 1}}"> 提交订单 </button>
+            <form bindsubmit="createOrder" report-submit wx:if="{{messageType === 0}}">
+                <button class="next" form-type="submit">
+                    <text>提交订单</text>
+                </button>
+            </form>
+        </view>
+    </view>
+
+</view>

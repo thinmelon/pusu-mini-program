@@ -22,7 +22,10 @@ Page({
         scores: [],
         principles: [],
         show: false,
-        page: 0,
+        target: 11, //关注企业的目标财报在历史财报数据中的位置
+        contrast: 7, //  关注企业的同比财报在历史财报数据中的位置
+        // offset: 4, //  计算自由现金流当期财报距上一年报的偏移量
+        page: 0
     },
 
     /**
@@ -146,6 +149,15 @@ Page({
             this.data.stock.principle.push(item)
         }
         // console.log('onInput >>> ', this.data.stock.principle)
+    },
+
+    /**
+     *  财报设置参数发生改变
+     */
+    onSettingChanged: function(e) {
+        const setting = {}
+        setting[e.currentTarget.dataset.field] = parseInt(e.detail.value)
+        this.setData(setting)
     },
 
     /**
@@ -367,7 +379,7 @@ Page({
                     total2 += data[principle.dCategory[i]][k] ? parseInt(data[principle.dCategory[i]][k][principle.denominator[i]] || 0) : 0
                 }
                 //  被除数不为零
-                seriesData.push(total2 > 0 ? (total1 / total2).toFixed(2) : 0)
+                seriesData.push(total2 !== 0 ? (total1 / total2).toFixed(2) : 0)
             }
             console.log(seriesData)
 

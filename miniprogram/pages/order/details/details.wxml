@@ -1,0 +1,94 @@
+<!--pages/order/details/details.wxml-->
+<wxs src="../config.wxs" module="config" />
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+<view class="container">
+
+    <!-- 导航 -->
+    <view class="list">
+        <view class="list-item">
+            <text class="request-text" style="color: {{order.status <= config.__ORDER_STATUS__.CHECK ? 'red': 'black'}}">预约剧团</text>
+            <text class="request-text" style="color: {{order.status === config.__ORDER_STATUS__.NOTPAY ? 'red': 'black'}}">剧团已接单</text>
+            <text class="request-text" style="color: {{order.status === config.__ORDER_STATUS__.SUCCESS ? 'red': 'black'}}">支付完成</text>
+            <text class="request-text" style="color: {{order.status === config.__ORDER_STATUS__.CLOSE ? 'red': 'black'}}">结束</text>
+        </view>
+    </view>
+
+    <mp-cells title="创建时间：{{order.createTime}}" class="order-details">
+        <mp-cell value="编号">
+            <view slot="footer" class="id">{{order._id}}</view>
+        </mp-cell>
+        <mp-cell value="剧团名称">
+            <view slot="footer" class="troupe-name">{{order.troupeName}}</view>
+        </mp-cell>
+        <mp-cell value="演出地点">
+            <view slot="footer" class="drama-address">{{order.dramaAddress}}</view>
+        </mp-cell>
+        <mp-cells title="演出日期">
+            <mp-cell wx:for="{{order.dramaDate}}" wx:key="day" value="{{item.year}}-{{item.month}}-{{item.day}} {{item.lunar.IMonthCn}}{{item.lunar.IDayCn}}" footer="{{item.lunar.ncWeek}}">
+            </mp-cell>
+        </mp-cells>
+        <mp-cells title="心仪剧目" wx:if="{{order.preferred.length}}">
+            <mp-cell wx:for="{{order.preferred}}" wx:key="_id" value="{{item.name}}">
+            </mp-cell>
+        </mp-cells>
+        <mp-cell value="是否自有戏台">
+            <view slot="footer">{{order.stage?"有":"无"}}</view>
+        </mp-cell>
+        <mp-cell value="联系人">
+            <view slot="footer">{{order.customer}}</view>
+        </mp-cell>
+        <mp-cell value="联系方式">
+            <view slot="footer">{{order.mobile}}</view>
+        </mp-cell>
+
+        <mp-cells title="剧团意见" wx:if="{{order.status === config.__ORDER_STATUS__.NOTPAY || order.status === config.__ORDER_STATUS__.SUCCESS}}">
+            <mp-cell value="审核意见">
+                <view slot="footer">{{order.checkMsg}}</view>
+            </mp-cell>
+            <mp-cell value="审核时间">
+                <view slot="footer" class="order-date">{{order.checkTime}}</view>
+            </mp-cell>
+            <mp-cell value="订单金额" footer="{{order.totalFee/100}}元"></mp-cell>
+            <form class="weui-btn-area btn" bindsubmit="onPayTap" report-submit wx:if="{{order.status === 2}}">
+                <button class="weui-btn" form-type="submit" type="primary"> 立即支付 </button>
+            </form>
+            <!-- <view class="weui-btn-area btn" wx:if="{{order.status === 2}}">
+                <button class="weui-btn" type="primary" bindtap="onPayTap">立即支付</button>
+            </view> -->
+        </mp-cells>
+
+        <mp-cells title="支付进度" wx:if="{{order.status === config.__ORDER_STATUS__.SUCCESS}}">
+            <mp-cell value="发起时间">
+                <view slot="footer" class="order-date">{{order.prepayTime}}</view>
+            </mp-cell>
+            <mp-cell value="支付完成">
+                <view slot="footer" class="order-date">{{order.endTime}}</view>
+            </mp-cell>
+            <view class="weui-btn-area btn">
+                <button class="weui-btn" type="warn" bindtap="onRefundTap">申请退款</button>
+            </view>
+        </mp-cells>
+    </mp-cells>
+</view>
+
+<view class="list" wx:if="{{order.status === config.__ORDER_STATUS__.REFUND}}">
+    <view class="list-item">
+        <text class="request-text" style="color: {{step === index + 1 ? 'red': 'black'}}">发起退款</text>
+        <text class="request-text" style="color: {{step === index + 1 ? 'red': 'black'}}">剧团已确认</text>
+        <text class="request-text" style="color: {{step === index + 1 ? 'red': 'black'}}">退款完成</text>
+    </view>
+</view>
+
+
+<!-- <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="onRepayTap">重新支付</button>
+</view> -->
+
+<!-- <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="onQueryTap">查询订单</button>
+</view> -->
+
+<!-- <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="onCloseTap">关闭订单</button>
+</view> -->

@@ -1,0 +1,9 @@
+<!--components/sms.vcode.wxml-->
+<mp-cell title="手机号" ext-class="weui-cell_vcode weui-cell_wxss">
+    <input bindblur='_onInputBlur' type="number" data-field="mobile" class="weui-input field-input" value="{{mobile}}" disabled='{{ isMobileDisabled }}' />
+    <view slot="footer" class="weui-vcode-btn" bindtap='_onTapSendBtn'>{{sendBtnText}} </view>
+</mp-cell>
+
+<mp-cell title="验证码" ext-class="weui-cell_vcode weui-cell_wxss">
+    <input bindblur='_onInputBlur' type="number" data-field="vcode" class="weui-input field-input" maxlength='6' />
+</mp-cell>

@@ -1,0 +1,54 @@
+<!--pages/order/refund/refund.wxml-->
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
+<!-- 联系人 -->
+<mp-form id="refund" style="width: 100%;">
+    <mp-cells title="责任方" footer="">
+        <mp-checkbox-group prop="responsibles" multi="{{false}}" bindchange="onResponsibleChange">
+            <mp-checkbox wx:for="{{responsibles}}" wx:key="value" label="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"></mp-checkbox>
+        </mp-checkbox-group>
+    </mp-cells>
+
+    <!-- <mp-cells title="退款原因说明" footer="">
+        <mp-checkbox-group prop="reason" multi="{{false}}" bindchange="onReasonChange">
+            <mp-checkbox wx:for="{{reasons}}" wx:key="{{value}}" label="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"></mp-checkbox>
+        </mp-checkbox-group>
+    </mp-cells> -->
+
+    <view class="weui-cells weui-cells_after-title" wx:if="{{responsible === 1}}">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea prop="other" bindblur="onOtherInputBlur" class="weui-textarea" placeholder="如果非自身原因，要求全额退款，请填写理由，不少于10个字" style="height: 3.3em" value="{{other}}" />
+                <view class="weui-textarea-counter">0/200</view>
+            </view>
+        </view>
+    </view>
+
+    <mp-cells title="预计退款金额" wx:if="{{responsible === 0}}">
+        <view slot="footer" class="guide">
+            <text class="headline">违约金扣除规则：</text>
+            <text class="p">演出前30天(不含)以上取消订单的，不收取违约金</text>
+            <text class="p">演出前10天以上的按订单金额20%计</text>
+            <text class="p">演出前5天以上，不足10天的按订单金额50%计</text>
+            <text class="p">不足5天的按订单金额80%计</text>
+        </view>
+        <mp-cell value="订单金额">
+            <view slot="footer">{{totalFee/100}}元</view>
+        </mp-cell>
+        <mp-cell value="违约金">
+            <view slot="footer">{{penalty/100}}元</view>
+        </mp-cell>
+        <mp-cell value="退款金额">
+            <view slot="footer">{{(totalFee-penalty)/100}}元</view>
+        </mp-cell>
+    </mp-cells>
+
+    <!-- <view class="weui-btn-area btn">
+        <button class="weui-btn" type="warn" bindtap="onRefundTap">申请退款</button>
+    </view> -->
+    <form bindsubmit="onRefundTap" report-submit>
+        <button class="weui-btn-area btn" form-type="submit" type="warn">
+            <text>申请退款</text>
+        </button>
+    </form>
+</mp-form>

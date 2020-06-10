@@ -80,6 +80,14 @@
     </mp-cell>
 </mp-cells>
 
+<!-- 建设期 - 连接器 -->
+<mp-cells title="建设期 - 连接器" footer="">
+    <mp-cell link hover wx:for="{{connector}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
 <!-- 建设期 - SDN/NFV -->
 <mp-cells title="建设期 - SDN/NFV" footer="">
     <mp-cell link hover wx:for="{{sdn}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
@@ -112,9 +120,33 @@
     </mp-cell>
 </mp-cells>
 
-<!-- 应用期 - 物联网 -->
-<mp-cells title="建设期 - 物联网" footer="">
-    <mp-cell link hover wx:for="{{iot}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+<!-- 维护期 - 网络优化 -->
+<mp-cells title="维护期 - 网络优化" footer="">
+    <mp-cell link hover wx:for="{{networkOptimization}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 应用期 - LED -->
+<mp-cells title="应用期 - LED" footer="">
+    <mp-cell link hover wx:for="{{led}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 应用期 - 手机镜头 -->
+<mp-cells title="应用期 - 手机镜头" footer="">
+    <mp-cell link hover wx:for="{{phoneCamera}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 应用期 - 手机终端 -->
+<mp-cells title="应用期 - 手机终端" footer="">
+    <mp-cell link hover wx:for="{{phoneTerminal}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
         <view>{{item.name}}</view>
         <view slot="footer">{{item.market}}</view>
     </mp-cell>
@@ -128,14 +160,6 @@
     </mp-cell>
 </mp-cells>
 
-<!-- 物联网 - 传感类设备 -->
-<mp-cells title="物联网 - 传感类设备" footer="">
-    <mp-cell link hover wx:for="{{sensor}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
-        <view>{{item.name}}</view>
-        <view slot="footer">{{item.market}}</view>
-    </mp-cell>
-</mp-cells>
-
 <!-- 物联网 - 通信模组 -->
 <mp-cells title="物联网 - 通信模组" footer="">
     <mp-cell link hover wx:for="{{communicationModules}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
@@ -144,9 +168,17 @@
     </mp-cell>
 </mp-cells>
 
-<!-- 物联网 - SIM卡/eSIM -->
-<mp-cells title="物联网 - SIM卡/eSIM" footer="">
+<!-- 物联网 - MCU/电子标签/eSIM -->
+<mp-cells title="物联网 - MCU/电子标签/eSIM" footer="">
     <mp-cell link hover wx:for="{{eSim}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!-- 物联网 - 智能表计 -->
+<mp-cells title="物联网 - 智能表计" footer="">
+    <mp-cell link hover wx:for="{{sensor}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
         <view>{{item.name}}</view>
         <view slot="footer">{{item.market}}</view>
     </mp-cell>
@@ -175,6 +207,15 @@
         <view slot="footer">{{item.market}}</view>
     </mp-cell>
 </mp-cells>
+
+<!-- 小家电 -->
+<mp-cells title="小家电" footer="">
+    <mp-cell link hover wx:for="{{homeAppliances}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+        <view>{{item.name}}</view>
+        <view slot="footer">{{item.market}}</view>
+    </mp-cell>
+</mp-cells>
+
 
 <!-- A股市场新增账户数 -->
 <view class="guide">
