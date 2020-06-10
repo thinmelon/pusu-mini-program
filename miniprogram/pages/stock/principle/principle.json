@@ -2,7 +2,7 @@
     "navigationBarTitleText": "评分",
     "usingComponents": {
         "indicator": "/components/stock.indicator",
-        "mp-cells": "/weui-miniprogram/cells/cells",
-        "mp-cell": "/weui-miniprogram/cell/cell"
+        "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells",
+        "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell"
     }
 }
