@@ -13,10 +13,40 @@ var sum = function(stock, category, index) {
         length = index.length,
         total = 0;
 
-    for (; i < length; i++) {
-        total += parseInt(stock[category[i]][index[i]] || 0);
+    if (category === 0) {
+        for (; i < length; i++) {
+            total += parseInt(stock[index[i]] || 0);
+        }
+    } else {
+        for (; i < length; i++) {
+            total += parseInt(stock[category[i]][index[i]] || 0);
+        }
     }
+
     return (total / 100000000).toFixed(2);
+};
+
+/**
+ *  两数组分别求和后相减
+ */
+var subtract = function(array1, index1, array2, index2) {
+    var i = 0,
+        length = index1.length,
+        total1 = 0,
+        total2 = 0;
+
+    for (; i < length; i++) {
+        total1 += parseInt(array1[index1[i]] || 0);
+    }
+
+    i = 0,
+        length = index2.length;
+
+    for (; i < length; i++) {
+        total2 += parseInt(array2[index2[i]] || 0);
+    }
+
+    return ((total1 - total2) / 100000000).toFixed(2);
 };
 
 /**
@@ -120,6 +150,7 @@ var doubleOffset = function(history, category1, index1, category2, index2, last,
 module.exports = {
     toFixed: toFixed,
     sum: sum,
+    subtract: subtract,
     proportion: proportion,
     substraction: substraction,
     increase: increase,

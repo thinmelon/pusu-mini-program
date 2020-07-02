@@ -99,6 +99,8 @@
         <canvas style="{{principles[page].name === 'CashInOutRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashInOutRatioTrend" disable-scroll="false" class="canvas" data-id="CashInOutRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
         <!-- 应收款占比总资产比率 -->
         <canvas style="{{principles[page].name === 'ReceivablesPercentageTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivablesPercentageTrend" disable-scroll="false" class="canvas" data-id="ReceivablesPercentageTrend" bindtouchstart="onCanvasTouched"></canvas>
+        <!-- 自由现金流 -->
+        <canvas style="{{principles[page].name === 'FreeCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="FreeCashFlowTrend" disable-scroll="false" class="canvas" data-id="FreeCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
     </view>
 </indicator>
 <indicator principle="{{principles[page]}}" stock="{{peer}}" print="{{false}}" target="{{target}}" contrast="{{contrast}}"></indicator>

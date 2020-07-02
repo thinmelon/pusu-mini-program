@@ -107,6 +107,23 @@
     </block>
 </view>
 
+<!--    两级指标之差     -->
+<view class="guide" wx:if="{{principle.type === 'margin' && history}}">
+    <text class="headline">当期财报：{{history.balance[target].F001D}}</text>
+    <block wx:for="{{principle.denominator}}" wx:key="*this">
+        <view class="p">{{principle.dState[index]}}：{{Math.toFixed(history[principle.dCategory][target][principle.denominator[index]]/100000000)}} 亿元</view>
+    </block>
+
+    <block wx:if="{{principle.numerator}}">
+        <view class="div-line"></view>
+        <block wx:for="{{principle.numerator}}" wx:key="*this">
+            <view class="p">{{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory][target][principle.numerator[index]]/100000000)}} 亿元</view>
+        </block>
+        <view class="div-line"></view>
+        <view class="p">{{principle.nName}}：{{Math.subtract(history[principle.dCategory][target], principle.denominator, history[principle.nCategory][target], principle.numerator)}}亿元</view>
+    </block>
+</view>
+
 <!--    同比净额变化     -->
 <view class="guide" wx:if="{{principle.type === 'net' && history}}">
     <text class="headline">当期财报：{{history.balance[target].F001D}}</text>
@@ -114,19 +131,11 @@
     <block wx:for="{{principle.numerator}}" wx:key="*this">
         <view class="p">{{principle.nState[index]}}增加：{{Math.toFixed((history[principle.nCategory[index]][target][principle.numerator[index]] - history[principle.nCategory[index]][contrast][principle.numerator[index]])/100000000)}} 亿元</view>
     </block>
-    <!--    计算营运资金     -->
-    <block wx:if="{{principle.denominator}}">
-        <view class="div-line"></view>
-        <block wx:for="{{principle.denominator}}" wx:key="*this">
-            <view class="p">{{principle.dState[index]}}增加：{{Math.toFixed((history[principle.dCategory[index]][target][principle.denominator[index]] - history[principle.dCategory[index]][contrast][principle.denominator[index]])/100000000)}} 亿元</view>
-        </block>
-        <view class="div-line"></view>
-        <view class="p">小计：{{Math.toFixed(Math.doubleOffset(history, principle.nCategory, principle.numerator, principle.dCategory, principle.denominator, target, target - contrast)/100000000)}}亿元</view>
-    </block>
     <!--    计算应付款与经营活动现金流净额比值     -->
     <block wx:if="{{principle.divisor}}">
         <view class="div-line"></view>
-        <view class="p">{{principle.nName}}（{{Math.toFixed(Math.singleOffset(history, principle.nCategory, principle.numerator, target, target - contrast)/100000000)}}亿元） / {{principle.dName}}（{{Math.toFixed(history[principle.dCategory][target][principle.divisor]/100000000)}}亿元）= {{Math.toFixed(Math.singleOffset(history, principle.nCategory, principle.numerator, target, target - contrast)*100/history[principle.dCategory][target][principle.divisor])}}%</view>
+        <view class="p">{{principle.nName}}（{{Math.toFixed(Math.singleOffset(history, principle.nCategory, principle.numerator, target, target - contrast)/100000000)}}亿元） / {{principle.dName}}（{{Math.toFixed(history[principle.dCategory][target][principle.divisor]/100000000)}}亿元）=
+            {{Math.toFixed(Math.singleOffset(history, principle.nCategory, principle.numerator, target, target - contrast)*100/history[principle.dCategory][target][principle.divisor])}}%</view>
     </block>
     <!--    计算三表关系     -->
     <block wx:if="{{principle.addend}}">
@@ -222,11 +231,14 @@
 </view>
 
 <!--    投资资本回报率     -->
-<view class="guide" wx:if="{{principle.type === 'profit' && stock}}">
-    <text class="headline">{{stock.name}}</text>
-    <text class="p">税后营业净利润 = 营业利润（{{Math.toFixed(stock.profit.F018N/100000000)}}）*（1-25%）= {{Math.toFixed(stock.profit.F018N*0.75/100000000)}}亿元</text>
-    <text class="p">投资资本 = 股东权益 + 有息负债 = 股东权益（{{Math.toFixed(stock.balance.F070N/100000000)}}） + 短期借款（{{Math.toFixed(stock.balance.F039N/100000000)}}） + 一年内到期的非流动负债（{{Math.toFixed(stock.balance.F050N/100000000)}}） + 长期借款（{{Math.toFixed(stock.balance.F053N/100000000)}}） + 应付债券（{{Math.toFixed(stock.balance.F054N/100000000)}}） + 长期应付款（{{Math.toFixed(stock.balance.F055N/100000000)}}） = {{Math.sum(stock, principle.dCategory, principle.denominator)}}亿元</text>
-    <text class="p">投资资本回报率 = 税后营业净利润 / 投资资本 = {{Math.toFixed(stock.profit.F018N*75/Math.sum(stock, principle.dCategory, principle.denominator)/100000000)}}%</text>
+<view class="guide" wx:if="{{principle.type === 'profit' && history}}">
+    <text class="headline">当期财报：{{history.balance[target].F001D}}</text>
+    <text class="p">息税前利润 = 净利润（{{Math.toFixed(history.profit[target].F027N/100000000)}}）+ 所得税（{{Math.toFixed(history.profit[target].F025N/100000000)}}）+ 利息费用（{{Math.toFixed(history.profit[target].F062N/100000000)}}）- 利息收入（{{Math.toFixed(history.profit[target].F063N/100000000)}}） = {{Math.toFixed((history.profit[target].F027N + history.profit[target].F025N + history.profit[target].F062N - history.profit[target].F063N) /100000000)}}亿元</text>
+
+    <text class="p" wx:for="{{principle.numerator}}" wx:key="*this"><text class="p" wx:if="{{index > 0}}">+</text> {{principle.nState[index]}}：{{Math.toFixed(history[principle.nCategory][target][principle.numerator[index]]/100000000)}} 亿元</text>
+    <text class="p"> = {{principle.nName}}：{{Math.sum(history[principle.nCategory][target], 0, principle.numerator)}} 亿元</text>
+
+    <text class="p">投资资本回报率（ROIC）= 息税前利润 * （1 - 有效税率 {{Math.toFixed(history.profit[target].F025N/history.profit[target].F024N)}}）/ （股东权益 {{Math.toFixed(history.balance[target].F070N/100000000)}}亿元 + 有息负债{{Math.sum(history[principle.nCategory][target], 0, principle.numerator)}} 亿元）= {{Math.toFixed((history.profit[target].F027N + history.profit[target].F025N + history.profit[target].F062N - history.profit[target].F063N) * (1-history.profit[target].F025N/history.profit[target].F024N) / (history.balance[target].F070N + Math.sum(history[principle.nCategory][target], 0, principle.numerator)*100000000)*100)}}%</text>
 </view>
 
 <!--    趋势分析     -->

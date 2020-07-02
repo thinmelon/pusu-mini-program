@@ -228,7 +228,7 @@ Page({
             if (this.data.principles[this.data.page].handler) {
 
             } else {
-                this.createRingChart(this.data.stock)
+                this.createRingChart(this.data.history)
             }
             this.setData({
                 ["principles[" + this.data.page + "].showCanvas"]: "display: block;"
@@ -358,6 +358,7 @@ Page({
         const series = []; //  Y轴
         const target = data[this.data.principles[this.data.page].nCategory[0]]; //  计数 一般为12个季度
         const principle = this.data.principles[this.data.page]; //  原则
+        const that = this;
 
         /** X坐标数据源 */
         target.map(item => {
@@ -365,7 +366,8 @@ Page({
         })
 
         /** Y坐标数据源 */
-        if (this.data.principles[this.data.page].denominator) {
+        if (this.data.principles[this.data.page].subtype === 'margin') {
+            /**     子类型为计算差值     */
             for (let k = 0; k < target.length; k++) {
                 let total1 = 0,
                     total2 = 0;
@@ -379,34 +381,62 @@ Page({
                     total2 += data[principle.dCategory[i]][k] ? parseInt(data[principle.dCategory[i]][k][principle.denominator[i]] || 0) : 0
                 }
                 //  被除数不为零
-                seriesData.push(total2 !== 0 ? (total1 / total2).toFixed(2) : 0)
+                seriesData.push(((total1 - total2) / 100000000).toFixed(2))
             }
-            console.log(seriesData)
+            // console.log(seriesData)
 
             series.push({
                 name: principle.state[0],
                 data: seriesData,
                 format: function(val, name) {
-                    return val;
+                    return val + that.data.principles[that.data.page].unit;
                 }
             })
         } else {
-            //  如果无需求和计算，则默认为多指标显示
-            for (let i = 0; i < principle.numerator.length; i++) {
-                seriesData = [];
-                //  各季度不同指标的数据
+            /**     没有指定子类型     */
+            if (this.data.principles[this.data.page].denominator) {
                 for (let k = 0; k < target.length; k++) {
-                    seriesData.push(data[principle.nCategory[i]][k][principle.numerator[i].trim()] || 0)
+                    let total1 = 0,
+                        total2 = 0;
+                    //  计算分子总和
+                    for (let i = 0; i < principle.numerator.length; i++) {
+                        total1 += data[principle.nCategory[i]][k] ? parseInt(data[principle.nCategory[i]][k][principle.numerator[i]] || 0) : 0
+                    }
+                    //  计算分母总和
+                    for (let i = 0; i < principle.denominator.length; i++) {
+                        // console.log(k, ' >>> ', principle.dCategory[i], principle.denominator[i], data[principle.dCategory[i]][k])
+                        total2 += data[principle.dCategory[i]][k] ? parseInt(data[principle.dCategory[i]][k][principle.denominator[i]] || 0) : 0
+                    }
+                    //  被除数不为零
+                    seriesData.push(total2 !== 0 ? (total1 / total2).toFixed(2) : 0)
                 }
-                console.log(seriesData)
-                if (seriesData.length > 0) {
-                    series.push({
-                        name: principle.state[i],
-                        data: seriesData,
-                        format: function(val, name) {
-                            return val;
-                        }
-                    })
+                // console.log(seriesData)
+
+                series.push({
+                    name: principle.state[0],
+                    data: seriesData,
+                    format: function(val, name) {
+                        return val;
+                    }
+                })
+            } else {
+                //  如果无需求和计算，则默认为多指标显示
+                for (let i = 0; i < principle.numerator.length; i++) {
+                    seriesData = [];
+                    //  各季度不同指标的数据
+                    for (let k = 0; k < target.length; k++) {
+                        seriesData.push(data[principle.nCategory[i]][k][principle.numerator[i].trim()] || 0)
+                    }
+                    // console.log(seriesData)
+                    if (seriesData.length > 0) {
+                        series.push({
+                            name: principle.state[i],
+                            data: seriesData,
+                            format: function(val, name) {
+                                return val;
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -445,7 +475,7 @@ Page({
         const principle = this.data.principles[this.data.page]; //  原则
 
         for (let i = 0; i < principle.numerator.length; i++) {
-            const value = data[principle.nCategory[i]][principle.numerator[i]]
+            const value = data[principle.nCategory[i]][this.data.target][principle.numerator[i]]
             series.push({
                 name: principle.state[i],
                 data: value && value > 0 ? value : 0
