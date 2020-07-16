@@ -1,0 +1,8 @@
+<!--miniprogram/pages/knowledge/folder/folder.wxml-->
+<mp-cells title="{{album}}">
+	<mp-cell link wx:for="{{folder}}" wx:key="_id" data-article="{{item}}" bindtap="onItemTap">
+		<view class="sub-title">{{item.index}}. {{item.title}}</view>
+		<!-- <view slot="footer" class="troupe-footer">点赞数：{{item.like}}</view> -->
+		<!-- <mp-icon slot="icon" icon="star" color="black" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></mp-icon> -->
+	</mp-cell>
+</mp-cells>

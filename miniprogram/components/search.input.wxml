@@ -1,5 +1,5 @@
 <!--components/search.input.wxml-->
-<input class='search-input' confirm-type='search' placeholder='{{inputPlaceHolder}}' bindinput="onInputKeyword" bindfocus='onInputFocus' bindblur='onInputBlur' focus='{{focus}}' value='{{keyword}}'></input>
+<input class='search-input' confirm-type='search' placeholder='{{inputPlaceHolder}}' bindinput="onInputKeyword" bindfocus='onInputFocus' bindblur='onInputBlur' focus='{{focus}}' value='{{keyword}}'/>
 <view class='search-result-pannel' wx:if='{{show}}'>
   <slot></slot>
 </view>

@@ -27,7 +27,9 @@
 		},
 		"useIsolateContext": true,
 		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"packNpmManually": false,
+		"packNpmRelationList": []
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.11.1",
@@ -122,6 +124,13 @@
 					"name": "pages/order/list/list",
 					"pathName": "pages/order/list/list",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "全集",
+					"pathName": "pages/knowledge/folder/folder",
+					"query": "album=投资必懂的100个经济名词&folder=Economy",
 					"scene": null
 				}
 			]

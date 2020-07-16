@@ -1,0 +1,6 @@
+<!--miniprogram/pages/knowledge/item/item.wxml-->
+<view class="guide">
+	<text class="headline">{{content.title}}</text>
+	<image style="width: 100%; margin: 1rem 0;" lazy-load="{{true}}" mode="widthFix" wx:for="{{content.card}}" wx:key="*this" src="{{item}}"></image>
+	<text class="p">{{content.note}}</text>
+</view>

@@ -9,8 +9,12 @@ Page({
      * 页面的初始数据
      */
     data: {
-        //  网络规划
+        //  网络规划 
         networkDesign: [{
+            "code": "002921",
+            "name": "联诚精密",
+            "market": "深交所"
+        }, {
             "code": "002093",
             "name": "国脉科技",
             "market": "深交所"
@@ -785,13 +789,13 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         this.setData({
             search: this.search.bind(this)
         })
     },
 
-    onReady: function() {
+    onReady: function () {
         this.getStockMarketAccountStatistic()
         this.getOptionals()
     },
@@ -799,7 +803,7 @@ Page({
     /**
      *  搜索
      */
-    search: function(value) {
+    search: function (value) {
         console.log('Search >>> ', value)
         return app.wxp.cloud.callFunction({
                 name: 'search',
@@ -831,7 +835,7 @@ Page({
     /**
      *  选择搜索结果
      */
-    onSearchResultSelected: function(e) {
+    onSearchResultSelected: function (e) {
         console.log('select result', e.detail)
         wx.navigateTo({
             url: '/pages/stock/stock?code=' + e.detail.item.value,
@@ -841,7 +845,7 @@ Page({
     /**
      *  点击显示详情处理逻辑
      */
-    onCanvasTouched: function(e) {
+    onCanvasTouched: function (e) {
         const target = this[e.target.dataset.category].find(canvas => {
             return canvas._id === e.target.dataset.id
         })
@@ -849,14 +853,14 @@ Page({
 
         target.handler.showToolTip(e, {
             // background: '#7cb5ec',
-            format: function(item, category) {
+            format: function (item, category) {
                 // console.log(item)
                 return '[' + category + ']' + item.name + ':' + item.data + target.unit
             }
         });
     },
 
-    onCellTap: function(e) {
+    onCellTap: function (e) {
         console.log(e)
         wx.navigateTo({
             url: '/pages/stock/stock?code=' + e.currentTarget.dataset.code,
@@ -866,7 +870,7 @@ Page({
     /**
      *      获取A股市场股票账户数
      */
-    getStockMarketAccountStatistic: function() {
+    getStockMarketAccountStatistic: function () {
         app.wxp.cloud.callFunction({
                 name: 'finance',
                 data: {
@@ -884,7 +888,7 @@ Page({
             })
     },
 
-    createLineCanvas: function(target) {
+    createLineCanvas: function (target) {
         this.lineCanvases = this.lineCanvases.map(canvas => {
             const categories = [];
             const series = [];
@@ -900,7 +904,7 @@ Page({
                     data: target.map(item => {
                         return item.day[0][field.value] || 0
                     }),
-                    format: function(val, name) {
+                    format: function (val, name) {
                         return val;
                     }
                 })
@@ -935,7 +939,7 @@ Page({
     /**
      *      获取自选股
      */
-    getOptionals: function() {
+    getOptionals: function () {
         app.wxp.cloud.callFunction({
                 name: 'search',
                 data: {

@@ -10,6 +10,8 @@
         "pages/stock/search/search",
         "pages/stock/stock",
         "pages/knowledge/knowledge",
+        "pages/knowledge/folder/folder",
+        "pages/knowledge/item/item",
         "pages/order/audit/audit",
         "pages/order/create/create",
         "pages/order/details/details",

@@ -29,27 +29,36 @@ Page({
         growthRate: 0,
         periods: 5,
         presentWorth: 0,
+        //  更多指标数据
+        indexes: [{
+            name: "股票",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock.png",
+            category: "stock",
+            url: "/pages/stock/search/search" //  股票
+        }, {
+            name: "莆仙戏",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/troupe.png",
+            category: "troupe",
+            url: "/pages/order/troupe/troupe" //  莆仙戏
+        }, {
+            name: "知识树",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/knowledge.png",
+            category: "knowledge",
+            url: "/pages/knowledge/folder/folder" //  知识树
+        }],
         /*	 	知识点      */
         articles: {
             "Bond": ["什么是收益率曲线倒挂？"],
             "Currency": ["什么是中间价？", "什么是不可能三角？"]
         }
     },
-    //  更多指标数据
-    indexes: [{
-        category: "stock",
-        url: "/pages/stock/search/search" //  股票市场
-    }, {
-        category: "troupe",
-        url: "/pages/order/troupe/troupe" //  莆仙点戏
-    }],
 
     lineCanvas: null, //  线形图
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         this.getChinaBondYieldRate()
         this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
         this.calculatePresentWorth()
@@ -58,8 +67,8 @@ Page({
     /**
      *  知识点点击事件
      */
-    onCellTap: function(e) {
-        console.log(e)
+    onCellTap: function (e) {
+        // console.log(e)
         wx.navigateTo({
             url: '/pages/knowledge/knowledge?subject=' + e.currentTarget.dataset.subject + "&title=" + e.currentTarget.dataset.title,
         })
@@ -68,7 +77,7 @@ Page({
     /**
      *  汇率转换币种选择事件
      */
-    onPickerChange: function(evt) {
+    onPickerChange: function (evt) {
         console.log(evt);
         if (evt.currentTarget.dataset.direction === 'from') {
             this.data.multiIndex[0] = evt.detail.value;
@@ -85,10 +94,10 @@ Page({
         )
     },
 
-    onIndexTap: function(e) {
+    onIndexTap: function (e) {
         console.log(e)
         wx.redirectTo({
-            url: this.indexes.find(item => {
+            url: this.data.indexes.find(item => {
                 return item.category === e.currentTarget.dataset.index
             }).url,
         })
@@ -97,7 +106,7 @@ Page({
     /**
      *  输入框焦点发生变化
      */
-    onInputChange: function(e) {
+    onInputChange: function (e) {
         this.data[e.currentTarget.dataset.field] = parseInt(e.detail.value)
         this.calculatePresentWorth()
     },
@@ -105,7 +114,7 @@ Page({
     /**
      *  计算现金流现值
      */
-    calculatePresentWorth: function() {
+    calculatePresentWorth: function () {
         this.setData({
             presentWorth: (((1 - Math.pow(1 + (this.data.growthRate / 100), this.data.periods) / (Math.pow(1 + (this.data.discountRate / 100), this.data.periods))) * 100 / (this.data.discountRate - this.data.growthRate)) * this.data.annualCashFlow * (1 + this.data.growthRate / 100)).toFixed(2)
         })
@@ -114,7 +123,7 @@ Page({
     /**
      * 获取中债国债数据
      */
-    getChinaBondYieldRate: function() {
+    getChinaBondYieldRate: function () {
         wx.showLoading({
             title: '正在抓取数据',
             mask: true
@@ -143,7 +152,7 @@ Page({
     /**
      *   显示拆线图
      */
-    showLineChart: function(result) {
+    showLineChart: function (result) {
         //   记录数据数组长度
         this.data.totalLabels = result.date.length;
         const margin = [],
@@ -201,12 +210,12 @@ Page({
     /**
      *  点击显示详情处理逻辑
      */
-    canvasTouchHandler: function(e) {
+    canvasTouchHandler: function (e) {
         console.log(e)
         if (e.target.dataset.category === 'line') {
             this.lineCanvas.showToolTip(e, {
                 // background: '#7cb5ec',
-                format: function(item, category) {
+                format: function (item, category) {
                     // console.log(item)
                     return '[' + category + '] ' + item.name + ':' + item.data
                 }
@@ -217,7 +226,7 @@ Page({
     /**
      * 	查询实时汇率
      */
-    getCurrencyExchange: function(from, to) {
+    getCurrencyExchange: function (from, to) {
         app.wxp.cloud.callFunction({
                 name: 'finance',
                 data: {

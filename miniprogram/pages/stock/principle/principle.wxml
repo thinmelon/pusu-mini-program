@@ -1,119 +1,119 @@
 <!--pages/stock/principle/principle.wxml-->
 <view class="guide" wx:if="{{page === 0}}">
-    <view class="nav">
-        <text class="prev">当期财报偏移量：</text>
-        <input class="current-page" value="{{target}}" type="number" data-field="target" bindblur="onSettingChanged"></input>
-    </view>
-    <view class="nav">
-        <text class="prev">同比财报偏移量：</text>
-        <input class="current-page" value="{{contrast}}" type="number" data-field="contrast" bindblur="onSettingChanged"></input>
-    </view>
+	<view class="nav">
+		<text class="prev">当期财报偏移量：</text>
+		<input class="current-page" value="{{target}}" type="number" data-field="target" bindblur="onSettingChanged" />
+	</view>
+	<view class="nav">
+		<text class="prev">同比财报偏移量：</text>
+		<input class="current-page" value="{{contrast}}" type="number" data-field="contrast" bindblur="onSettingChanged" />
+	</view>
 </view>
 
 <view class="guide">
-    <view class="nav">
-        <button class="prev" size="mini" type="default" bindtap="onPrevStepTap">{{page === 0 ? '' : '上一步'}}</button>
-        <input class="current-page" value="{{page + 1}}" type="number" bindblur="onPageChanged"></input>
-        <button class="next" size="mini" type="default" bindtap="onNextStepTap">{{page + 1 === principles.length ? '完成' : '下一步'}}</button>
-    </view>
+	<view class="nav">
+		<button class="prev" size="mini" type="default" bindtap="onPrevStepTap">{{page === 0 ? '' : '上一步'}}</button>
+		<input class="current-page" value="{{page + 1}}" type="number" bindblur="onPageChanged" />
+		<button class="next" size="mini" type="default" bindtap="onNextStepTap">{{page + 1 === principles.length ? '完成' : '下一步'}}</button>
+	</view>
 </view>
 
 <!-- 遵循原则 -->
 <view class="guide">
-    <text class="headline">原则 {{page + 1}}</text>
-    <text class="p">{{principles[page].summary}}</text>
+	<text class="headline">原则 {{page + 1}}</text>
+	<text class="p">{{principles[page].summary}}</text>
 </view>
 
 <mp-cells title="" footer="" wx:if="{{principles[page].articles.length > 0}}">
-    <mp-cell link hover wx:for="{{principles[page].articles}}" wx:key="*this" data-title="{{item}}" bindtap="onCellTap">
-        <view>{{item}}</view>
-    </mp-cell>
+	<mp-cell link hover wx:for="{{principles[page].articles}}" wx:key="*this" data-title="{{item}}" bindtap="onCellTap">
+		<view>{{item}}</view>
+	</mp-cell>
 </mp-cells>
 
 <!-- 关键指标 -->
 <indicator principle="{{principles[page]}}" stock="{{stock}}" history="{{history}}" show="{{show}}" target="{{target}}" contrast="{{contrast}}">
-    <view style="{{principles[page].showCanvas || 'display: none;'}}">
-         <!-- 生产资产/总资产 -->
-        <canvas style="{{principles[page].name === 'ProductiveAssetsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ProductiveAssetsTrend" disable-scroll="false" class="canvas" data-id="ProductiveAssetsTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 现金及现金等价物/有息负债变化趋势 -->
-        <canvas style="{{principles[page].name === 'CashEquivalentsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashEquivalentsTrend" disable-scroll="false" class="canvas" data-id="CashEquivalentsTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 存货周转率及毛利率变化趋 -->
-        <canvas style="{{principles[page].name === 'StockTurnoverTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="StockTurnoverTrend" disable-scroll="false" class="canvas" data-id="StockTurnoverTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 短期偿债能力变化趋势 -->
-        <canvas style="{{principles[page].name === 'ShortTermLiquidityTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ShortTermLiquidityTrend" disable-scroll="false" class="canvas" data-id="ShortTermLiquidityTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 总资产报酬率变化趋势 -->
-        <canvas style="{{principles[page].name === 'ReturnOfAssetsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReturnOfAssetsTrend" disable-scroll="false" class="canvas" data-id="ReturnOfAssetsTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 经营现金流净额/净利润变化趋势 -->
-        <canvas style="{{principles[page].name === 'NetOperatingCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="NetOperatingCashFlowTrend" disable-scroll="false" class="canvas" data-id="NetOperatingCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 周转天数变化趋势 -->
-        <canvas style="{{principles[page].name === 'DaysOfTurnoverTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="DaysOfTurnoverTrend" disable-scroll="false" class="canvas" data-id="DaysOfTurnoverTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 货币资金/短期负债变化趋势 -->
-        <canvas style="{{principles[page].name === 'MonetaryCapitalTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="MonetaryCapitalTrend" disable-scroll="false" class="canvas" data-id="MonetaryCapitalTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 应收账款/营业总收入变化趋势 -->
-        <canvas style="{{principles[page].name === 'ReceivablesTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivablesTrend" disable-scroll="false" class="canvas" data-id="ReceivablesTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 预付款项变化趋势 -->
-        <canvas style="{{principles[page].name === 'PrepaymentTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PrepaymentTrend" disable-scroll="false" class="canvas" data-id="PrepaymentTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 预付款项占比营业成本的变化趋势 -->
-        <canvas style="{{principles[page].name === 'PrepaymentCostPercentageTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PrepaymentCostPercentageTrend" disable-scroll="false" class="canvas" data-id="PrepaymentCostPercentageTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 其他应收款/总资产变化趋势 -->
-        <canvas style="{{principles[page].name === 'ReceivableOtherTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivableOtherTrend" disable-scroll="false" class="canvas" data-id="ReceivableOtherTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 应付账款及应付票据变化趋势 -->
-        <canvas style="{{principles[page].name === 'AccountsPayableTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AccountsPayableTrend" disable-scroll="false" class="canvas" data-id="AccountsPayableTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 存货占比变化趋势 -->
-        <canvas style="{{principles[page].name === 'StockProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="StockProportionTrend" disable-scroll="false" class="canvas" data-id="StockProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 在建工程变化趋势 -->
-        <canvas style="{{principles[page].name === 'InProgressConstructionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="InProgressConstructionTrend" disable-scroll="false" class="canvas" data-id="InProgressConstructionTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 研发费用占比营业收入变化趋势 -->
-        <canvas style="{{principles[page].name === 'ResearchExpenditureTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ResearchExpenditureTrend" disable-scroll="false" class="canvas" data-id="ResearchExpenditureTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 应付职工薪酬及递延所得税资产变化趋势 -->
-        <canvas style="{{principles[page].name === 'EmployeePayableTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="EmployeePayableTrend" disable-scroll="false" class="canvas" data-id="EmployeePayableTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 营业利润率变化趋势 -->
-        <canvas style="{{principles[page].name === 'OperatingProfitRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="OperatingProfitRatioTrend" disable-scroll="false" class="canvas" data-id="OperatingProfitRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 营业利润占比环形图 -->
-        <canvas style="{{principles[page].name === 'OperatingProfitRing' ? 'display: block;' : 'display: none;'}}" canvas-id="OperatingProfitRing" disable-scroll="false" class="canvas" data-id="OperatingProfitRing" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 销售商品、提供劳务收到现金/营业总收入 -->
-        <canvas style="{{principles[page].name === 'CashOfSellingGoodsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashOfSellingGoodsTrend" disable-scroll="false" class="canvas" data-id="CashOfSellingGoodsTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 经营活动现金流净额/投资活动现金流净额 -->
-        <canvas style="{{principles[page].name === 'NetCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="NetCashFlowTrend" disable-scroll="false" class="canvas" data-id="NetCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 投资支出/经营活动现金流净额 -->
-        <canvas style="{{principles[page].name === 'InvestmentExpenditureProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="InvestmentExpenditureProportionTrend" disable-scroll="false" class="canvas" data-id="InvestmentExpenditureProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 资产处置所得/投资活动现金流入 -->
-        <canvas style="{{principles[page].name === 'AssetSaleProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetSaleProportionTrend" disable-scroll="false" class="canvas" data-id="AssetSaleProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 取得借款/偿还债务 -->
-        <canvas style="{{principles[page].name === 'BorrowDebtTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="BorrowDebtTrend" disable-scroll="false" class="canvas" data-id="BorrowDebtTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 收到其他与经营活动有关的现金 -->
-        <canvas style="{{principles[page].name === 'OtherBusinessCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="OtherBusinessCashFlowTrend" disable-scroll="false" class="canvas" data-id="OtherBusinessCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 资产减值损失 -->
-        <canvas style="{{principles[page].name === 'AssetsImpairmentLossTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetsImpairmentLossTrend" disable-scroll="false" class="canvas" data-id="AssetsImpairmentLossTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 销售费用占营业收入比例 -->
-        <canvas style="{{principles[page].name === 'SellingExpensesProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="SellingExpensesProportionTrend" disable-scroll="false" class="canvas" data-id="SellingExpensesProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 资本性支出占营业收入比例 -->
-        <canvas style="{{principles[page].name === 'CapitalExpenditureTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CapitalExpenditureTrend" disable-scroll="false" class="canvas" data-id="CapitalExpenditureTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 销售现金率 -->
-        <canvas style="{{principles[page].name === 'CashSalesRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashSalesRatioTrend" disable-scroll="false" class="canvas" data-id="CashSalesRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 现金购销比率 -->
-        <canvas style="{{principles[page].name === 'PurchaseSaleRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PurchaseSaleRatioTrend" disable-scroll="false" class="canvas" data-id="PurchaseSaleRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 商品销售成本率 -->
-        <canvas style="{{principles[page].name === 'CostSaleRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CostSaleRatioTrend" disable-scroll="false" class="canvas" data-id="CostSaleRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 现金流入对现金流出比率 -->
-        <canvas style="{{principles[page].name === 'CashInOutRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashInOutRatioTrend" disable-scroll="false" class="canvas" data-id="CashInOutRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 应收款占比总资产比率 -->
-        <canvas style="{{principles[page].name === 'ReceivablesPercentageTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivablesPercentageTrend" disable-scroll="false" class="canvas" data-id="ReceivablesPercentageTrend" bindtouchstart="onCanvasTouched"></canvas>
-        <!-- 自由现金流 -->
-        <canvas style="{{principles[page].name === 'FreeCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="FreeCashFlowTrend" disable-scroll="false" class="canvas" data-id="FreeCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
-    </view>
+	<view style="{{principles[page].showCanvas || 'display: none;'}}">
+		<!-- 生产资产/总资产 -->
+		<canvas style="{{principles[page].name === 'ProductiveAssetsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ProductiveAssetsTrend" disable-scroll="false" class="canvas" data-id="ProductiveAssetsTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 现金及现金等价物/有息负债变化趋势 -->
+		<canvas style="{{principles[page].name === 'CashEquivalentsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashEquivalentsTrend" disable-scroll="false" class="canvas" data-id="CashEquivalentsTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 存货周转率及毛利率变化趋 -->
+		<canvas style="{{principles[page].name === 'StockTurnoverTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="StockTurnoverTrend" disable-scroll="false" class="canvas" data-id="StockTurnoverTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 短期偿债能力变化趋势 -->
+		<canvas style="{{principles[page].name === 'ShortTermLiquidityTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ShortTermLiquidityTrend" disable-scroll="false" class="canvas" data-id="ShortTermLiquidityTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 总资产报酬率变化趋势 -->
+		<canvas style="{{principles[page].name === 'ReturnOfAssetsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReturnOfAssetsTrend" disable-scroll="false" class="canvas" data-id="ReturnOfAssetsTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 经营现金流净额/净利润变化趋势 -->
+		<canvas style="{{principles[page].name === 'NetOperatingCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="NetOperatingCashFlowTrend" disable-scroll="false" class="canvas" data-id="NetOperatingCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 周转天数变化趋势 -->
+		<canvas style="{{principles[page].name === 'DaysOfTurnoverTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="DaysOfTurnoverTrend" disable-scroll="false" class="canvas" data-id="DaysOfTurnoverTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 货币资金/短期负债变化趋势 -->
+		<canvas style="{{principles[page].name === 'MonetaryCapitalTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="MonetaryCapitalTrend" disable-scroll="false" class="canvas" data-id="MonetaryCapitalTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 应收账款/营业总收入变化趋势 -->
+		<canvas style="{{principles[page].name === 'ReceivablesTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivablesTrend" disable-scroll="false" class="canvas" data-id="ReceivablesTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 预付款项变化趋势 -->
+		<canvas style="{{principles[page].name === 'PrepaymentTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PrepaymentTrend" disable-scroll="false" class="canvas" data-id="PrepaymentTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 预付款项占比营业成本的变化趋势 -->
+		<canvas style="{{principles[page].name === 'PrepaymentCostPercentageTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PrepaymentCostPercentageTrend" disable-scroll="false" class="canvas" data-id="PrepaymentCostPercentageTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 其他应收款/总资产变化趋势 -->
+		<canvas style="{{principles[page].name === 'ReceivableOtherTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivableOtherTrend" disable-scroll="false" class="canvas" data-id="ReceivableOtherTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 应付账款及应付票据变化趋势 -->
+		<canvas style="{{principles[page].name === 'AccountsPayableTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AccountsPayableTrend" disable-scroll="false" class="canvas" data-id="AccountsPayableTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 存货占比变化趋势 -->
+		<canvas style="{{principles[page].name === 'StockProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="StockProportionTrend" disable-scroll="false" class="canvas" data-id="StockProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 在建工程变化趋势 -->
+		<canvas style="{{principles[page].name === 'InProgressConstructionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="InProgressConstructionTrend" disable-scroll="false" class="canvas" data-id="InProgressConstructionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 研发费用占比营业收入变化趋势 -->
+		<canvas style="{{principles[page].name === 'ResearchExpenditureTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ResearchExpenditureTrend" disable-scroll="false" class="canvas" data-id="ResearchExpenditureTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 应付职工薪酬及递延所得税资产变化趋势 -->
+		<canvas style="{{principles[page].name === 'EmployeePayableTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="EmployeePayableTrend" disable-scroll="false" class="canvas" data-id="EmployeePayableTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 营业利润率变化趋势 -->
+		<canvas style="{{principles[page].name === 'OperatingProfitRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="OperatingProfitRatioTrend" disable-scroll="false" class="canvas" data-id="OperatingProfitRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 营业利润占比环形图 -->
+		<canvas style="{{principles[page].name === 'OperatingProfitRing' ? 'display: block;' : 'display: none;'}}" canvas-id="OperatingProfitRing" disable-scroll="false" class="canvas" data-id="OperatingProfitRing" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 销售商品、提供劳务收到现金/营业总收入 -->
+		<canvas style="{{principles[page].name === 'CashOfSellingGoodsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashOfSellingGoodsTrend" disable-scroll="false" class="canvas" data-id="CashOfSellingGoodsTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 经营活动现金流净额/投资活动现金流净额 -->
+		<canvas style="{{principles[page].name === 'NetCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="NetCashFlowTrend" disable-scroll="false" class="canvas" data-id="NetCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 投资支出/经营活动现金流净额 -->
+		<canvas style="{{principles[page].name === 'InvestmentExpenditureProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="InvestmentExpenditureProportionTrend" disable-scroll="false" class="canvas" data-id="InvestmentExpenditureProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 资产处置所得/投资活动现金流入 -->
+		<canvas style="{{principles[page].name === 'AssetSaleProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetSaleProportionTrend" disable-scroll="false" class="canvas" data-id="AssetSaleProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 取得借款/偿还债务 -->
+		<canvas style="{{principles[page].name === 'BorrowDebtTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="BorrowDebtTrend" disable-scroll="false" class="canvas" data-id="BorrowDebtTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 收到其他与经营活动有关的现金 -->
+		<canvas style="{{principles[page].name === 'OtherBusinessCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="OtherBusinessCashFlowTrend" disable-scroll="false" class="canvas" data-id="OtherBusinessCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 资产减值损失 -->
+		<canvas style="{{principles[page].name === 'AssetsImpairmentLossTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetsImpairmentLossTrend" disable-scroll="false" class="canvas" data-id="AssetsImpairmentLossTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 销售费用占营业收入比例 -->
+		<canvas style="{{principles[page].name === 'SellingExpensesProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="SellingExpensesProportionTrend" disable-scroll="false" class="canvas" data-id="SellingExpensesProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 资本性支出占营业收入比例 -->
+		<canvas style="{{principles[page].name === 'CapitalExpenditureTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CapitalExpenditureTrend" disable-scroll="false" class="canvas" data-id="CapitalExpenditureTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 销售现金率 -->
+		<canvas style="{{principles[page].name === 'CashSalesRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashSalesRatioTrend" disable-scroll="false" class="canvas" data-id="CashSalesRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 现金购销比率 -->
+		<canvas style="{{principles[page].name === 'PurchaseSaleRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="PurchaseSaleRatioTrend" disable-scroll="false" class="canvas" data-id="PurchaseSaleRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 商品销售成本率 -->
+		<canvas style="{{principles[page].name === 'CostSaleRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CostSaleRatioTrend" disable-scroll="false" class="canvas" data-id="CostSaleRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 现金流入对现金流出比率 -->
+		<canvas style="{{principles[page].name === 'CashInOutRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashInOutRatioTrend" disable-scroll="false" class="canvas" data-id="CashInOutRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 应收款占比总资产比率 -->
+		<canvas style="{{principles[page].name === 'ReceivablesPercentageTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="ReceivablesPercentageTrend" disable-scroll="false" class="canvas" data-id="ReceivablesPercentageTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 自由现金流 -->
+		<canvas style="{{principles[page].name === 'FreeCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="FreeCashFlowTrend" disable-scroll="false" class="canvas" data-id="FreeCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
+	</view>
 </indicator>
 <indicator principle="{{principles[page]}}" stock="{{peer}}" print="{{false}}" target="{{target}}" contrast="{{contrast}}"></indicator>
 
 <!-- 评分 -->
 <mp-cells title="开始评分" footer="">
-    <mp-cell wx:for="{{evaluate}}" wx:key="field" title="{{item.name}}" ext-class="weui-cell_vcode">
-        <view class="field-addminus">
-            <image class="addminus" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/minus.png" data-op="minus" data-field="{{item.field}}" bindtap="onAddMinusTap"></image>
-            <input bindinput="onInput" type="number" data-field="{{item.field}}" class="weui-input addminus-input" value="{{stock.principle[page][item.field] || (item.field === 'reliability' ? 100 : 0)}}" />{{item.field === 'reliability' ? '%' : ''}}
-            <image class="addminus" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/plus.png" data-op="add" data-field="{{item.field}}" bindtap="onAddMinusTap"></image>
-        </view>
-    </mp-cell>
+	<mp-cell wx:for="{{evaluate}}" wx:key="field" title="{{item.name}}" ext-class="weui-cell_vcode">
+		<view class="field-addminus">
+			<image class="addminus" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/minus.png" data-op="minus" data-field="{{item.field}}" bindtap="onAddMinusTap"></image>
+			<input bindinput="onInput" type="number" data-field="{{item.field}}" class="weui-input addminus-input" value="{{stock.principle[page][item.field] || (item.field === 'reliability' ? 100 : 0)}}" />{{item.field === 'reliability' ? '%' : ''}}
+			<image class="addminus" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/plus.png" data-op="add" data-field="{{item.field}}" bindtap="onAddMinusTap"></image>
+		</view>
+	</mp-cell>
 </mp-cells>
 
 <view class="guide"></view>
