@@ -1,5 +1,6 @@
-const UTIL = require('util');
+const UTIL = require('util')
 const AXIOS = require('axios')
+const MD5 = require('md5-node')
 const MOMENT = require('moment')
 const CLOUD = require('wx-server-sdk')
 const URL = require('../utils/url.js')
@@ -31,29 +32,6 @@ const FIELDS = [{
     start: "invstr_num",
     end: "};"
 }]
-
-/**
- *      获取 巨潮资讯网 ACCESS TOKEN
- * 
- * 通过POST方式请求 http://webapi.cninfo.com.cn/api-cloud-platform/oauth2/token 接口
- * 传入 我的凭证 下面二个参数client_id=Access Key的值，client_secret=Access Secret的值来获取token
- * 
- */
-async function getCNInfoAPIOauthToken() {
-    const data = {
-        grant_type: 'client_credentials',
-        client_id: CONFIG.CNINFO_ACCESS_KEY,
-        client_secret: CONFIG.CNINFO_ACCESS_SECRET
-    };
-
-    const result = await HTTP_CLIENT.postPromisify(
-        URL.CNINFO_API_HOST,
-        80,
-        URL.CNINFO_API_OAUTH_TOKEN_PATH,
-        data);
-
-    return JSON.parse(result);
-}
 
 /**
  *      分配抓取各大股票市场的所有股票任务
@@ -240,41 +218,6 @@ async function grabStockAccountNumber(request) {
 }
 
 /**
- *  定期报告审计意见
- */
-async function grabStockInfo(request, url, field) {
-    const token = await getCNInfoAPIOauthToken()
-    const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
-    const data = {}
-    // console.log(response)
-
-    if (response.status === 200 && response.data.resultcode === 200) {
-        data[field] = response.data.records
-        return await db.collection('_stock')
-            .where({
-                "stocks.code": request.code
-            })
-            .update({
-                data: data
-            })
-    } else {
-        return {
-            errMsg: response.data.resultmsg || "无法获取数据"
-        }
-    }
-}
-
-/**
- *      港股
- */
-async function grabHKBalanceSheet(request) {
-    const token = await getCNInfoAPIOauthToken()
-    const response = await AXIOS.get(UTIL.format(URL.CNINFO_STOCK_HK_BALANCE_SHEET, request.code, token.access_token))
-    console.log(response)
-    return 'DONE'
-}
-
-/**
  *      获取过去一年内A股市场的股票账户数
  */
 async function market() {
@@ -302,6 +245,79 @@ async function market() {
             errMsg: "暂无数据"
         }
     }
+}
+
+/**
+ *      获取 巨潮资讯网 ACCESS TOKEN
+ * 
+ * 通过POST方式请求 http://webapi.cninfo.com.cn/api-cloud-platform/oauth2/token 接口
+ * 传入 我的凭证 下面二个参数client_id=Access Key的值，client_secret=Access Secret的值来获取token
+ * 
+ */
+async function getCNInfoAPIOauthToken() {
+    const data = {
+        grant_type: 'client_credentials',
+        client_id: CONFIG.CNINFO_ACCESS_KEY,
+        client_secret: CONFIG.CNINFO_ACCESS_SECRET
+    };
+
+    const result = await HTTP_CLIENT.postPromisify(
+        URL.CNINFO_API_HOST,
+        80,
+        URL.CNINFO_API_OAUTH_TOKEN_PATH,
+        data);
+
+    return JSON.parse(result);
+}
+
+/**
+ *  从各第三方开放平台（巨潮资讯）调用API获取相应数据（财报、股权等）后，更新指定上市公司的数据
+ */
+async function grabStockInfo(request, url, field) {
+    const token = await getCNInfoAPIOauthToken()
+    const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
+    const data = {}
+    // console.log(response)
+
+    if (response.status === 200 && response.data.resultcode === 200) {
+        data[field] = response.data.records
+        return await db.collection('_stock')
+            .where({
+                "stocks.code": request.code
+            })
+            .update({
+                data: data
+            })
+    } else {
+        return {
+            errMsg: response.data.resultmsg || "无法获取数据"
+        }
+    }
+}
+
+/**
+ *  从企查查开放平台调用API获取相应小道消息后，更新指定上市公司的数据
+ */
+async function grabStockGossip(request) {
+    const userKey = "2755d731b3894bb8b8f9e4cc71a6a9e6";
+    const timeSpan = Math.round(new Date / 1000);
+    const secretKey = "3C4B88210CA11B0ADE5704E0252AFDF0";
+    const token = MD5(userKey + timeSpan + secretKey).toUpperCase();
+
+    const response = await HTTP_CLIENT.getPlusPromisify(
+        "api.qichacha.com",
+        '/CompanyNews/SearchNews?', {
+            "key": userKey,
+            "searchKey": "沪士电子股份有限公司"
+        }, {
+            "Token": token,
+            "Timespan": timeSpan
+        }
+    )
+    const data = {}
+    console.log(response)
+
+    return 'DONE'
 }
 
 /**
@@ -467,7 +483,7 @@ module.exports = {
     grabStockAccountNumber,
     grabMarketStocksTask,
     grabMarketStocks,
-    grabHKBalanceSheet,
+    grabStockGossip,
     market,
     follow,
     manual,

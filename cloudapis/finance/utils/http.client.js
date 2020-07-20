@@ -19,6 +19,7 @@ function get(url, callback) {
     });
 }
 
+//  简易 get 请求
 function getPromisify(url) {
     console.log('http.getPromisify ==> ' + url);
     return new Promise((resolve, reject) => {
@@ -36,6 +37,36 @@ function getPromisify(url) {
     })
 }
 
+//  加强版 get 请求，附加请求头
+function getPlusPromisify(hostname, path, data, headers) {
+    const content = QUERY_STRING.stringify(data);
+    const options = {
+        "hostname": hostname,
+        "method": "GET",
+        "path": path + content,
+        "headers": headers
+    }
+
+    return new Promise((resolve, reject) => {
+        const req = HTTP.request(options, (response) => {
+            let data = '';
+            response.on('data', (chunk) => {
+                data += chunk;
+            });
+            response.on('end', () => {
+                resolve(data);
+            });
+        }).on('error', (error) => {
+            reject(error)
+        });
+        req.end();
+    })
+
+}
+
+/**
+ *      POST 请求
+ */
 function postPromisify(host, port, path, data) {
     console.log('http.postPromisify ==> ', host, port, path);
     const postData = QUERY_STRING.stringify(data);
@@ -70,5 +101,6 @@ function postPromisify(host, port, path, data) {
 module.exports = {
     get,
     getPromisify,
+    getPlusPromisify,
     postPromisify
 }

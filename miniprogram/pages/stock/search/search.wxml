@@ -1,6 +1,12 @@
 <!--pages/stock/search/search.wxml-->
 <mp-searchbar bindselectresult="onSearchResultSelected" search="{{search}}"></mp-searchbar>
 
+<!-- A股市场新增账户数 -->
+<view class="guide">
+    <text class="headline">A股市场新增账户数</text>
+</view>
+<canvas canvas-id="aStockMarketAccount" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="aStockMarketAccount" bindtouchstart="onCanvasTouched"></canvas>
+
 <!-- 特别关注 -->
 <mp-cells title="特别关注" footer="">
     <mp-cell link hover wx:for="{{optionals}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
@@ -215,13 +221,6 @@
         <view slot="footer">{{item.market}}</view>
     </mp-cell>
 </mp-cells>
-
-
-<!-- A股市场新增账户数 -->
-<view class="guide">
-    <text class="headline">A股市场新增账户数</text>
-</view>
-<canvas canvas-id="aStockMarketAccount" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="aStockMarketAccount" bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- 投资系统 -->
 <image style="width: 100%;" lazy-load="{{true}}" mode="widthFix" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/investment-system/mechanism.jpeg"></image>

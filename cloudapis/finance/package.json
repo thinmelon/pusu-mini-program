@@ -13,6 +13,7 @@
         "moment": "latest",
         "cheerio": "latest",
         "axios": "latest",
-        "iconv-lite": "latest"
+        "iconv-lite": "latest",
+        "md5-node": "latest"
     }
 }
