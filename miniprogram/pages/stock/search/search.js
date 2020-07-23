@@ -11,8 +11,12 @@ Page({
     data: {
         //  网络规划 
         networkDesign: [{
-            "code": "002921",
-            "name": "联诚精密",
+            "code": "002436",
+            "name": "兴森科技",
+            "market": "深交所"
+        }, {
+            "code": "601860",
+            "name": "紫金银行",
             "market": "深交所"
         }, {
             "code": "002093",
@@ -937,7 +941,7 @@ Page({
     },
 
     /**
-     *      获取自选股
+     *      获取自选股 
      */
     getOptionals: function () {
         app.wxp.cloud.callFunction({

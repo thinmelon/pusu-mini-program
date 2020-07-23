@@ -34,7 +34,7 @@ exports.main = async(event, context) => {
             fn: GOVERNMENT.population
         }, {
             action: "test",
-            fn: STOCK.grabStockGossip
+            fn: STOCK.grabMarketStocks
         },
         /**
          *      

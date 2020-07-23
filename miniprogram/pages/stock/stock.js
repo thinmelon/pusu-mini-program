@@ -190,11 +190,11 @@ Page({
             })
             .then(res => {
                 console.log('getStockInfo >>> ', res)
-                if (res.result && res.result.list.length > 0) {
+                if (res.result && res.result.data.length > 0) {
                     let buy = 0,
                         sell = 0;
-                    const market = res.result.list[0]._id
-                    const stock = res.result.list[0].result
+                    const market = res.result.data[0].market
+                    const stock = res.result.data[0]
                     //  如果有股权质押，过滤到已解押，并且质押终止日未到期的记录
                     if (stock.pledge) {
                         stock.pledge = stock.pledge.filter(item => {

@@ -40,8 +40,8 @@ const FIELDS = [{
  */
 async function grabMarketStocksTask(request) {
     // const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_SZ_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 4))
-    // const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_SH_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 4))
-    const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_HK_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 4))
+    const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_SH_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 4))
+    // const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_HK_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 4))
     // const response = await AXIOS.get(UTIL.format(URL.JUHE_STOCK_USA_LIST, CONFIG.JUHE_STOCK_APP_KEY, request.page || 1, request.type || 3))
 
     if (response.status === 200 &&
@@ -58,16 +58,18 @@ async function grabMarketStocksTask(request) {
                         rank: 11,
                         subject: 'FINANCE',
                         category: 'STOCK',
-                        // market: 'SHEN ZHEN',
-                        // market: 'SHANG HAI',
-                        market: 'HONG KONG',
-                        // market: 'USA',
+                        // market: 'SZ',
+                        market: 'SH',
+                        // market: 'HK',
+                        // market: 'US',
                         page: i,
-                        type: request.type || 3,
+                        type: request.type || 4,
                         status: 0,
                         addTime: new Date()
                     }
                 })
+
+            console.log(result)
         }
         return 'DONE'
     } else {
@@ -86,49 +88,52 @@ async function grabMarketStocksTask(request) {
  */
 async function grabMarketStocks(request) {
     let url = ""
+    let content = ''
+
+    request.market = "US"
+    request.page = 1
+    request.type = 3
 
     switch (request.market) {
-        case "SHEN ZHEN": //  深圳证券交易所
+        case "SZ": //  深圳证券交易所
             url = URL.JUHE_STOCK_SZ_LIST;
             break;
-        case "SHANG HAI": //  上海证券交易所
+        case "SH": //  上海证券交易所
             url = URL.JUHE_STOCK_SH_LIST;
             break;
-        case "HONG KONG": //  联交所
+        case "HK": //  联交所
             url = URL.JUHE_STOCK_HK_LIST;
             break;
-        case "USA": //  美股市场
+        case "US": //  美股
             url = URL.JUHE_STOCK_USA_LIST;
             break;
         default:
             return "DONE"
     }
+
     console.log("grabMarketStocks >>> ", url, request.page, request.type)
     const response = await AXIOS.get(UTIL.format(url, CONFIG.JUHE_STOCK_APP_KEY, request.page, request.type))
+    console.log(response)
 
     if (response.status === 200 && response.data.error_code === 0) {
-        let stocks = response.data.result.data.map(record => {
-            return {
-                name: request.market === "USA" ? record.cname : record.name,
-                code: request.market === "USA" || request.market === "HONG KONG" ? record.symbol : record.code,
-                shortened: record.engname
-            }
+        response.data.result.data.map(record => {
+            content += (JSON.stringify({
+                _id: record.symbol,
+                name: request.market === "US" ? record.cname : record.name,
+                code: request.market === "US" || request.market === "HK" ? record.symbol : record.code,
+                shortened: record.engname || "",
+                market: request.market === "US" ? record.market : request.market
+            }) + '\n')
         })
+        console.log("AFTER", content)
 
-        const result = await db.collection('_stock')
-            .doc(request.market)
-            .update({
-                data: {
-                    stocks: _.push({
-                        each: stocks,
-                        sort: {
-                            name: 1
-                        }
-                    }),
+        const fileName = request.market + ".json"
+        const res = await CLOUD.uploadFile({
+            cloudPath: fileName,
+            fileContent: content
+        })
+        console.log(res)
 
-                }
-            })
-        console.log(result)
         return "DONE"
     } else {
         return {
@@ -277,13 +282,13 @@ async function grabStockInfo(request, url, field) {
     const token = await getCNInfoAPIOauthToken()
     const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
     const data = {}
-    // console.log(response)
+    console.log(response)
 
     if (response.status === 200 && response.data.resultcode === 200) {
         data[field] = response.data.records
-        return await db.collection('_stock')
+        return await db.collection('_stocks')
             .where({
-                "stocks.code": request.code
+                "code": request.code
             })
             .update({
                 data: data
@@ -324,13 +329,13 @@ async function grabStockGossip(request) {
  *      添加/移除自选股
  */
 async function follow(request) {
-    return await db.collection('_stock')
+    return await db.collection('_stocks')
         .where({
-            "stocks.code": request.code
+            "code": request.code
         })
         .update({
             data: {
-                "stocks.$.follow": request.follow
+                "follow": request.follow
             }
         })
 }
@@ -339,16 +344,16 @@ async function follow(request) {
  *      手动更新单支股票信息
  */
 async function manual(request) {
-    return await db.collection('_stock')
+    return await db.collection('_stocks')
         .where({
-            "stocks.code": request.code
+            "code": request.code
         })
         .update({
             data: {
-                "stocks.$.balance": request.balance,
-                "stocks.$.cashflow": request.cashflow,
-                "stocks.$.profit": request.profit,
-                "stocks.$.indicators": request.indicators
+                "balance": request.balance,
+                "cashflow": request.cashflow,
+                "profit": request.profit,
+                "indicators": request.indicators
             }
         })
 }
@@ -359,12 +364,12 @@ async function manual(request) {
 async function refresh(request) {
     console.log("refresh >>> ", request)
     switch (request.market) {
-        case "SHEN ZHEN":
-        case "SHANG HAI":
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_BALANCE_SHEET, "stocks.$.balance") //  资产负债表
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_PROFIT_STATEMENT, "stocks.$.profit") //  利润表
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_CASH_FLOW_STATEMENT, "stocks.$.cashflow") //  现金流量表
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INDICATORS, "stocks.$.indicators") //  指标表
+        case "SZ":
+        case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_BALANCE_SHEET, "balance") //  资产负债表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_PROFIT_STATEMENT, "profit") //  利润表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INDICATORS, "indicators") //  指标表
             break;
         default:
             break;
@@ -379,10 +384,10 @@ async function refresh(request) {
 async function shareholder(request) {
     console.log("shareholder >>> ", request)
     switch (request.market) {
-        case "SHEN ZHEN":
-        case "SHANG HAI":
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_PLEDGE, "stocks.$.pledge") //  股权质押
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FLOAT_HOLDER, "stocks.$.holder") //  十大流通股东持股情况
+        case "SZ":
+        case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_PLEDGE, "pledge") //  股权质押
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FLOAT_HOLDER, "holder") //  十大流通股东持股情况
             break;
         default:
             break;
@@ -397,10 +402,10 @@ async function shareholder(request) {
 async function fund(request) {
     console.log("fund >>> ", request)
     switch (request.market) {
-        case "SHEN ZHEN":
-        case "SHANG HAI":
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FUND_SOURCE, "stocks.$.fund") //  募集资金来源
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INVESTMENT, "stocks.$.investment") //  募集资金计划投资项目
+        case "SZ":
+        case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FUND_SOURCE, "fund") //  募集资金来源
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INVESTMENT, "investment") //  募集资金计划投资项目
             break;
         default:
             break;
@@ -415,11 +420,11 @@ async function fund(request) {
 async function issue(request) {
     console.log("issue >>> ", request)
     switch (request.market) {
-        case "SHEN ZHEN":
-        case "SHANG HAI":
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_AUDIT, "stocks.$.audit") //  审计意见
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_EXTERNAL_GUARANTEE, "stocks.$.guarantee") //  对外担保
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_PUNISHMENT, "stocks.$.punishment") //  公司受处罚表
+        case "SZ":
+        case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_AUDIT, "audit") //  审计意见
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_EXTERNAL_GUARANTEE, "guarantee") //  对外担保
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_PUNISHMENT, "punishment") //  公司受处罚表
             break;
         default:
             break;
@@ -444,14 +449,13 @@ async function principle(request) {
  *  更新评分
  */
 async function score(request) {
-    return await db.collection('_stock')
+    return await db.collection('_stocks')
         .where({
-            "_id": request.market,
-            "stocks.code": request.code
+            "code": request.code
         })
         .update({
             data: {
-                "stocks.$.principle": request.principle
+                "principle": request.principle
             }
         })
 }
