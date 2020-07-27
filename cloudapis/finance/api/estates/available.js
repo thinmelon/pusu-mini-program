@@ -1,7 +1,6 @@
 const UTIL = require('util');
 const AXIOS = require('axios')
 const CHEERIO = require('cheerio')
-const MOMENT = require('moment')
 const CLOUD = require('wx-server-sdk')
 const ESTATES = require('./estates.js')
 const URL = require('../../utils/url.js')

@@ -6,6 +6,7 @@ const CLOUD = require('wx-server-sdk')
 const URL = require('../utils/url.js')
 const CONFIG = require('../utils/config.js')
 const HTTP_CLIENT = require('../utils/http.client.js')
+const COMMON = require('../utils/common.js')
 
 //  初始化 CLOUD
 CLOUD.init({
@@ -113,7 +114,7 @@ async function grabMarketStocks(request) {
 
     console.log("grabMarketStocks >>> ", url, request.page, request.type)
     const response = await AXIOS.get(UTIL.format(url, CONFIG.JUHE_STOCK_APP_KEY, request.page, request.type))
-    console.log(response)
+    // console.log(response)
 
     if (response.status === 200 && response.data.error_code === 0) {
         response.data.result.data.map(record => {
@@ -253,36 +254,13 @@ async function market() {
 }
 
 /**
- *      获取 巨潮资讯网 ACCESS TOKEN
- * 
- * 通过POST方式请求 http://webapi.cninfo.com.cn/api-cloud-platform/oauth2/token 接口
- * 传入 我的凭证 下面二个参数client_id=Access Key的值，client_secret=Access Secret的值来获取token
- * 
- */
-async function getCNInfoAPIOauthToken() {
-    const data = {
-        grant_type: 'client_credentials',
-        client_id: CONFIG.CNINFO_ACCESS_KEY,
-        client_secret: CONFIG.CNINFO_ACCESS_SECRET
-    };
-
-    const result = await HTTP_CLIENT.postPromisify(
-        URL.CNINFO_API_HOST,
-        80,
-        URL.CNINFO_API_OAUTH_TOKEN_PATH,
-        data);
-
-    return JSON.parse(result);
-}
-
-/**
  *  从各第三方开放平台（巨潮资讯）调用API获取相应数据（财报、股权等）后，更新指定上市公司的数据
  */
 async function grabStockInfo(request, url, field) {
-    const token = await getCNInfoAPIOauthToken()
+    const token = await COMMON.getCNInfoAPIOauthToken()
     const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
     const data = {}
-    console.log(response)
+    // console.log(response)
 
     if (response.status === 200 && response.data.resultcode === 200) {
         data[field] = response.data.records
@@ -320,7 +298,7 @@ async function grabStockGossip(request) {
         }
     )
     const data = {}
-    console.log(response)
+    // console.log(response)
 
     return 'DONE'
 }
@@ -389,6 +367,9 @@ async function shareholder(request) {
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_PLEDGE, "pledge") //  股权质押
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_FLOAT_HOLDER, "holder") //  十大流通股东持股情况
             break;
+        case "HK":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_SHARE_HOLDER_CHANGE, "change") //  主要股东股权变动
+            break;
         default:
             break;
     }
@@ -406,6 +387,8 @@ async function fund(request) {
         case "SH":
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_FUND_SOURCE, "fund") //  募集资金来源
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_INVESTMENT, "investment") //  募集资金计划投资项目
+            break;
+        case "HK":
             break;
         default:
             break;
@@ -482,7 +465,6 @@ async function note(request) {
         })
 }
 
-
 module.exports = {
     grabStockAccountNumber,
     grabMarketStocksTask,
@@ -497,5 +479,5 @@ module.exports = {
     issue,
     principle,
     score,
-    note
+    note,
 }

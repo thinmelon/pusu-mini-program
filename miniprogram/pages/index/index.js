@@ -1,4 +1,5 @@
 // pages/index/index.js
+const MOMENT = require('../../lib/moment.min.js');
 const wxcharts = require('../../lib/wxcharts.js');
 const config = require('./config.js')
 const app = getApp()
@@ -23,12 +24,6 @@ Page({
         /*	    货币列表    */
         multiIndex: [1, 0],
         currencyList: config.CURRENCY_LIST,
-        /*	    现金流估值    */
-        annualCashFlow: 3000,
-        discountRate: 12,
-        growthRate: 0,
-        periods: 5,
-        presentWorth: 0,
         //  更多指标数据
         indexes: [{
             name: "股票",
@@ -44,7 +39,17 @@ Page({
             name: "知识树",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/knowledge.png",
             category: "knowledge",
-            url: "/pages/knowledge/folder/folder" //  知识树
+            url: "/pages/knowledge/folder/folder?album=投资必懂的100个经济名词&folder=Economy" //  知识树
+        }, {
+            name: "房地产",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/estates.png",
+            category: "estates",
+            url: "/pages/estates/estates" //  房地产
+        }, {
+            name: "工具盒",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/tools.png",
+            category: "tools",
+            url: "/pages/tools/tools" //  工具盒
         }],
         /*	 	知识点      */
         articles: {
@@ -53,15 +58,15 @@ Page({
         }
     },
 
-    lineCanvas: null, //  线形图
-
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.getChinaBondYieldRate()
-        this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
-        this.calculatePresentWorth()
+        // this.getChinaBondYieldRate()
+        // this.getStockMarketAccountStatistic()
+        // this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
+        this.getMacroIndexes()
+        // this.getMoneySupply()
     },
 
     /**
@@ -103,22 +108,39 @@ Page({
         })
     },
 
-    /**
-     *  输入框焦点发生变化
-     */
-    onInputChange: function (e) {
-        this.data[e.currentTarget.dataset.field] = parseInt(e.detail.value)
-        this.calculatePresentWorth()
-    },
-
-    /**
-     *  计算现金流现值
-     */
-    calculatePresentWorth: function () {
-        this.setData({
-            presentWorth: (((1 - Math.pow(1 + (this.data.growthRate / 100), this.data.periods) / (Math.pow(1 + (this.data.discountRate / 100), this.data.periods))) * 100 / (this.data.discountRate - this.data.growthRate)) * this.data.annualCashFlow * (1 + this.data.growthRate / 100)).toFixed(2)
-        })
-    },
+    lineCanvases: [{
+        _id: "aStockMarketAccount",
+        unit: "万户",
+        subIndex: [{
+            name: "新增账户数",
+            value: "newInvestors"
+        }],
+        handler: null
+    }, {
+        _id: "chinaBondYieldRate",
+        unit: "",
+        subIndex: [{
+            name: "利差",
+            value: "margin"
+        }],
+        handler: null
+    }, {
+        _id: "CPI",
+        unit: "",
+        handler: null
+    }, {
+        _id: "PPI",
+        unit: "",
+        handler: null
+    }, {
+        _id: "PMI",
+        unit: "",
+        handler: null
+    }, {
+        _id: "moneySupply",
+        unit: "%",
+        handler: null
+    }],
 
     /**
      * 获取中债国债数据
@@ -137,8 +159,30 @@ Page({
             })
             .then(res => {
                 console.log(res)
+                const margin = [],
+                    oneYear = [],
+                    tenYear = [],
+                    date = [],
+                    series = [];
+
+                //   计算不同期限的收益率差
+                for (let i = 0, length = res.result.date.length; i < length; i++) {
+                    oneYear[i] = res.result.oneYear[length - 1 - i];
+                    tenYear[i] = res.result.tenYear[length - 1 - i];
+                    date[i] = res.result.date[length - 1 - i];
+                    margin[i] = (tenYear[i] - oneYear[i]).toFixed(4);
+                }
+
+                //   Y坐标数据源
+                series.push({
+                    name: '利差',
+                    data: margin
+                })
+
+                //   创建线形图表
+                this.createLineCanvas("chinaBondYieldRate", date, series)
+
                 wx.hideLoading();
-                this.showLineChart(res.result)
             })
             .catch(err => {
                 wx.hideLoading();
@@ -150,77 +194,249 @@ Page({
     },
 
     /**
-     *   显示拆线图
+     *      获取A股市场股票账户数
      */
-    showLineChart: function (result) {
-        //   记录数据数组长度
-        this.data.totalLabels = result.date.length;
-        const margin = [],
-            oneYear = [],
-            tenYear = [],
-            date = [];
-        //   计算不同期限的收益率差
-        for (let i = 0, length = result.date.length; i < length; i++) {
-            oneYear[i] = result.oneYear[length - 1 - i];
-            tenYear[i] = result.tenYear[length - 1 - i];
-            date[i] = result.date[length - 1 - i];
-            margin[i] = (tenYear[i] - oneYear[i]).toFixed(4);
-        }
+    getStockMarketAccountStatistic: function () {
+        app.wxp.cloud.callFunction({
+                name: 'finance',
+                data: {
+                    action: 'market'
+                }
+            })
+            .then(res => {
+                console.log('getStockMarketAccountStatistic >>> ', res)
+                if (res.result.data && res.result.data.length > 0) {
+                    const categories = [];
+                    const series = [];
+                    const canvas = this.lineCanvases.filter(item => {
+                        return item._id === "aStockMarketAccount"
+                    })[0]
 
-        const categories = [];
-        const series = [];
+                    /** X坐标数据源 */
+                    res.result.data.map(item => {
+                        categories.push(item._id);
+                    })
 
-        /** Y坐标数据源 */
-        // series.push({
-        //     name: '一年期',
-        //     data: oneYear
-        // })
-        // series.push({
-        //     name: '十年期',
-        //     data: tenYear
-        // })
-        series.push({
-            name: '利差',
-            data: margin
-        })
+                    /** Y坐标数据源 */
+                    canvas.subIndex.map(field => {
+                        series.push({
+                            name: field.name,
+                            data: res.result.data.map(item => {
+                                return item.day[0][field.value] || 0
+                            }),
+                            format: function (val, name) {
+                                return val;
+                            }
+                        })
+                    })
 
-        /** 绘制图表 */
-        this.lineCanvas = new wxcharts({
-            canvasId: "chinaBondYieldRate",
-            type: "line",
-            categories: date,
-            series: series,
-            xAxis: {
-                disableGrid: true
-            },
-            yAxis: {
-                min: 0
-            },
-            animation: true,
-            width: app.windowWidth,
-            height: app.windowHeight,
-            dataLabel: false,
-            dataPointShape: false,
-            extra: {
-                lineStyle: 'curve'
+                    this.createLineCanvas("aStockMarketAccount", categories, series)
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    },
+
+    /**
+     *      宏观数据
+     */
+    getMacroIndexes: function () {
+        app.wxp.cloud.callFunction({
+                name: "database",
+                data: {
+                    collection: "_macro",
+                    limit: 20,
+                    sort1: "_id",
+                    sortOption1: "desc"
+                }
+            })
+            .then(res => {
+                console.log(res);
+
+                if (res.result && res.result.data.length > 0) {
+                    const rawData = res.result.data.reverse()
+                    const series = [{
+                        name: "CPI",
+                        data: [],
+                        subIndex: [{
+                            name: "同比",
+                            value: "cpiYearOnYear"
+                        }, {
+                            name: "环比",
+                            value: "cpiMonthOnMonth"
+                        }]
+                    }, {
+                        name: "PPI",
+                        data: [],
+                        subIndex: [{
+                            name: "同比",
+                            value: "ppiYearOnYear"
+                        }]
+                    }, {
+                        name: "PMI",
+                        data: [],
+                        subIndex: [{
+                            name: "PMI",
+                            value: "purchasingManagersIndex"
+                        }, {
+                            name: "进口指数",
+                            value: "importIndex"
+                        }, {
+                            name: "新出口订单指数",
+                            value: "newExportOrdersIndex"
+                        }, {
+                            name: "购进价格指数",
+                            value: "purchasingPriceIndex"
+                        }]
+                    }];
+                    const date = [];
+
+                    //  日期    X轴是时间轴
+                    rawData.map(item => {
+                        date.push(item._id)
+                    })
+                    //  各宏观指标  Y轴
+                    for (let i = 0, length = series.length; i < length; i++) {
+                        //  各项子指标
+                        series[i].subIndex.map(field => {
+                            series[i].data.push({
+                                name: field.name,
+                                data: rawData.map(item => {
+                                    return item[field.value] || 0
+                                }),
+                                format: function (val, name) {
+                                    return val;
+                                }
+                            })
+                        })
+                        //  绘制图形
+                        this.createLineCanvas(series[i].name, date, series[i].data)
+                    }
+                }
+
+            })
+    },
+
+    /**
+     *      货币信贷
+     */
+    getMoneySupply: function () {
+        app.wxp.cloud.callFunction({
+                name: "database",
+                data: {
+                    collection: "_money",
+                    limit: 50,
+                    sort1: "_id",
+                    sortOption1: "desc"
+                }
+            })
+            .then(res => {
+                console.log(res);
+                const date = [],
+                    m1Growth = [],
+                    m2Growth = [],
+                    m1m2Margin = [],
+                    series = [];
+
+                for (let i = 0, length = res.result.data.length; i < length; i++) {
+                    const item = res.result.data[i];
+                    //  无记录，继续
+                    if (!!!item.M1) {
+                        continue;
+                    }
+                    //  计算M1增速
+                    const lastYear = MOMENT(item._id, 'YYYY.MM').subtract(1, 'years').format('YYYY.MM') //  一年前
+                    const lastYearItem = res.result.data.filter(record => {
+                        return record._id === lastYear
+                    })
+                    if (lastYearItem.length > 0) {
+                        const m1Increase = (((item.M1 - lastYearItem[0].M1) / lastYearItem[0].M1) * 100).toFixed(2)
+                        const m2Increase = (((item.M2 - lastYearItem[0].M2) / lastYearItem[0].M2) * 100).toFixed(2)
+                        date.push(item._id)
+                        m1Growth.push(m1Increase)
+                        m2Growth.push(m2Increase)
+                        m1m2Margin.push((m1Increase - m2Increase).toFixed(2))
+                    } else {
+                        break
+                    }
+                }
+
+                series.push({
+                    name: "M1增速",
+                    data: m1Growth.reverse(),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+                series.push({
+                    name: "M2增速",
+                    data: m2Growth.reverse(),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+                series.push({
+                    name: "M1M2剪刀差",
+                    data: m1m2Margin.reverse(),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+                //  绘制图形
+                this.createLineCanvas("moneySupply", date.reverse(), series)
+
+            })
+    },
+
+    /**
+     *  绘制图表
+     */
+    createLineCanvas: function (_id, categories, series) {
+        this.lineCanvases = this.lineCanvases.map(canvas => {
+            if (canvas._id === _id) {
+                canvas.handler = new wxcharts({
+                    canvasId: canvas._id,
+                    type: 'line',
+                    categories: categories,
+                    series: series,
+                    xAxis: {
+                        disableGrid: true
+                    },
+                    yAxis: {
+                        min: 0
+                    },
+                    animation: false,
+                    width: app.windowWidth,
+                    height: app.windowHeight,
+                    dataLabel: false,
+                    dataPointShape: false,
+                    extra: {
+                        lineStyle: 'curve'
+                    }
+                });
             }
+
+            return canvas
         });
     },
 
     /**
      *  点击显示详情处理逻辑
      */
-    canvasTouchHandler: function (e) {
-        console.log(e)
-        if (e.target.dataset.category === 'line') {
-            this.lineCanvas.showToolTip(e, {
-                // background: '#7cb5ec',
-                format: function (item, category) {
-                    // console.log(item)
-                    return '[' + category + '] ' + item.name + ':' + item.data
-                }
-            });
-        }
+    onCanvasTouched: function (e) {
+        const target = this[e.target.dataset.category].find(canvas => {
+            return canvas._id === e.target.dataset.id
+        })
+        // console.log(target)
+
+        target.handler.showToolTip(e, {
+            // background: '#7cb5ec',
+            format: function (item, category) {
+                // console.log(item)
+                return '[' + category + ']  ' + item.name + ':' + item.data + target.unit
+            }
+        });
     },
 
     /**

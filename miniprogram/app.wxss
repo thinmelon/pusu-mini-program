@@ -188,7 +188,7 @@ button::after {
 }
 
 .field-input {
-    height: 120rpx;
-    padding-left: 100rpx;
+    height: 120rpm;
+    padding-left: 100rpm;
     text-align: center;
 }

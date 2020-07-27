@@ -71,8 +71,7 @@
 
 <!--                    各项指标                    -->
 
-<!-- <view wx:if="{{market==='SHEN ZHEN' || market==='SHANG HAI'}}"> -->
-<view class="guide" wx:if="{{market==='SHEN ZHEN' || market==='SHANG HAI'}}">
+<view class="guide" wx:if="{{stock.market==='SZ' || stock.market==='SH'}}">
     <text class="headline">指标 - {{stock.indicators.F069D}}</text>
     <view class="div-line"></view>
     <text class="p" wx:if="{{stock.indicators.F014N}}">净资产收益率：{{Math.toFixed(stock.indicators.F014N)}}%</text>
@@ -558,8 +557,16 @@
 
 <mp-cells title="十大流通股东持股情况" footer="占总股本比例 单位：%" wx:if="{{stock.holder}}">
     <mp-cell hover wx:for="{{stock.holder}}" wx:key="F001N">
-        <view class="brief">{{item.F001N}}  {{item.F003V}}</view>
+        <view class="brief">{{item.F001N}} {{item.F003V}}</view>
         <view slot="footer">{{item.F006N}}</view>
     </mp-cell>
 </mp-cells>
-<!-- </view> -->
+
+<!--                    主要股东股权变动                    -->
+
+<mp-cells title="主要股东股权变动（单位：亿股）" footer="" wx:if="{{stock.change}}">
+    <mp-cell hover wx:for="{{stock.change}}" wx:key="F001D">
+        <view class="brief">{{item.F001D}} {{item.F003V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F005N/100000000)}} ({{Math.toFixed(item.F006N/100000000)}})</view>
+    </mp-cell>
+</mp-cells>

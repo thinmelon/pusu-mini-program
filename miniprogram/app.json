@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/index/index",
         "pages/estates/estates",
         "pages/estates/map/map",
         "pages/estates/search/search",
@@ -19,7 +20,7 @@
         "pages/order/refund/refund",
         "pages/order/scheduling/scheduling",
         "pages/order/troupe/troupe",
-        "pages/index/index"
+        "pages/tools/tools"
     ],
     "window": {
         "backgroundTextStyle": "light",

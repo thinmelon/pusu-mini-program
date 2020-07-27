@@ -38,11 +38,16 @@ Component({
         onNavbarBtnClicked: function(evt) {
             console.log(evt)
             console.log(this.data.pageName)
-            let url = this.data.navbarButtons[parseInt(evt.currentTarget.dataset.tapindex)].url;
-            if (url) {
-                wx.navigateTo({
-                    url: url
-                })
+            const item = this.data.navbarButtons[parseInt(evt.currentTarget.dataset.tapindex)]
+            if (item.url) {
+                if (item.name === "主页")
+                    wx.redirectTo({
+                        url: item.url
+                    })
+                else
+                    wx.navigateTo({
+                        url: item.url
+                    })
             }
         }
     }

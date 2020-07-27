@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "莆田房产",
+    "navigationBarTitleText": "房",
     "navigationStyle": "custom",
     "usingComponents": {
         "navbar": "/components/navigation.bar",

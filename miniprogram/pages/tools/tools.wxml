@@ -1,0 +1,21 @@
+<!--miniprogram/pages/tools/tools.wxml-->
+<!-- --------------------------------------------------- -->
+<view class="guide">
+	<text class="headline">现金流估值工具</text>
+</view>
+
+<mp-cells title="固定期限内定期产生固定现金流" footer="（分期付款）">
+	<mp-cell prop="annualCashFlow" title="年度现金流">
+		<input bindinput="onInputChange" data-field="annualCashFlow" class="weui-input field-input" value="{{annualCashFlow}}" />
+	</mp-cell>
+	<mp-cell prop="discountRate" title="贴现率（%）">
+		<input bindinput="onInputChange" data-field="discountRate" class="weui-input field-input" value="{{discountRate}}" />
+	</mp-cell>
+	<mp-cell prop="growthRate" title="增长率（%）">
+		<input bindinput="onInputChange" data-field="growthRate" class="weui-input field-input" value="{{growthRate}}" />
+	</mp-cell>
+	<mp-cell prop="periods" title="时期数">
+		<input bindinput="onInputChange" data-field="periods" class="weui-input field-input" value="{{periods}}" />
+	</mp-cell>
+	<mp-cell value="现值" footer="{{presentWorth}}"></mp-cell>
+</mp-cells>

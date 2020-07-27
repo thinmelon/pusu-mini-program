@@ -18,7 +18,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function(options) {
         console.log(options)
         this.subject = options.folder
         this.setData({
@@ -29,17 +29,17 @@ Page({
 
     },
 
-    onReachBottom: function () {
+    onReachBottom: function() {
         this.getItems()
     },
 
-    onItemTap: function (e) {
+    onItemTap: function(e) {
         wx.navigateTo({
             url: '/pages/knowledge/item/item?_=' + encodeURIComponent(JSON.stringify(e.currentTarget.dataset.article)),
         })
     },
 
-    getItems: function () {
+    getItems: function() {
         app.wxp.cloud.callFunction({
                 name: "database",
                 data: {
@@ -48,7 +48,9 @@ Page({
                         folder: this.subject
                     })),
                     skip: this.skip,
-                    limit: this.limit
+                    limit: this.limit,
+                    sort1: "index",
+                    sortOption1: "asc"
                 }
             })
             .then(res => {

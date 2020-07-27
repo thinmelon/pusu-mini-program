@@ -1,7 +1,6 @@
 {
-    "navigationBarTitleText": "宏观",
+    "navigationBarTitleText": "工具箱",
     "usingComponents": {
-        "mp-icon": "/miniprogram_npm/weui-miniprogram/icon/icon",
         "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells",
         "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell"
     }

@@ -1,4 +1,5 @@
 {
+    "navigationBarTitleText": "莆仙戏剧团",
     "usingComponents": {
         "mp-searchbar": "/miniprogram_npm/weui-miniprogram/searchbar/searchbar",
         "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells",

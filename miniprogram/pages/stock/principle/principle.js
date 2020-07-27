@@ -90,7 +90,6 @@ Page({
                 data: {
                     action: 'score',
                     data: encodeURIComponent(JSON.stringify({
-                        market: this.data.market,
                         code: this.data.stock.code,
                         principle: this.data.stock.principle
                     }))
@@ -285,7 +284,7 @@ Page({
             .then(res => {
                 console.log("getStockInfo >>> ", res)
                 if (res.result && res.result.list.length > 0) {
-                    const stock = res.result.list[0].result
+                    const stock = res.result.list[0]
                     //  如果有股权质押，过滤到已解押，并且质押终止日未到期的记录
                     if (stock.pledge) {
                         stock.pledge = stock.pledge.filter(item => {
@@ -329,16 +328,13 @@ Page({
             })
             .then(res => {
                 console.log("getStockHistory >>> ", res)
-                if (res.result && res.result.list.length > 0) {
-                    const market = res.result.list[0]._id
-                    const history = res.result.list[0].result
-                    history.market = market
+                if (res.result && res.result.data.length > 0) {
+                    const history = res.result.data[0]
                     history.balance = history.balance.reverse()
                     history.cashflow = history.cashflow.reverse()
                     history.indicators = history.indicators.reverse()
                     history.profit = history.profit.reverse()
                     this.setData({
-                        market,
                         history
                     })
                 }

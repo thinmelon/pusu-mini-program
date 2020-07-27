@@ -9,17 +9,22 @@ Page({
      * 页面的初始数据
      */
     data: {
-        navigationBarTitleText: "莆田房产",
+        navigationBarTitleText: "",
         navbarHeight: 0, //  导航栏高度
         navbarTop: 0, //  导航栏上边距
         navbarButtons: [{ //  导航栏按钮
                 index: 0,
+                name: '主页',
+                icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/main.png',
+                url: '/pages/index/index'
+            }, {
+                index: 1,
                 name: '搜索',
                 icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/search.png',
                 url: '/pages/estates/search/search'
             },
             {
-                index: 1,
+                index: 2,
                 name: '地图',
                 icon: 'cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/map.png',
                 url: '/pages/estates/map/map'
@@ -263,15 +268,6 @@ Page({
     },
 
     /**
-     *  更多内容
-     */
-    onMoreIndexTap: function() {
-        wx.navigateTo({
-            url: "/pages/index/index"
-        })
-    },
-
-    /**
      *  知识点【很帅的投资客】
      */
     onCellTap: function(e) {
@@ -396,7 +392,7 @@ Page({
             .then(res => {
                 console.log(res)
                 if (res.result.data && res.result.data.length > 0) {
-                    this.createRateChart(res.result.data)
+                    this.createRateChart(res.result.data.reverse())
                 }
             })
             .catch(err => {

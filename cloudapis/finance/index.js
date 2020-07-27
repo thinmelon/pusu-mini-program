@@ -7,6 +7,7 @@ const BOND = require('./api/bond.js')
 const CURRENCY = require('./api/currency.js')
 const MONEY = require('./api/money.js')
 const STOCK = require('./api/stock.js')
+const MACRO = require('./api/macro.js')
 const TRIGGER = require('./api/trigger.js')
 
 // 云函数入口函数
@@ -34,7 +35,16 @@ exports.main = async(event, context) => {
             fn: GOVERNMENT.population
         }, {
             action: "test",
-            fn: STOCK.grabMarketStocks
+            fn: MACRO.grabMoneySupply
+        },
+        /**
+         *      
+         *      宏观
+         * 
+         */
+        {
+            action: "macro",
+            fn: MACRO.refresh //  每月执行一次增量更新
         },
         /**
          *      
@@ -478,7 +488,7 @@ exports.main = async(event, context) => {
     //         "F040N": "25919861000",
     //         "F037N": "-380103000",
     //         "F041N": "25073687000"
-    //     },{
+    //     }, {
     //         "ENDDATE": "2019-12-31",
     //         "F001D": "2019-12-31",
     //         "F003V": "合并本期",

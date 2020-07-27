@@ -129,7 +129,3 @@
         <view>{{item}}</view>
     </mp-cell>
 </mp-cells>
-
-<view class="guide">
-    <button size="mini" type="default" bindtap="onMoreIndexTap">更多指标</button>
-</view>

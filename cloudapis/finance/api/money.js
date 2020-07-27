@@ -1,6 +1,5 @@
 const UTIL = require('util');
 const AXIOS = require('axios')
-const CHEERIO = require('cheerio')
 const MOMENT = require('moment')
 const CLOUD = require('wx-server-sdk')
 const URL = require('../utils/url.js')
@@ -108,7 +107,8 @@ async function grabMortgageRate(request) {
 
 async function main() {
     return await db.collection('_money')
-        .orderBy('_id', 'asc')
+        .orderBy('_id', 'desc')
+        .limit(20)
         .get()
 }
 

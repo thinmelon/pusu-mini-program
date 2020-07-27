@@ -2,7 +2,6 @@
 const FINANCE = require('./category/finance.js')
 const STOCK = require('./category/stock.js')
 const NOTE = require('./category/note.js')
-const OPTIONAL = require('./category/optional.js')
 
 // 云函数入口函数
 exports.main = async(event, context) => {
@@ -20,7 +19,7 @@ exports.main = async(event, context) => {
         fn: NOTE.main
     }, {
         action: "optional",
-        fn: OPTIONAL.main
+        fn: STOCK.optional
     }];
 
     console.log(event)
@@ -29,7 +28,6 @@ exports.main = async(event, context) => {
     const params = event.data ? JSON.parse(decodeURIComponent(event.data)) : {};
     return item ? await item.fn(params) : null;
     // return item ? await item.fn({
-    //     // code: "002415",
-    //     _id: "0024151577696843495"
+    //     keyword: "300136",
     // }) : null;
 }
