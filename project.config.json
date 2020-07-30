@@ -20,6 +20,7 @@
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"compileHotReLoad": false,
+		"useMultiFrameRuntime": true,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
@@ -71,13 +72,6 @@
 					"scene": null
 				},
 				{
-					"id": 2,
-					"name": "pages/stock/stock",
-					"pathName": "pages/stock/stock",
-					"query": "code=01810",
-					"scene": null
-				},
-				{
 					"id": 3,
 					"name": "pages/stock/principle/principle",
 					"pathName": "pages/stock/principle/principle",
@@ -110,6 +104,13 @@
 					"name": "全集",
 					"pathName": "pages/knowledge/folder/folder",
 					"query": "album=投资必懂的100个经济名词&folder=Economy",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "pages/stock/bank/bank",
+					"pathName": "pages/stock/bank/bank",
+					"query": "",
 					"scene": null
 				}
 			]

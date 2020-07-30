@@ -82,7 +82,7 @@ button::after {
 
 .tag {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 5px 0;

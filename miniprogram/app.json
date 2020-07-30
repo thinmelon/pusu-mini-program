@@ -9,6 +9,7 @@
         "pages/stock/note/note",
         "pages/stock/principle/principle",
         "pages/stock/search/search",
+        "pages/stock/bank/bank",
         "pages/stock/stock",
         "pages/knowledge/knowledge",
         "pages/knowledge/folder/folder",

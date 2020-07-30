@@ -3,8 +3,17 @@
 
 <!-- 特别关注 -->
 <mp-cells title="特别关注" footer="">
-    <mp-cell link hover wx:for="{{optionals}}" wx:key="code" data-code="{{item.code}}" bindtap="onCellTap">
+    <mp-cell link hover wx:for="{{optionals}}" wx:key="code" data-type="general" data-code="{{item.code}}" bindtap="onCellTap">
         <view>{{item.name}}</view>
     </mp-cell>
 </mp-cells>
 
+<view class="guide">
+    <text class="p">银行系统</text>
+</view>
+<view class="bank-list">
+    <view class="tag" wx:for="{{banks}}" wx:key="code" data-type="bank" data-code="{{item.code}}" bindtap="onCellTap">
+        <image src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/bank/{{item.name}}.png"></image>
+        <text>{{item.name}}</text>
+    </view>
+</view>

@@ -1,6 +1,7 @@
 // pages/stock/search/search.js
 
 const app = getApp()
+const CONFIG = require('./config')
 
 Page({
 
@@ -9,26 +10,27 @@ Page({
      */
     data: {
         //  特别关注
-        optionals: []
+        optionals: [],
+        banks: CONFIG.BANK_LIST
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         this.setData({
             search: this.search.bind(this)
         })
     },
 
-    onReady: function() {
+    onReady: function () {
         this.getOptionals()
     },
 
     /**
      *  搜索
      */
-    search: function(value) {
+    search: function (value) {
         console.log('Search >>> ', value)
         return app.wxp.cloud.callFunction({
                 name: 'search',
@@ -60,24 +62,25 @@ Page({
     /**
      *  选择搜索结果
      */
-    onSearchResultSelected: function(e) {
+    onSearchResultSelected: function (e) {
         console.log('select result', e.detail)
         wx.navigateTo({
             url: '/pages/stock/stock?code=' + e.detail.item.value,
         })
     },
 
-    onCellTap: function(e) {
-        console.log(e)
+    onCellTap: function (e) {
+        let url = ""
+        e.currentTarget.dataset.type === "general" ? url = `/pages/stock/stock?code=${e.currentTarget.dataset.code}` : url = `/pages/stock/bank/bank?code=${e.currentTarget.dataset.code}`
         wx.navigateTo({
-            url: '/pages/stock/stock?code=' + e.currentTarget.dataset.code,
+            url
         })
     },
 
     /**
      *      获取自选股 
      */
-    getOptionals: function() {
+    getOptionals: function () {
         app.wxp.cloud.callFunction({
                 name: 'search',
                 data: {

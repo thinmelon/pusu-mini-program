@@ -14,11 +14,12 @@ Page({
     subject: "", //  分类主题
     skip: 0, //  分页
     limit: 20, //  每页数量
+    reachBottom: false, //触底
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         console.log(options)
         this.subject = options.folder
         this.setData({
@@ -26,20 +27,23 @@ Page({
         })
 
         this.getItems()
-
     },
 
-    onReachBottom: function() {
+    onReachBottom: function () {
+        if (this.reachBottom)
+            return;
+
+        this.reachBottom = true;
         this.getItems()
     },
 
-    onItemTap: function(e) {
+    onItemTap: function (e) {
         wx.navigateTo({
             url: '/pages/knowledge/item/item?_=' + encodeURIComponent(JSON.stringify(e.currentTarget.dataset.article)),
         })
     },
 
-    getItems: function() {
+    getItems: function () {
         app.wxp.cloud.callFunction({
                 name: "database",
                 data: {
@@ -55,12 +59,16 @@ Page({
             })
             .then(res => {
                 console.log(res);
+                this.reachBottom = false;
                 if (res.result && res.result.data && res.result.data.length > 0) {
                     this.skip += res.result.data.length;
                     this.setData({
                         folder: this.data.folder.concat(res.result.data)
                     })
                 }
+            })
+            .catch(err => {
+                this.reachBottom = false;
             })
     }
 

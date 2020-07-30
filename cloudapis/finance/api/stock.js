@@ -342,12 +342,19 @@ async function manual(request) {
 async function refresh(request) {
     console.log("refresh >>> ", request)
     switch (request.market) {
+        //  沪深
         case "SZ":
         case "SH":
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_BALANCE_SHEET, "balance") //  资产负债表
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_PROFIT_STATEMENT, "profit") //  利润表
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_INDICATORS, "indicators") //  指标表
+            break;
+        //  银行系统
+        case "BANK":
+            await grabStockInfo(request, URL.CNINFO_STOCK_BANK_BALANCE_SHEET, "balance") //  资产负债表
+            await grabStockInfo(request, URL.CNINFO_STOCK_BANK_PROFIT_STATEMENT, "profit") //  利润表
+            await grabStockInfo(request, URL.CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
             break;
         default:
             break;

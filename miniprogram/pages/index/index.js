@@ -62,11 +62,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        // this.getChinaBondYieldRate()
-        // this.getStockMarketAccountStatistic()
-        // this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
+        this.getChinaBondYieldRate()
+        this.getStockMarketAccountStatistic()
+        this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
         this.getMacroIndexes()
-        // this.getMoneySupply()
+        this.getMoneySupply()
     },
 
     /**

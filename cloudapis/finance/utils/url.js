@@ -61,6 +61,11 @@ const CNINFO_STOCK_HS_LIST = 'http://webapi.cninfo.com.cn/api/stock/p_stock2101?
 const CNINFO_STOCK_HS_BALANCE_SHEET = 'http://webapi.cninfo.com.cn/api/stock/p_stock2300?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  资产负债表
 const CNINFO_STOCK_HS_PROFIT_STATEMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2301?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  利润表
 const CNINFO_STOCK_HS_CASH_FLOW_STATEMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2302?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  现金流表
+
+const CNINFO_STOCK_BANK_BALANCE_SHEET = 'http://webapi.cninfo.com.cn/api/stock/p_stock2325?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  金融类资产负债表2007版
+const CNINFO_STOCK_BANK_PROFIT_STATEMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2326?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  金融类利润表2007版
+const CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2327?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  金融类现金流量表2007版
+
 const CNINFO_STOCK_HS_INDICATORS = 'http://webapi.cninfo.com.cn/api/stock/p_stock2303?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F069D:desc'; //  指标表
 const CNINFO_STOCK_HS_SHARE_PLEDGE = 'http://webapi.cninfo.com.cn/api/stock/p_stock2220?scode=%s&access_token=%s&@orderby=F009D:desc'; //  股份质押
 const CNINFO_STOCK_HS_FLOAT_HOLDER = 'http://webapi.cninfo.com.cn/api/stock/p_stock2209?scode=%s&access_token=%s&@limit=10&@orderby=ENDDATE:desc'; //  十大流通股东持股情况
@@ -127,6 +132,10 @@ module.exports = {
     CNINFO_STOCK_HS_AUDIT,
     CNINFO_STOCK_HS_EXTERNAL_GUARANTEE,
     CNINFO_STOCK_HS_PUNISHMENT,
+    //  巨潮资讯    -   银行
+    CNINFO_STOCK_BANK_BALANCE_SHEET,
+    CNINFO_STOCK_BANK_PROFIT_STATEMENT,
+    CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT,
     //  巨潮资讯    -   港股
     CNINFO_STOCK_HK_BALANCE_SHEET,
     CNINFO_STOCK_HK_SHARE_HOLDER_CHANGE,

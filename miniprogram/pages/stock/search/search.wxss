@@ -1,2 +1,7 @@
 /* pages/stock/search/search.wxss */
 @import "../../../style/guide.wxss";
+
+.bank-list {
+    display: grid;
+    grid-template-columns: repeat(3, 33.33%);
+}

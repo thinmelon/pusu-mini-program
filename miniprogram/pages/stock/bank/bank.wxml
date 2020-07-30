@@ -1,0 +1,37 @@
+<!--miniprogram/pages/stock/bank/bank.wxml-->
+<wxs src="./../../../utils/math.wxs" module="Math" />
+
+<view class="guide">
+    <view class="head">
+        <text class="headline">{{stock.name}}</text>
+    </view>
+</view>
+
+<!--                    刷新数据                    -->
+
+<mp-cells title="" footer="">
+    <mp-cell value="财务报表" footer="更新" data-op="refresh" bindtap="onRefreshCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_report.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+</mp-cells>
+
+<!--                    评分                       -->
+
+<view class="guide">
+    <view class="wrapper">
+        <view class="score">
+            <text class="important">{{Math.toFixed(buy)}}</text>
+            <text class="p">买入分</text>
+        </view>
+        <view class="score">
+            <text class="important">{{Math.toFixed(sell)}}</text>
+            <text class="p">卖出分</text>
+        </view>
+    </view>
+</view>
+
+<view class="weui-btn-area">
+    <button class="weui-btn" type="warn" bindtap="onCommentTap">开始评分</button>
+</view>
+
