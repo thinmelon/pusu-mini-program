@@ -350,7 +350,7 @@ async function refresh(request) {
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_INDICATORS, "indicators") //  指标表
             break;
-        //  银行系统
+            //  银行系统
         case "BANK":
             await grabStockInfo(request, URL.CNINFO_STOCK_BANK_BALANCE_SHEET, "balance") //  资产负债表
             await grabStockInfo(request, URL.CNINFO_STOCK_BANK_PROFIT_STATEMENT, "profit") //  利润表

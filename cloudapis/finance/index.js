@@ -11,7 +11,7 @@ const MACRO = require('./api/macro.js')
 const TRIGGER = require('./api/trigger.js')
 
 // 云函数入口函数
-exports.main = async(event, context) => {
+exports.main = async (event, context) => {
     const entry = [{
             action: "history", //  莆田房产首页 - 统计数据
             fn: ESTATES.history

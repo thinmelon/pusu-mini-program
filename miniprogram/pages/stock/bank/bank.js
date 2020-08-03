@@ -1,4 +1,6 @@
 // miniprogram/pages/stock/bank/bank.js
+const app = getApp()
+
 Page({
 
     /**
@@ -14,7 +16,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.getStockInfo(options.code)
     },
 
     /**
@@ -32,7 +34,7 @@ Page({
                 data: {
                     action: e.currentTarget.dataset.op,
                     data: encodeURIComponent(JSON.stringify({
-                        market: this.data.stock.market,
+                        market: "BANK",
                         code: this.data.stock.code
                     }))
                 }
@@ -67,12 +69,13 @@ Page({
                     let buy = 0,
                         sell = 0;
                     const stock = res.result.list[0]
-                    //  如果有股权质押，过滤到已解押，并且质押终止日未到期的记录
-                    if (stock.pledge) {
-                        stock.pledge = stock.pledge.filter(item => {
-                            return !!!item.F010D || (!!!item.F011D && MOMENT(item.F010D).isAfter())
-                        })
-                    }
+                    // //  如果有股权质押，过滤到已解押，并且质押终止日未到期的记录
+                    // if (stock.pledge) {
+                    //     stock.pledge = stock.pledge.filter(item => {
+                    //         return !!!item.F010D || (!!!item.F011D && MOMENT(item.F010D).isAfter())
+                    //     })
+                    // }
+
                     //  计算买入与卖出总分
                     if (stock.principle) {
                         stock.principle.map(item => {
@@ -81,11 +84,11 @@ Page({
                         })
                     }
 
-                    if (stock.change) {
-                        stock.change = stock.change.filter(item => {
-                            return item.F004V && (item.F004V === '董事')
-                        })
-                    }
+                    // if (stock.change) {
+                    //     stock.change = stock.change.filter(item => {
+                    //         return item.F004V && (item.F004V === '董事')
+                    //     })
+                    // }
 
                     wx.setNavigationBarTitle({
                         title: stock.name
