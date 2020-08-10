@@ -75,7 +75,7 @@
 		<canvas style="{{principles[page].name === 'CashOfSellingGoodsTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashOfSellingGoodsTrend" disable-scroll="false" class="canvas" data-id="CashOfSellingGoodsTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 经营活动现金流净额/投资活动现金流净额 -->
 		<canvas style="{{principles[page].name === 'NetCashFlowTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="NetCashFlowTrend" disable-scroll="false" class="canvas" data-id="NetCashFlowTrend" bindtouchstart="onCanvasTouched"></canvas>
-		<!-- 投资支出/经营活动现金流净额 -->
+		<!-- 资本性支出/经营活动现金流净额 -->
 		<canvas style="{{principles[page].name === 'InvestmentExpenditureProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="InvestmentExpenditureProportionTrend" disable-scroll="false" class="canvas" data-id="InvestmentExpenditureProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 资产处置所得/投资活动现金流入 -->
 		<canvas style="{{principles[page].name === 'AssetSaleProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetSaleProportionTrend" disable-scroll="false" class="canvas" data-id="AssetSaleProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
@@ -87,8 +87,10 @@
 		<canvas style="{{principles[page].name === 'AssetsImpairmentLossTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="AssetsImpairmentLossTrend" disable-scroll="false" class="canvas" data-id="AssetsImpairmentLossTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 销售费用占营业收入比例 -->
 		<canvas style="{{principles[page].name === 'SellingExpensesProportionTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="SellingExpensesProportionTrend" disable-scroll="false" class="canvas" data-id="SellingExpensesProportionTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<!-- 资本性支出占归母净利润比例 -->
+		<canvas style="{{principles[page].name === 'CapitalExpenditureNetProfitTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CapitalExpenditureNetProfitTrend" disable-scroll="false" class="canvas" data-id="CapitalExpenditureNetProfitTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 资本性支出占营业收入比例 -->
-		<canvas style="{{principles[page].name === 'CapitalExpenditureTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CapitalExpenditureTrend" disable-scroll="false" class="canvas" data-id="CapitalExpenditureTrend" bindtouchstart="onCanvasTouched"></canvas>
+		<canvas style="{{principles[page].name === 'CapitalExpenditureIncomeTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CapitalExpenditureIncomeTrend" disable-scroll="false" class="canvas" data-id="CapitalExpenditureIncomeTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 销售现金率 -->
 		<canvas style="{{principles[page].name === 'CashSalesRatioTrend' ? 'display: block;' : 'display: none;'}}" canvas-id="CashSalesRatioTrend" disable-scroll="false" class="canvas" data-id="CashSalesRatioTrend" bindtouchstart="onCanvasTouched"></canvas>
 		<!-- 现金购销比率 -->
