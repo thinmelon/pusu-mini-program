@@ -39,7 +39,7 @@ Page({
             name: "知识树",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/knowledge.png",
             category: "knowledge",
-            url: "/pages/knowledge/folder/folder?album=投资必懂的100个经济名词&folder=Economy" //  知识树
+            url: "/pages/knowledge/collections/collections" //  知识树
         }, {
             name: "房地产",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/estates.png",

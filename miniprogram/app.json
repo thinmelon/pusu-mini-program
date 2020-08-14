@@ -12,6 +12,7 @@
         "pages/stock/bank/bank",
         "pages/stock/stock",
         "pages/knowledge/knowledge",
+        "pages/knowledge/collections/collections",
         "pages/knowledge/folder/folder",
         "pages/knowledge/item/item",
         "pages/order/audit/audit",

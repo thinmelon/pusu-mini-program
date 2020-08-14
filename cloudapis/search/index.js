@@ -20,6 +20,9 @@ exports.main = async (event, context) => {
     }, {
         action: "optional",
         fn: STOCK.optional
+    }, {
+        action: "test",
+        fn: NOTE.remove
     }];
 
     console.log(event)
