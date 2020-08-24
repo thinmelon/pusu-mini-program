@@ -72,7 +72,8 @@ const __DEVICE_INFO__ = "MINI-PROGRAM"
  * KEY：商户支付密钥，参考开户邮件设置（必须配置，登录商户平台自行设置）
  * 设置地址：https://pay.weixin.qq.com/index.php/account/api_cert
  */
-const __KEY__ = '1u7blt3a6qlwjf1xg2d9cnsiiiewr95g'
+// const __KEY__ = '1u7blt3a6qlwjf1xg2d9cnsiiiewr95g'
+const __KEY__ = 'LmYIlzeJiPMuVZobxSs1f454OPxXP1wM'
 
 /**
  * 回传通知地址

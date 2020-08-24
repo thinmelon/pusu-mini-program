@@ -22,7 +22,7 @@ exports.main = async (event, context) => {
         fn: STOCK.optional
     }, {
         action: "test",
-        fn: NOTE.remove
+        fn: NOTE.main
     }];
 
     console.log(event)
