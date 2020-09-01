@@ -67,6 +67,7 @@ Page({
         this.getCurrencyExchange(this.data.fromCurrencyCode, this.data.toCurrencyCode)
         this.getMacroIndexes()
         this.getMoneySupply()
+        this.getShibor()
     },
 
     /**
@@ -139,6 +140,14 @@ Page({
     }, {
         _id: "moneySupply",
         unit: "%",
+        handler: null
+    }, {
+        _id: "shibor",
+        unit: "%",
+        subIndex: [{
+            name: "3个月",
+            value: "3M"
+        }],
         handler: null
     }],
 
@@ -390,6 +399,55 @@ Page({
     },
 
     /**
+     *      货币信贷
+     */
+    getShibor: function () {
+        app.wxp.cloud.callFunction({
+                name: "database",
+                data: {
+                    collection: "_shibor",
+                    limit: 360,
+                    sort1: "_id",
+                    sortOption1: "desc"
+                }
+            })
+            .then(res => {
+                console.log(res)
+                if (res.result && res.result.data.length > 0) {
+                    const rawData = res.result.data.reverse()
+                    const date = [];
+                    const series = [];
+                    const canvas = this.lineCanvases.filter(item => {
+                        return item._id === "shibor"
+                    })[0]
+
+                    //  日期    X轴是时间轴
+                    rawData.map(item => {
+                        date.push(item._id)
+                    })
+
+                    //  Y坐标数据源
+                    canvas.subIndex.map(field => {
+                        series.push({
+                            name: field.name,
+                            data: rawData.map(item => {
+                                return item[field.value] || 0
+                            }),
+                            format: function (val, name) {
+                                return val;
+                            }
+                        })
+                    })
+
+                    //  绘制图形
+                    this.createLineCanvas("shibor", date, series)
+                }
+            })
+
+    },
+
+
+    /**
      *  绘制图表
      */
     createLineCanvas: function (_id, categories, series) {
@@ -471,7 +529,5 @@ Page({
                     icon: 'none'
                 })
             })
-    },
-
-
+    }
 })
