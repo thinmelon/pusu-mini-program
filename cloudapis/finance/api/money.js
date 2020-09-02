@@ -3,7 +3,6 @@ const AXIOS = require('axios')
 const MOMENT = require('moment')
 const CLOUD = require('wx-server-sdk')
 const URL = require('../utils/url.js')
-const CONFIG = require('../utils/config.js')
 
 //  初始化 CLOUD
 CLOUD.init({

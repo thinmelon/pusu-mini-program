@@ -85,6 +85,13 @@ App({
             num: 11
         }]
     }, {
+        subject: "Money",
+        articles: [{
+            title: "货币信用框架理论",
+            href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/financing-aggregate/",
+            num: 15
+        }]
+    }, {
         subject: "Currency",
         articles: [{
             title: "什么是中间价？",
@@ -140,7 +147,7 @@ App({
     }],
 
 
-    onLaunch: function() {
+    onLaunch: function () {
         const systemInfo = wx.getSystemInfoSync()
         this.windowWidth = systemInfo.windowWidth
 
@@ -166,7 +173,7 @@ App({
         // promisify(wx.getSystemInfo)().then(console.log)
     },
 
-    getRandomColor: function() {
+    getRandomColor: function () {
         return "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
     },
 
@@ -174,13 +181,13 @@ App({
      * 	由坐标到坐标所在位置的文字描述的转换
      * 	输入坐标返回地理位置信息和附近poi列表
      */
-    reverseGeocoder: function(options) {
+    reverseGeocoder: function (options) {
         let qqMapInstance = new QQ_MAP_WX_JSSDK({ // 实例化API核心类
             key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U'
         });
         const that = this;
         return new Promise((resolve, reject) => {
-            options.success = function(result) {
+            options.success = function (result) {
                 console.log('reverseGeocoder	>>>	', result)
                 if (result.status === 0 && result.message === "query ok") {
                     let target = result.result.ad_info.city.substr(0, result.result.ad_info.city.indexOf('市'));
@@ -209,7 +216,7 @@ App({
                     reject(false);
                 }
             }
-            options.fail = function(reason) {
+            options.fail = function (reason) {
                 console.error(reason)
                 reject(false);
             }

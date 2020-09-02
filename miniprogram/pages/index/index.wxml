@@ -4,55 +4,79 @@
 	<text class="headline">全国居民消费价格指数（ CPI ）</text>
 </view>
 
-<canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI" bindtouchstart="onCanvasTouched"></canvas>
+<canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI"
+	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        PPI        --------------- -->
 <view class="guide">
 	<text class="headline">工业生产者出厂价格指数（ PPI ）</text>
 </view>
 
-<canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI" bindtouchstart="onCanvasTouched"></canvas>
+<canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI"
+	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        PMI        --------------- -->
 <view class="guide">
 	<text class="headline">采购经理指数（ PMI ）</text>
 </view>
 
-<canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI" bindtouchstart="onCanvasTouched"></canvas>
-
-<!-- --------------        货币信贷        --------------- -->
-<view class="guide">
-	<text class="headline">货币信贷</text>
-</view>
-
-<canvas canvas-id="moneySupply" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="moneySupply" bindtouchstart="onCanvasTouched"></canvas>
-
-<!-- --------------        Shibor        --------------- -->
-<view class="guide">
-	<text class="headline">Shibor</text>
-</view>
-
-<canvas canvas-id="shibor" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="shibor" bindtouchstart="onCanvasTouched"></canvas>
+<canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI"
+	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        中债国债收益率曲线        --------------- -->
 <view class="guide">
 	<text class="headline">中债国债收益率曲线</text>
 </view>
 
-<canvas canvas-id="chinaBondYieldRate" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="chinaBondYieldRate" bindtouchstart="onCanvasTouched"></canvas>
+<canvas canvas-id="chinaBondYieldRate" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="chinaBondYieldRate" bindtouchstart="onCanvasTouched"></canvas>
 
 <mp-cells title="" footer="">
-	<mp-cell link hover wx:for="{{articles.Bond}}" wx:key="*this" data-subject="Bond" data-title="{{item}}" bindtap="onCellTap">
+	<mp-cell link hover wx:for="{{articles.Bond}}" wx:key="*this" data-subject="Bond" data-title="{{item}}"
+		bindtap="onCellTap">
 		<view>{{item}}</view>
 	</mp-cell>
 </mp-cells>
+
+<!-- --------------        Shibor        --------------- -->
+<view class="guide">
+	<text class="headline">Shibor</text>
+</view>
+
+<canvas canvas-id="shibor" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="shibor"
+	bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        社融总量余额增速        --------------- -->
+<view class="guide">
+	<text class="headline">社融总量余额增速</text>
+</view>
+
+<canvas canvas-id="financingAggregate" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="financingAggregate" bindtouchstart="onCanvasTouched"></canvas>
+
+<mp-cells title="" footer="">
+	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"
+		bindtap="onCellTap">
+		<view>{{item}}</view>
+	</mp-cell>
+</mp-cells>
+
+
+<!-- --------------        货币信贷        --------------- -->
+<view class="guide">
+	<text class="headline">货币信贷</text>
+</view>
+
+<canvas canvas-id="moneySupply" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="moneySupply"
+	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        A股市场新增账户数        --------------- -->
 <view class="guide">
 	<text class="headline">A股市场新增账户数</text>
 </view>
 
-<canvas canvas-id="aStockMarketAccount" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="aStockMarketAccount" bindtouchstart="onCanvasTouched"></canvas>
+<canvas canvas-id="aStockMarketAccount" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="aStockMarketAccount" bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- -----------------------    汇率   --------------------- -->
 
@@ -61,27 +85,32 @@
 </view>
 
 <view class='currency'>
-	<picker bindchange="onPickerChange" data-direction='from' value="{{multiIndex[0]}}" range="{{currencyList}}" range-key="name">
+	<picker bindchange="onPickerChange" data-direction='from' value="{{multiIndex[0]}}" range="{{currencyList}}"
+		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[0]].name}} {{currencyList[multiIndex[0]].code}}
-			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
+			<image class='icon-smaller'
+				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
 		</view>
 	</picker>
 	<text>{{currencyFD}}</text>
 </view>
 
 <view class='currency'>
-	<picker bindchange="onPickerChange" data-direction='to' value="{{multiIndex[1]}}" range="{{currencyList}}" range-key="name">
+	<picker bindchange="onPickerChange" data-direction='to' value="{{multiIndex[1]}}" range="{{currencyList}}"
+		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[1]].name}} {{currencyList[multiIndex[1]].code}}
-			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
+			<image class='icon-smaller'
+				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
 		</view>
 	</picker>
 	<text>{{result}}</text>
 </view>
 
 <mp-cells title="" footer="">
-	<mp-cell link hover wx:for="{{articles.Currency}}" wx:key="*this" data-subject="Currency" data-title="{{item}}" bindtap="onCellTap">
+	<mp-cell link hover wx:for="{{articles.Currency}}" wx:key="*this" data-subject="Currency" data-title="{{item}}"
+		bindtap="onCellTap">
 		<view>{{item}}</view>
 	</mp-cell>
 </mp-cells>

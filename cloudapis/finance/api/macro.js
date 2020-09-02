@@ -1,6 +1,7 @@
 const UTIL = require('util')
 const AXIOS = require('axios')
 const MOMENT = require('moment')
+const CHEERIO = require('cheerio')
 const CLOUD = require('wx-server-sdk')
 const URL = require('../utils/url.js')
 const COMMON = require('../utils/common.js')
@@ -135,6 +136,73 @@ async function update(url, collection, factory) {
 }
 
 /**
+ *  社会融资规模存量统计表（存量及增量数据）
+ */
+async function grabFinancingAggregate(request) {
+    //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
+    const response = await AXIOS.get(
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/08/2020081415420479749.htm', {
+            withCredentials: true,
+            headers: {
+                'Cookie': 'wzws_cid=ab7c5f7c5a3cfbc9a26e20c5836b701835e64e29f1ffbf7204820b383c6f9de59b757eaea6c46f88a8cfe1bcca9f9ac1ccbef814e38c98962065d88e1cab9a352d81d9f0945d2d335c48580d1987656c',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9;',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+            }
+        }
+    );
+    const $ = CHEERIO.load(response.data, {
+        xml: {
+            normalizeWhitespace: true
+        }
+    });
+    const target = $('table tr');
+    const lastMonth = MOMENT().subtract(1, 'months').format('YYYY.MM')
+
+    for (let i = 1; i <= 12; i++) {
+        const month = MOMENT(target.eq(4).children('td').eq(i).text().trim().replace(/&nbsp;/g, ""), 'YYYY.M').format('YYYY.MM')
+        // console.log(month, lastMonth)
+        //  解析上一个月的数据，更新至数据库中
+        if (month === lastMonth) {
+            //  社会融资规模存量
+            const financingAggregateStock = parseFloat(target.eq(8).children('td').eq(2 * i - 1).text().trim().replace(/&nbsp;/g, ""))
+            //  社会融资规模增速
+            const financingAggregateGrowthRate = parseFloat(target.eq(8).children('td').eq(2 * i).text().trim().replace(/&nbsp;/g, ""))
+            //  数据不存在，则中止
+            if (financingAggregateStock) {
+                const data = {
+                    financingAggregateStock,
+                    financingAggregateGrowthRate
+                }
+                console.log(data)
+
+                const record = await db.collection('_money').where({
+                    "_id": month
+                }).get()
+
+                if (record.data && record.data.length > 0) {
+                    await db.collection('_money')
+                        .doc(month)
+                        .update({ //  更新
+                            data
+                        })
+                } else {
+                    await db.collection('_money')
+                        .doc(month)
+                        .set({ //  添加
+                            data
+                        })
+                }
+
+            }
+
+            break;
+        }
+    }
+
+    return 'DONE'
+}
+
+/**
  *      增量更新宏观数据
  */
 async function refresh() {
@@ -142,6 +210,7 @@ async function refresh() {
     await grabPMIData()
     await grabPPIData()
     await grabMoneySupply()
+    await grabFinancingAggregate()
 
     return 'DONE'
 }
@@ -152,4 +221,5 @@ module.exports = {
     grabPMIData,
     grabPPIData,
     grabMoneySupply,
+    grabFinancingAggregate
 }

@@ -28,9 +28,9 @@
 		"useIsolateContext": true,
 		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
-		"useMultiFrameRuntime": true,
 		"packNpmManually": false,
-		"packNpmRelationList": []
+		"packNpmRelationList": [],
+		"useMultiFrameRuntime": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.0",

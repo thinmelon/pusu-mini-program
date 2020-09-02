@@ -54,6 +54,7 @@ Page({
         /*	 	知识点      */
         articles: {
             "Bond": ["什么是收益率曲线倒挂？"],
+            "Money": ["货币信用框架理论"],
             "Currency": ["什么是中间价？", "什么是不可能三角？"]
         }
     },
@@ -139,6 +140,10 @@ Page({
         handler: null
     }, {
         _id: "moneySupply",
+        unit: "%",
+        handler: null
+    }, {
+        _id: "financingAggregate",
         unit: "%",
         handler: null
     }, {
@@ -335,7 +340,7 @@ Page({
                 name: "database",
                 data: {
                     collection: "_money",
-                    limit: 50,
+                    limit: 60,
                     sort1: "_id",
                     sortOption1: "desc"
                 }
@@ -359,9 +364,10 @@ Page({
                     const lastYearItem = res.result.data.filter(record => {
                         return record._id === lastYear
                     })
-                    if (lastYearItem.length > 0) {
+                    if (lastYearItem.length > 0 && lastYearItem[0].M1 && lastYearItem[0].M2) {
                         const m1Increase = (((item.M1 - lastYearItem[0].M1) / lastYearItem[0].M1) * 100).toFixed(2)
                         const m2Increase = (((item.M2 - lastYearItem[0].M2) / lastYearItem[0].M2) * 100).toFixed(2)
+
                         date.push(item._id)
                         m1Growth.push(m1Increase)
                         m2Growth.push(m2Increase)
@@ -395,6 +401,31 @@ Page({
                 //  绘制图形
                 this.createLineCanvas("moneySupply", date.reverse(), series)
 
+                const growthDate = [],
+                    growth = [],
+                    growthSeries = [];
+
+                for (let i = 0, length = res.result.data.length; i < length; i++) {
+                    const item = res.result.data[i];
+                    //  无记录，继续
+                    if (!!!item.financingAggregateGrowthRate) {
+                        continue;
+                    }
+
+                    growthDate.push(item._id)
+                    growth.push(item.financingAggregateGrowthRate)
+                }
+
+                growthSeries.push({
+                    name: "社融总量余额增速",
+                    data: growth.reverse(),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+
+                //  绘制图形
+                this.createLineCanvas("financingAggregate", growthDate.reverse(), growthSeries)
             })
     },
 
@@ -406,7 +437,7 @@ Page({
                 name: "database",
                 data: {
                     collection: "_shibor",
-                    limit: 360,
+                    limit: 360 * 5,
                     sort1: "_id",
                     sortOption1: "desc"
                 }
