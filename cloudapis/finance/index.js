@@ -35,7 +35,7 @@ exports.main = async (event, context) => {
             fn: GOVERNMENT.population
         }, {
             action: "test",
-            fn: MACRO.grabFinancingAggregate
+            fn: MACRO.manual
         },
         /**
          *      

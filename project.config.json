@@ -1,119 +1,120 @@
 {
-	"miniprogramRoot": "miniprogram/",
-	"cloudfunctionRoot": "cloudapis/",
-	"description": "项目配置文件。",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": true,
-		"es6": true,
-		"enhance": true,
-		"postcss": true,
-		"minified": true,
-		"newFeature": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"packNpmManually": false,
-		"packNpmRelationList": [],
-		"useMultiFrameRuntime": true
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.12.0",
-	"appid": "wx0a72bd7d41e0b066",
-	"projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": 1,
-					"name": "pages/stock/search/search",
-					"pathName": "pages/stock/search/search",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "pages/stock/principle/principle",
-					"pathName": "pages/stock/principle/principle",
-					"query": "code=002475",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "pages/stock/note/note",
-					"pathName": "pages/stock/note/note",
-					"query": "code=002415",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "审核",
-					"pathName": "pages/order/audit/audit",
-					"query": "_=%7B%22outTradeNo%22%3A%22pEG2AGtx9KJ9mpKm9BdTpif4VgnxTXvM%22%2C%22outRefundNo%22%3A%22cCVzpvsr96ebh6c8tUWOk0OkBEiTDMuD%22%7D",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/order/list/list",
-					"pathName": "pages/order/list/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 9,
-					"name": "全集",
-					"pathName": "pages/knowledge/folder/folder",
-					"query": "album=投资必懂的100个经济名词&folder=Economy",
-					"scene": null
-				},
-				{
-					"id": 6,
-					"name": "pages/stock/bank/bank",
-					"pathName": "pages/stock/bank/bank",
-					"query": "code=601398",
-					"scene": null
-				}
-			]
-		}
-	}
+    "miniprogramRoot": "miniprogram/",
+    "cloudfunctionRoot": "cloudapis/",
+    "description": "项目配置文件。",
+    "packOptions": {
+        "ignore": []
+    },
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true,
+        "nodeModules": true,
+        "autoAudits": false,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": true,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "useMultiFrameRuntime": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "useIsolateContext": true,
+        "useCompilerModule": true,
+        "userConfirmedUseCompilerModuleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "useApiHook": true
+    },
+    "compileType": "miniprogram",
+    "libVersion": "2.12.0",
+    "appid": "wx0a72bd7d41e0b066",
+    "projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
+    "isGameTourist": false,
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+    "condition": {
+        "search": {
+            "current": -1,
+            "list": []
+        },
+        "conversation": {
+            "current": -1,
+            "list": []
+        },
+        "plugin": {
+            "current": -1,
+            "list": []
+        },
+        "game": {
+            "currentL": -1,
+            "list": []
+        },
+        "gamePlugin": {
+            "current": -1,
+            "list": []
+        },
+        "miniprogram": {
+            "current": -1,
+            "list": [
+                {
+                    "id": 1,
+                    "name": "pages/stock/search/search",
+                    "pathName": "pages/stock/search/search",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 3,
+                    "name": "pages/stock/principle/principle",
+                    "pathName": "pages/stock/principle/principle",
+                    "query": "code=002475",
+                    "scene": null
+                },
+                {
+                    "id": 4,
+                    "name": "pages/stock/note/note",
+                    "pathName": "pages/stock/note/note",
+                    "query": "code=002415",
+                    "scene": null
+                },
+                {
+                    "id": 3,
+                    "name": "审核",
+                    "pathName": "pages/order/audit/audit",
+                    "query": "_=%7B%22outTradeNo%22%3A%22pEG2AGtx9KJ9mpKm9BdTpif4VgnxTXvM%22%2C%22outRefundNo%22%3A%22cCVzpvsr96ebh6c8tUWOk0OkBEiTDMuD%22%7D",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "pages/order/list/list",
+                    "pathName": "pages/order/list/list",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 9,
+                    "name": "全集",
+                    "pathName": "pages/knowledge/folder/folder",
+                    "query": "album=投资必懂的100个经济名词&folder=Economy",
+                    "scene": null
+                },
+                {
+                    "id": 6,
+                    "name": "pages/stock/bank/bank",
+                    "pathName": "pages/stock/bank/bank",
+                    "query": "code=601398",
+                    "scene": null
+                }
+            ]
+        }
+    }
 }

@@ -1,7 +1,7 @@
 <!--pages/index/index.wxml-->
 <!-- --------------        CPI        --------------- -->
 <view class="guide">
-	<text class="headline">全国居民消费价格指数（ CPI ）</text>
+	<text class="headline">全国居民消费价格环比涨跌幅（ CPI ）</text>
 </view>
 
 <canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI"
@@ -9,7 +9,7 @@
 
 <!-- --------------        PPI        --------------- -->
 <view class="guide">
-	<text class="headline">工业生产者出厂价格指数（ PPI ）</text>
+	<text class="headline">工业生产者出厂价格同比涨跌幅（ PPI ）</text>
 </view>
 
 <canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI"
@@ -46,13 +46,21 @@
 <canvas canvas-id="shibor" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="shibor"
 	bindtouchstart="onCanvasTouched"></canvas>
 
-<!-- --------------        社融总量余额增速        --------------- -->
+<!-- --------------        社会融资规模存量增速        --------------- -->
 <view class="guide">
-	<text class="headline">社融总量余额增速</text>
+	<text class="headline">社融存量增速</text>
 </view>
 
 <canvas canvas-id="financingAggregate" disable-scroll="false" class="canvas" data-category="lineCanvases"
 	data-id="financingAggregate" bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        社会融资规模增量        --------------- -->
+<view class="guide">
+	<text class="headline">社融增量</text>
+</view>
+
+<canvas canvas-id="financingAggregateFlow" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="financingAggregateFlow" bindtouchstart="onCanvasTouched"></canvas>
 
 <mp-cells title="" footer="">
 	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"

@@ -136,20 +136,21 @@ async function update(url, collection, factory) {
 }
 
 /**
- *  社会融资规模存量统计表（存量及增量数据）
+ *  社会融资规模存量统计表（存量及增速）
  */
 async function grabFinancingAggregate(request) {
     //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/08/2020081415420479749.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/09/2020091518045288398.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=ab7c5f7c5a3cfbc9a26e20c5836b701835e64e29f1ffbf7204820b383c6f9de59b757eaea6c46f88a8cfe1bcca9f9ac1ccbef814e38c98962065d88e1cab9a352d81d9f0945d2d335c48580d1987656c',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9;',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+                'Cookie': 'wzws_cid=015049f192e6378b77fdf31e9f26ea50cd54dd77b909679b4bfa0ae27994aeba529131f98d49caab11032e24c7b7724688aa5d7385c6866dabaa424907dce38c79eebcab45b19c4863a3f8ab9d28bcc2',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'
             }
         }
     );
+    // console.log(response.data)
     const $ = CHEERIO.load(response.data, {
         xml: {
             normalizeWhitespace: true
@@ -160,7 +161,7 @@ async function grabFinancingAggregate(request) {
 
     for (let i = 1; i <= 12; i++) {
         const month = MOMENT(target.eq(4).children('td').eq(i).text().trim().replace(/&nbsp;/g, ""), 'YYYY.M').format('YYYY.MM')
-        // console.log(month, lastMonth)
+        console.log(month, lastMonth)
         //  解析上一个月的数据，更新至数据库中
         if (month === lastMonth) {
             //  社会融资规模存量
@@ -203,6 +204,81 @@ async function grabFinancingAggregate(request) {
 }
 
 /**
+ *  社会融资规模增量统计表（含人民币贷款、政府债券、非金融企业境内股票融资等细项）
+ */
+async function grabFinancingAggregateFlow(request) {
+    const response = await AXIOS.get(
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/09/2020091518040140289.htm', {
+            withCredentials: true,
+            headers: {
+                'Cookie': 'wzws_cid=891c8469c38f83791fd3ef7d10b171303b2a601c01da725d7ceae45ca21b643691e9d7e6cd5d4fdfa6ae0675af54411d41fe6e5db67cbf24075aed52b97d72d51d7069d691a6d173f7c698032ef21f29',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'
+            }
+        }
+    );
+    // console.log(response.data)
+    const $ = CHEERIO.load(response.data, {
+        xml: {
+            normalizeWhitespace: true
+        }
+    });
+    const target = $('table tr');
+    const lastMonth = MOMENT().subtract(1, 'months').format('YYYY.MM')
+
+    for (let i = 7; i <= 18; i++) {
+        const month = MOMENT(target.eq(i).children('td').eq(0).text().trim().replace(/&nbsp;/g, ""), 'YYYY.M').format('YYYY.MM')
+        console.log(month, lastMonth)
+        if (month === lastMonth) {
+            //  社会融资规模增量
+            const financingAggregateFlow = parseFloat(target.eq(i).children('td').eq(1).text().trim().replace(/&nbsp;/g, ""))
+            if (financingAggregateFlow) {
+                //  人民币贷款
+                const RMBLoans = parseFloat(target.eq(i).children('td').eq(2).text().trim().replace(/&nbsp;/g, ""))
+                //  企业债券
+                const corporateBonds = parseFloat(target.eq(i).children('td').eq(7).text().trim().replace(/&nbsp;/g, ""))
+                //  政府债券
+                const governmentBonds = parseFloat(target.eq(i).children('td').eq(8).text().trim().replace(/&nbsp;/g, ""))
+                //  非金融企业境内股票融资
+                const equityFinancingOnStockMarket = parseFloat(target.eq(i).children('td').eq(9).text().trim().replace(/&nbsp;/g, ""))
+                const data = {
+                    financingAggregateFlow,
+                    RMBLoans,
+                    corporateBonds,
+                    governmentBonds,
+                    equityFinancingOnStockMarket
+                }
+                console.log(data)
+
+                const record = await db.collection('_money').where({
+                    "_id": month
+                }).get()
+
+                if (record.data && record.data.length > 0) {
+                    await db.collection('_money')
+                        .doc(month)
+                        .update({ //  更新
+                            data
+                        })
+                } else {
+                    await db.collection('_money')
+                        .doc(month)
+                        .set({ //  添加
+                            data
+                        })
+                }
+            }
+
+            break;
+        }
+    }
+
+
+    return 'DONE'
+
+}
+
+/**
  *      增量更新宏观数据
  */
 async function refresh() {
@@ -210,16 +286,27 @@ async function refresh() {
     await grabPMIData()
     await grabPPIData()
     await grabMoneySupply()
-    await grabFinancingAggregate()
 
     return 'DONE'
 }
 
+/**
+ *      增量更新社融数据（手动）
+ *  
+ *  社融指实体经济从金融体系拿到的钱，可以作为GDP的前置指标，因为资本可以作为GDP的驱动因素之一
+ */
+async function manual() {
+    await grabFinancingAggregate()
+    await grabFinancingAggregateFlow()
+}
+
 module.exports = {
     refresh,
+    manual,
     grabCPIData,
     grabPMIData,
     grabPPIData,
     grabMoneySupply,
-    grabFinancingAggregate
+    grabFinancingAggregate,
+    grabFinancingAggregateFlow
 }

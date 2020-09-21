@@ -128,11 +128,11 @@ Page({
         handler: null
     }, {
         _id: "CPI",
-        unit: "",
+        unit: "%",
         handler: null
     }, {
         _id: "PPI",
-        unit: "",
+        unit: "%",
         handler: null
     }, {
         _id: "PMI",
@@ -145,6 +145,10 @@ Page({
     }, {
         _id: "financingAggregate",
         unit: "%",
+        handler: null
+    }, {
+        _id: "financingAggregateFlow",
+        unit: "亿",
         handler: null
     }, {
         _id: "shibor",
@@ -273,13 +277,16 @@ Page({
                     const series = [{
                         name: "CPI",
                         data: [],
-                        subIndex: [{
-                            name: "同比",
-                            value: "cpiYearOnYear"
-                        }, {
-                            name: "环比",
-                            value: "cpiMonthOnMonth"
-                        }]
+                        subIndex: [
+                            // {
+                            //     name: "同比",
+                            //     value: "cpiYearOnYear"
+                            // }, 
+                            {
+                                name: "环比",
+                                value: "cpiMonthOnMonth"
+                            }
+                        ]
                     }, {
                         name: "PPI",
                         data: [],
@@ -314,7 +321,11 @@ Page({
                             series[i].data.push({
                                 name: field.name,
                                 data: rawData.map(item => {
-                                    return item[field.value] || 0
+                                    if (series[i].name === "PMI") {
+                                        return item[field.value] ? item[field.value] : 0
+                                    } else {
+                                        return item[field.value] ? (item[field.value] - 100).toFixed(1) : 0
+                                    }
                                 }),
                                 format: function (val, name) {
                                     return val;
@@ -414,7 +425,7 @@ Page({
                 }
 
                 growthSeries.push({
-                    name: "社融总量余额增速",
+                    name: "社融存量增速",
                     data: growth.reverse(),
                     format: function (val, name) {
                         return val;
@@ -423,6 +434,32 @@ Page({
 
                 //  绘制图形
                 this.createLineCanvas("financingAggregate", growthDate.reverse(), growthSeries)
+
+                const flowDate = [],
+                    flow = [],
+                    flowSeries = [];
+
+                for (let i = 0, length = res.result.data.length; i < length; i++) {
+                    const item = res.result.data[i];
+                    //  无记录，继续
+                    if (!!!item.financingAggregateFlow) {
+                        continue;
+                    }
+
+                    flowDate.push(item._id)
+                    flow.push(item.financingAggregateFlow)
+                }
+
+                flowSeries.push({
+                    name: "社融增量",
+                    data: flow.reverse(),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+
+                //  绘制图形
+                this.createLineCanvas("financingAggregateFlow", flowDate.reverse(), flowSeries)
             })
     },
 
