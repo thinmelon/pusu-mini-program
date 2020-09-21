@@ -294,14 +294,11 @@ Page({
                             name: "PMI",
                             value: "purchasingManagersIndex"
                         }, {
-                            name: "进口指数",
-                            value: "importIndex"
+                            name: "新订单指数",
+                            value: "newOrdersIndex"
                         }, {
-                            name: "新出口订单指数",
-                            value: "newExportOrdersIndex"
-                        }, {
-                            name: "购进价格指数",
-                            value: "purchasingPriceIndex"
+                            name: "生产指数",
+                            value: "productionIndex"
                         }]
                     }];
                     const date = [];
