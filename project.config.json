@@ -20,7 +20,8 @@
         "checkSiteMap": true,
         "uploadWithSourceMap": true,
         "compileHotReLoad": false,
-        "useMultiFrameRuntime": true,
+        "useMultiFrameRuntime": false,
+        "useApiHook": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
@@ -30,11 +31,10 @@
         "useCompilerModule": true,
         "userConfirmedUseCompilerModuleSwitch": false,
         "packNpmManually": false,
-        "packNpmRelationList": [],
-        "useApiHook": true
+        "packNpmRelationList": []
     },
     "compileType": "miniprogram",
-    "libVersion": "2.12.0",
+    "libVersion": "2.13.1",
     "appid": "wx0a72bd7d41e0b066",
     "projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
     "isGameTourist": false,
@@ -80,13 +80,6 @@
                     "scene": null
                 },
                 {
-                    "id": 4,
-                    "name": "pages/stock/note/note",
-                    "pathName": "pages/stock/note/note",
-                    "query": "code=002415",
-                    "scene": null
-                },
-                {
                     "id": 3,
                     "name": "审核",
                     "pathName": "pages/order/audit/audit",
@@ -108,10 +101,17 @@
                     "scene": null
                 },
                 {
-                    "id": 6,
-                    "name": "pages/stock/bank/bank",
-                    "pathName": "pages/stock/bank/bank",
+                    "id": 5,
+                    "name": "pages/knowledge/collections/collections",
+                    "pathName": "pages/knowledge/collections/collections",
                     "query": "code=601398",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "pages/commodity/commodity",
+                    "pathName": "pages/commodity/commodity",
+                    "query": "",
                     "scene": null
                 }
             ]

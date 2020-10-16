@@ -26,10 +26,20 @@ Page({
         currencyList: config.CURRENCY_LIST,
         //  更多指标数据
         indexes: [{
+            name: "商品",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/commodity.png",
+            category: "commodity",
+            url: "/pages/commodity/commodity" //  商品
+        }, {
             name: "股票",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock.png",
             category: "stock",
             url: "/pages/stock/search/search" //  股票
+        }, {
+            name: "房产",
+            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/estates.png",
+            category: "estates",
+            url: "/pages/estates/estates" //  房地产
         }, {
             name: "莆仙戏",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/troupe.png",
@@ -40,11 +50,6 @@ Page({
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/knowledge.png",
             category: "knowledge",
             url: "/pages/knowledge/collections/collections" //  知识树
-        }, {
-            name: "房地产",
-            src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/estates.png",
-            category: "estates",
-            url: "/pages/estates/estates" //  房地产
         }, {
             name: "工具盒",
             src: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/tools.png",
@@ -131,12 +136,20 @@ Page({
         unit: "%",
         handler: null
     }, {
+        _id: "CCI",
+        unit: "%",
+        handler: null
+    }, {
+        _id: "totalRetailSales",
+        unit: "%",
+        handler: null
+    }, {
         _id: "PPI",
         unit: "%",
         handler: null
     }, {
         _id: "PMI",
-        unit: "",
+        unit: "%",
         handler: null
     }, {
         _id: "moneySupply",
@@ -277,16 +290,27 @@ Page({
                     const series = [{
                         name: "CPI",
                         data: [],
-                        subIndex: [
-                            // {
-                            //     name: "同比",
-                            //     value: "cpiYearOnYear"
-                            // }, 
-                            {
-                                name: "环比",
-                                value: "cpiMonthOnMonth"
-                            }
-                        ]
+                        subIndex: [{
+                            name: "环比",
+                            value: "cpiMonthOnMonth"
+                        }]
+                    }, {
+                        name: "CCI",
+                        data: [],
+                        subIndex: [{
+                            name: "信心",
+                            value: "consumerConfidenceIndex"
+                        }, {
+                            name: "预期",
+                            value: "consumerExpectationIndex"
+                        }]
+                    }, {
+                        name: "totalRetailSales",
+                        data: [],
+                        subIndex: [{
+                            name: "同比",
+                            value: "retailSalesYearOnYear"
+                        }]
                     }, {
                         name: "PPI",
                         data: [],
@@ -321,8 +345,10 @@ Page({
                             series[i].data.push({
                                 name: field.name,
                                 data: rawData.map(item => {
-                                    if (series[i].name === "PMI") {
+                                    if (series[i].name === "totalRetailSales") {
                                         return item[field.value] ? item[field.value] : 0
+                                    } else if (series[i].name === "PMI") {
+                                        return item[field.value] ? (item[field.value] - 50).toFixed(1) : 0
                                     } else {
                                         return item[field.value] ? (item[field.value] - 100).toFixed(1) : 0
                                     }

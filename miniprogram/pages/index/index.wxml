@@ -7,6 +7,22 @@
 <canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI"
 	bindtouchstart="onCanvasTouched"></canvas>
 
+<!-- --------------        CCI        --------------- -->
+<view class="guide">
+	<text class="headline">消费者信心指数（ CCI ）</text>
+</view>
+
+<canvas canvas-id="CCI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CCI"
+	bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        全国消费品零售总额综合数据（月度）        --------------- -->
+<view class="guide">
+	<text class="headline">全国消费品零售总额同比涨跌幅</text>
+</view>
+
+<canvas canvas-id="totalRetailSales" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="totalRetailSales" bindtouchstart="onCanvasTouched"></canvas>
+
 <!-- --------------        PPI        --------------- -->
 <view class="guide">
 	<text class="headline">工业生产者出厂价格同比涨跌幅（ PPI ）</text>

@@ -1,13 +1,10 @@
 const MOMENT = require('moment')
 const CLOUD = require('wx-server-sdk')
-
 const AVAILABLE = require('./estates/available.js')
 const ESTATES = require('./estates/estates.js')
 const GOVERNMENT = require('./estates/government.js')
 const MONEY = require('./money.js')
 const STOCK = require('./stock.js')
-
-const URL = require('../utils/url.js')
 const CONFIG = require('../utils/config.js')
 
 // 初始化 CLOUD

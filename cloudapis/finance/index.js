@@ -8,6 +8,7 @@ const CURRENCY = require('./api/currency.js')
 const MONEY = require('./api/money.js')
 const STOCK = require('./api/stock.js')
 const MACRO = require('./api/macro.js')
+const COMMODITY = require('./api/commodity.js')
 const TRIGGER = require('./api/trigger.js')
 
 // 云函数入口函数
@@ -35,7 +36,7 @@ exports.main = async (event, context) => {
             fn: GOVERNMENT.population
         }, {
             action: "test",
-            fn: MACRO.manual
+            fn: COMMODITY.grabIndustrialProductsOutput
         },
         /**
          *      

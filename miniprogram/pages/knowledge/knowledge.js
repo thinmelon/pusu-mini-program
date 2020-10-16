@@ -1,5 +1,5 @@
 // pages/knowledge/knowledge.js
-const app = getApp()
+const config = require('./config')
 
 Page({
 
@@ -13,8 +13,8 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
-        const target = app.hierarchy.find(item => {
+    onLoad: function (options) {
+        const target = config.HIERARCHY.find(item => {
             return item.subject === options.subject
         }).articles.find(item => {
             return item.title === options.title

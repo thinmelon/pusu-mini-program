@@ -66,6 +66,19 @@ async function grabPPIData(request) {
 }
 
 /**
+ *      消费者信心指数月度统计
+ */
+async function grabCCIData(request) {
+    return await update(URL.CNINFO_MACRO_CCI, '_macro', (rawData) => {
+        return {
+            "consumerExpectationIndex": rawData.F003N,
+            "consumerSatisfactionIndex": rawData.F004N,
+            "consumerConfidenceIndex": rawData.F005N
+        }
+    })
+}
+
+/**
  *      货币供应量月度统计表
  */
 async function grabMoneySupply(request) {
@@ -77,6 +90,18 @@ async function grabMoneySupply(request) {
             "M1YearOnYear": rawData.F005N,
             "M2": rawData.F006N,
             "M2YearOnYear": rawData.F007N
+        }
+    })
+}
+
+/**
+ *      全国消费品零售总额综合数据（月度）
+ */
+async function grabTotalRetailSales(request) {
+    return await update(URL.CNINFO_MACRO_RETAIL_SALES, '_macro', (rawData) => {
+        return {
+            "retailSales": rawData.F004N,
+            "retailSalesYearOnYear": rawData.F005N
         }
     })
 }
@@ -285,7 +310,9 @@ async function refresh() {
     await grabCPIData()
     await grabPMIData()
     await grabPPIData()
+    await grabCCIData()
     await grabMoneySupply()
+    await grabTotalRetailSales()
 
     return 'DONE'
 }
@@ -298,6 +325,8 @@ async function refresh() {
 async function manual() {
     await grabFinancingAggregate()
     await grabFinancingAggregateFlow()
+
+    return 'DONE'
 }
 
 module.exports = {
@@ -306,7 +335,9 @@ module.exports = {
     grabCPIData,
     grabPMIData,
     grabPPIData,
+    grabCCIData,
     grabMoneySupply,
+    grabTotalRetailSales,
     grabFinancingAggregate,
     grabFinancingAggregateFlow
 }

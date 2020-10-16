@@ -1,4 +1,6 @@
 // miniprogram/pages/knowledge/collections/collections.js
+const config = require('../config.js')
+
 Page({
 
     /**
@@ -16,13 +18,31 @@ Page({
             value: "清华名师的财务入门课",
             footer: "肖星",
             url: "/pages/knowledge/folder/folder?album=清华名师的财务入门课&folder=Finance"
-        }]
+        }],
+        methodology: [],
+        cases: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        const methodology = config.HIERARCHY.filter(item => {
+            return item.subject === "Methodology"
+        })
+        const cases = config.HIERARCHY.filter(item => {
+            return item.subject === "Case"
+        })
 
+        this.setData({
+            methodology: methodology[0].articles,
+            cases: cases[0].articles
+        })
+    },
+
+    onCellTap: function (e) {
+        wx.navigateTo({
+            url: '/pages/knowledge/knowledge?subject=' + e.currentTarget.dataset.subject + "&title=" + e.currentTarget.dataset.title,
+        })
     }
 })

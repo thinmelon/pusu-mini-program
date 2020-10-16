@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/commodity/commodity",
         "pages/estates/estates",
         "pages/estates/map/map",
         "pages/estates/search/search",

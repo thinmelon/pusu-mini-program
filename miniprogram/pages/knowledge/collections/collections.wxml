@@ -6,3 +6,17 @@
             style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></image>
     </mp-cell>
 </mp-cells>
+
+<!--    方法论    -->
+<mp-cells title="方法论" footer="">
+	<mp-cell link hover wx:for="{{methodology}}" wx:key="title" data-subject="Methodology" data-title="{{item.title}}" bindtap="onCellTap">
+		<view>{{item.title}}</view>
+	</mp-cell>
+</mp-cells>
+
+<!--    分析案例   -->
+<mp-cells title="分析案例" footer="">
+	<mp-cell link hover wx:for="{{cases}}" wx:key="title" data-subject="Case" data-title="{{item.title}}" bindtap="onCellTap">
+		<view>{{item.title}}</view>
+	</mp-cell>
+</mp-cells>

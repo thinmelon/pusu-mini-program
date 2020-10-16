@@ -1,0 +1,49 @@
+<!--miniprogram/pages/commodity/commodity.wxml-->
+<!-- --------------        手机        --------------- -->
+<view class="guide">
+    <text class="headline">手机（ I030167 ）</text>
+</view>
+
+<canvas canvas-id="mobile" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="mobile"
+    bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        彩色电视机        --------------- -->
+<view class="guide">
+    <text class="headline">彩色电视机（ I030164 ）</text>
+</view>
+
+<canvas canvas-id="tv" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="tv"
+    bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        汽车        --------------- -->
+<view class="guide">
+    <text class="headline">汽车（ I030147 ）</text>
+</view>
+
+<canvas canvas-id="car" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="car"
+    bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        水泥        --------------- -->
+<view class="guide">
+    <text class="headline">水泥（ I030126 ）</text>
+</view>
+
+<canvas canvas-id="cement" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="cement"
+    bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        集成电路        --------------- -->
+<view class="guide">
+    <text class="headline">集成电路（ I030163 ）</text>
+</view>
+
+<canvas canvas-id="integratedCircuit" disable-scroll="false" class="canvas" data-category="lineCanvases"
+    data-id="integratedCircuit" bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        移动通信基站设备        --------------- -->
+<view class="guide">
+    <text class="headline">移动通信基站设备（ I030159 ）</text>
+</view>
+
+<canvas canvas-id="baseStation" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="baseStation"
+    bindtouchstart="onCanvasTouched"></canvas>
+
