@@ -166,16 +166,16 @@ async function update(url, collection, factory) {
 async function grabFinancingAggregate(request) {
     //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/09/2020091518045288398.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/10/2020101616045436308.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=015049f192e6378b77fdf31e9f26ea50cd54dd77b909679b4bfa0ae27994aeba529131f98d49caab11032e24c7b7724688aa5d7385c6866dabaa424907dce38c79eebcab45b19c4863a3f8ab9d28bcc2',
+                'Cookie': 'wzws_cid=6733b01da2ddc59c95d52cd3fcfb26282a9f8f007aea2811ea6229ad1b52ae91d70d23cb0a044249f3c8cc0051fa080ce988e06a56782d80af8a6baf8f6763896316be6b34d921a94c236686d2b930f4',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'
             }
         }
     );
-    // console.log(response.data)
+    console.log(response.data)
     const $ = CHEERIO.load(response.data, {
         xml: {
             normalizeWhitespace: true
@@ -233,12 +233,12 @@ async function grabFinancingAggregate(request) {
  */
 async function grabFinancingAggregateFlow(request) {
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/09/2020091518040140289.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/10/2020101616035553212.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=891c8469c38f83791fd3ef7d10b171303b2a601c01da725d7ceae45ca21b643691e9d7e6cd5d4fdfa6ae0675af54411d41fe6e5db67cbf24075aed52b97d72d51d7069d691a6d173f7c698032ef21f29',
+                'Cookie': 'wzws_cid=6733b01da2ddc59c95d52cd3fcfb26282a9f8f007aea2811ea6229ad1b52ae91d70d23cb0a044249f3c8cc0051fa080ce988e06a56782d80af8a6baf8f6763896316be6b34d921a94c236686d2b930f4',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'
             }
         }
     );
