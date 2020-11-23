@@ -25,12 +25,13 @@ const TOP_PRE_SELL = BUREAU_HOUSING_HOST + '/House/link/ListPreSell?Area=%s'
 /**
  *          巨潮资讯    -   宏观
  */
-const CNINFO_MACRO_CPI = 'http://webapi.cninfo.com.cn/api/macro/p_CPI?access_token=%s'; //  全国居民消费价格指数
-const CNINFO_MACRO_PMI = 'http://webapi.cninfo.com.cn/api/macro/p_PMI?access_token=%s'; //  采购经理指数（月度）
-const CNINFO_MACRO_PPI = 'http://webapi.cninfo.com.cn/api/macro/p_PPI?access_token=%s'; //  工业生产者出厂价格指数
-const CNINFO_MACRO_CCI = 'http://webapi.cninfo.com.cn/api/macro/p_CCI?access_token=%s'; //  消费者信心指数（月度）
-const CNINFO_MACRO_MONEY_SUPPLY = 'http://webapi.cninfo.com.cn/api/macro/p_macro9034?access_token=%s'; //  货币供应量（月度）
-const CNINFO_MACRO_RETAIL_SALES = 'http://webapi.cninfo.com.cn/api/macro/p_macro9047?access_token=%s'; //  全国消费品零售总额综合数据（月度）
+const CNINFO_MACRO_CPI = 'http://webapi.cninfo.com.cn/api/macro/p_CPI?access_token=%s&year=%s&month=%s'; //  全国居民消费价格指数
+const CNINFO_MACRO_PMI = 'http://webapi.cninfo.com.cn/api/macro/p_PMI?access_token=%s&year=%s&month=%s'; //  采购经理指数（月度）
+const CNINFO_MACRO_PPI = 'http://webapi.cninfo.com.cn/api/macro/p_PPI?access_token=%s&year=%s&month=%s'; //  工业生产者出厂价格指数
+const CNINFO_MACRO_CCI = 'http://webapi.cninfo.com.cn/api/macro/p_CCI?access_token=%s&year=%s&month=%s'; //  消费者信心指数（月度）
+const CNINFO_MACRO_MONEY_SUPPLY = 'http://webapi.cninfo.com.cn/api/macro/p_macro9034?access_token=%s&year=%s&month=%s'; //  货币供应量（月度）
+const CNINFO_MACRO_RETAIL_SALES = 'http://webapi.cninfo.com.cn/api/macro/p_macro9047?access_token=%s&year=%s&month=%s'; //  全国消费品零售总额综合数据（月度）
+const CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE = 'http://webapi.cninfo.com.cn/api/macro/p_macro9048?access_token=%s&year=%s&month=%s&sortcode=%s'; //  全国进出口贸易数据(月度)
 const CNINFO_MACRO_INDUSTRIAL_PRODUCTS = 'http://webapi.cninfo.com.cn/api/macro/p_macro9025?access_token=%s&year=%s&month=%s'; //  全国工业主要产品产量及增长速度
 const CNINFO_MACRO_REAL_ESTATE = 'http://webapi.cninfo.com.cn/api/macro/p_macro9042?access_token=%s&year=%s&month=%s'; //  全国房地产建设与销售
 
@@ -115,6 +116,7 @@ module.exports = {
     CNINFO_MACRO_CCI,
     CNINFO_MACRO_MONEY_SUPPLY,
     CNINFO_MACRO_RETAIL_SALES,
+    CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE,
     CNINFO_MACRO_INDUSTRIAL_PRODUCTS,
     CNINFO_MACRO_REAL_ESTATE,
     //  中国人民银行

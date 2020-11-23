@@ -156,6 +156,10 @@ Page({
         unit: "%",
         handler: null
     }, {
+        _id: "importsExportsBalance",
+        unit: "亿美元",
+        handler: null
+    }, {
         _id: "financingAggregate",
         unit: "%",
         handler: null
@@ -331,6 +335,18 @@ Page({
                             name: "生产指数",
                             value: "productionIndex"
                         }]
+                    }, {
+                        name: "importsExportsBalance",
+                        data: [],
+                        subIndex: [{
+                                name: "当月值",
+                                value: "importsExportsBalanceMonthly"
+                            }
+                            // , {
+                            //     name: "累计",
+                            //     value: "importsExportsBalanceTotal"
+                            // }
+                        ]
                     }];
                     const date = [];
 
@@ -347,6 +363,8 @@ Page({
                                 data: rawData.map(item => {
                                     if (series[i].name === "totalRetailSales") {
                                         return item[field.value] ? item[field.value] : 0
+                                    } else if (series[i].name === "importsExportsBalance") {
+                                        return item[field.value] ? (item[field.value] / 100000).toFixed(1) : 0
                                     } else if (series[i].name === "PMI") {
                                         return item[field.value] ? (item[field.value] - 50).toFixed(1) : 0
                                     } else {

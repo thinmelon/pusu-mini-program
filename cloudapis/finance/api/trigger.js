@@ -5,6 +5,7 @@ const ESTATES = require('./estates/estates.js')
 const GOVERNMENT = require('./estates/government.js')
 const MONEY = require('./money.js')
 const STOCK = require('./stock.js')
+const MACRO = require('./macro.js')
 const CONFIG = require('../utils/config.js')
 
 // 初始化 CLOUD
@@ -52,7 +53,7 @@ async function main() {
                         executeTime: new Date()
                     }
                 })
-            console.log(updated)
+            console.log("Task  >>>  ", record.data[0].category)
 
             switch (record.data[0].category) {
                 case "SEED": //  1 种子，抓取各县区所有项目
@@ -85,11 +86,14 @@ async function main() {
                 case "MARKET": //  10   股票账户数
                     await STOCK.grabStockAccountNumber(record.data[0])
                     break;
-                case "STOCK": //  11   获取各大市场的股票列表
+                case "STOCK": //  11   各大市场的股票列表
                     await STOCK.grabMarketStocks(record.data[0])
                     break;
                 case "CONTRACT": //  12   商品房签约情况
                     await ESTATES.updateContractStatistic(record.data[0])
+                    break;
+                case "MACRO": //  13   各宏观指标
+                    await MACRO.refresh()
                     break;
                 default:
                     break;
@@ -99,19 +103,6 @@ async function main() {
         }
 
         return "DONE"
-
-        // return await db.collection('_task')
-        //     .where({
-        //         category: "BUILDING"
-        //     })
-        //     .remove()
-
-        // await db.collection('_task')
-        //     .update({
-        //         data: {
-        //             status: 0
-        //         }
-        //     })
 
     } catch (err) {
         console.error(err)

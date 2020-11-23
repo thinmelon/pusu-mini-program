@@ -107,23 +107,39 @@ async function grabTotalRetailSales(request) {
 }
 
 /**
+ *      全国进出口贸易数据（月度）
+ */
+async function grabImportsExportsBalance(request) {
+    return await update(URL.CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE,
+        '_macro',
+        (rawData) => {
+            return {
+                "importsExportsBalanceMonthly": rawData.F004N,
+                "importsExportsBalanceTotal": rawData.F007N
+            }
+        },
+        'C0305')
+}
+
+/**
  *  如果返回结果中存在上个月数据，比对数据库，存在则更新，不存在则添加
  */
-async function update(url, collection, factory) {
-    const token = await COMMON.getCNInfoAPIOauthToken()
-    const response = await AXIOS.get(UTIL.format(url, token.access_token))
-    console.log(response)
-
+async function update(url, collection, factory, options) {
     const lastMonth = MOMENT().subtract(1, 'months')
     const year = lastMonth.year()
     const month = lastMonth.month() + 1
     console.log('上个月：', year, month)
 
+    const token = await COMMON.getCNInfoAPIOauthToken()
+    const response = await AXIOS.get(options ?
+        UTIL.format(url, token.access_token, year, month, options) :
+        UTIL.format(url, token.access_token, year, month))
+    // console.log(response)
+
     if (response.status === 200 && response.data.resultmsg === "success") {
         const target = response.data.records.filter(item => {
             return item.YEAR === year && item.MONTH === month;
         })
-        console.log(target)
 
         if (target.length === 1) {
             const _id = MOMENT(`${target[0].YEAR}.${target[0].MONTH}`, 'YYYY-M').format('YYYY.MM')
@@ -166,16 +182,16 @@ async function update(url, collection, factory) {
 async function grabFinancingAggregate(request) {
     //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/10/2020101616045436308.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/11/2020111616052956817.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=6733b01da2ddc59c95d52cd3fcfb26282a9f8f007aea2811ea6229ad1b52ae91d70d23cb0a044249f3c8cc0051fa080ce988e06a56782d80af8a6baf8f6763896316be6b34d921a94c236686d2b930f4',
+                'Cookie': 'wzws_cid=b54cf76189dcde13e3cf51e64f6f7f29a008a9399a65fe222b0eba55a56713c5f5ce8eb6cd17a18f4619ad9218eccd997f266d05ebdaf64e11ede6af82ce082b669d176fdef3aebbfdc2be7252515bb3',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Mobile Safari/537.36'
             }
         }
     );
-    console.log(response.data)
+    // console.log(response.data)
     const $ = CHEERIO.load(response.data, {
         xml: {
             normalizeWhitespace: true
@@ -233,12 +249,12 @@ async function grabFinancingAggregate(request) {
  */
 async function grabFinancingAggregateFlow(request) {
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/10/2020101616035553212.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/11/2020111616044569755.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=6733b01da2ddc59c95d52cd3fcfb26282a9f8f007aea2811ea6229ad1b52ae91d70d23cb0a044249f3c8cc0051fa080ce988e06a56782d80af8a6baf8f6763896316be6b34d921a94c236686d2b930f4',
+                'Cookie': 'wzws_cid=45bc11bfada4c23fc3ed3c87df38393febff58978182f74d567d5e9130fddcc63aa1f891cc84a84276731e05d7c2f2231a52d1497c84a6ef561d50b8f3c0dc429f2d2f2ef30618fd3240f047fdaffe06',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Mobile Safari/537.36'
             }
         }
     );
@@ -313,6 +329,7 @@ async function refresh() {
     await grabCCIData()
     await grabMoneySupply()
     await grabTotalRetailSales()
+    await grabImportsExportsBalance()
 
     return 'DONE'
 }
@@ -338,6 +355,7 @@ module.exports = {
     grabCCIData,
     grabMoneySupply,
     grabTotalRetailSales,
+    grabImportsExportsBalance,
     grabFinancingAggregate,
     grabFinancingAggregateFlow
 }

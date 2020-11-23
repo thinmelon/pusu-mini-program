@@ -44,23 +44,6 @@ async function seed() {
 }
 
 /**
- *          每日小结（统计本月、上月、本日、昨日的商品房签约情况）
- */
-async function contract() {
-    const ret = await db.collection('_task')
-        .add({
-            data: {
-                rank: 12,
-                subject: 'FINANCE',
-                category: 'CONTRACT',
-                status: 0,
-                addTime: new Date()
-            }
-        })
-    console.log(ret)
-}
-
-/**
  *          每日小结（统计各县区楼盘的成交量及成交均价）
  */
 async function statistic() {
@@ -147,12 +130,48 @@ async function market() {
 }
 
 /**
+ *          莆田房地产（统计本月、上月、本日、昨日的商品房签约情况）
+ */
+async function contract() {
+    const ret = await db.collection('_task')
+        .add({
+            data: {
+                rank: 12,
+                subject: 'FINANCE',
+                category: 'CONTRACT',
+                status: 0,
+                addTime: new Date()
+            }
+        })
+    console.log(ret)
+}
+
+/**
+ *      巨潮资讯网（宏观经济指标）
+ */
+async function macro() {
+    const ret = await db.collection('_task')
+        .add({
+            data: {
+                rank: 13,
+                subject: 'FINANCE',
+                category: 'MACRO',
+                status: 0,
+                addTime: new Date()
+            }
+        })
+    console.log(ret)
+}
+
+/**
  *  初始化所有任务
  */
 async function init() {
     const now = new Date()
+    const day = parseInt(now.getDate())
     const hour = parseInt(now.getHours()) + 8
-    console.log('init >>> now: ', hour)
+    console.log('init >>> now: ', day, hour)
+
     //  每天早上8点重启失败任务
     if (hour >= 7 && hour <= 9) {
         await restart()
@@ -179,6 +198,12 @@ async function init() {
         await market()
         //  任务八：抓取商品房签约情况
         await contract()
+
+        //  每月执行一次（21日晚上8点）
+        if (day === 21) {
+            //  任务一：抓取各宏观指标
+            await macro()
+        }
     }
 
     return "DONE"
@@ -211,7 +236,7 @@ async function clear() {
 }
 
 // 云函数入口函数
-exports.main = async(event, context) => {
+exports.main = async (event, context) => {
     const entry = [{
         action: "restart", //  重启任务
         fn: restart

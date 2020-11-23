@@ -39,6 +39,14 @@
 <canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI"
 	bindtouchstart="onCanvasTouched"></canvas>
 
+<!-- --------------        全国进出口贸易数据（月度）        --------------- -->
+<view class="guide">
+	<text class="headline">进出口贸易差额</text>
+</view>
+
+<canvas canvas-id="importsExportsBalance" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="importsExportsBalance" bindtouchstart="onCanvasTouched"></canvas>
+
 <!-- --------------        中债国债收益率曲线        --------------- -->
 <view class="guide">
 	<text class="headline">中债国债收益率曲线</text>
