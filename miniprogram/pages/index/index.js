@@ -160,6 +160,10 @@ Page({
         unit: "亿美元",
         handler: null
     }, {
+        _id: "importsExportsBalanceMonthOnMonth",
+        unit: "%",
+        handler: null
+    }, {
         _id: "financingAggregate",
         unit: "%",
         handler: null
@@ -290,7 +294,7 @@ Page({
                 console.log(res);
 
                 if (res.result && res.result.data.length > 0) {
-                    const rawData = res.result.data.reverse()
+                    //  简单加工各宏观数据
                     const series = [{
                         name: "CPI",
                         data: [],
@@ -348,37 +352,10 @@ Page({
                             // }
                         ]
                     }];
-                    const date = [];
 
-                    //  日期    X轴是时间轴
-                    rawData.map(item => {
-                        date.push(item._id)
-                    })
-                    //  各宏观指标  Y轴
-                    for (let i = 0, length = series.length; i < length; i++) {
-                        //  各项子指标
-                        series[i].subIndex.map(field => {
-                            series[i].data.push({
-                                name: field.name,
-                                data: rawData.map(item => {
-                                    if (series[i].name === "totalRetailSales") {
-                                        return item[field.value] ? item[field.value] : 0
-                                    } else if (series[i].name === "importsExportsBalance") {
-                                        return item[field.value] ? (item[field.value] / 100000).toFixed(1) : 0
-                                    } else if (series[i].name === "PMI") {
-                                        return item[field.value] ? (item[field.value] - 50).toFixed(1) : 0
-                                    } else {
-                                        return item[field.value] ? (item[field.value] - 100).toFixed(1) : 0
-                                    }
-                                }),
-                                format: function (val, name) {
-                                    return val;
-                                }
-                            })
-                        })
-                        //  绘制图形
-                        this.createLineCanvas(series[i].name, date, series[i].data)
-                    }
+                    this.simpleProcessing(series, res.result.data.reverse());
+                    //  进出口贸易差额累计环比及同比增速
+                    this.secondaryProcessing(res.result.data.reverse(), "importsExportsBalanceTotal", "importsExportsBalanceMonthOnMonth")
                 }
 
             })
@@ -453,58 +430,111 @@ Page({
                 //  绘制图形
                 this.createLineCanvas("moneySupply", date.reverse(), series)
 
-                const growthDate = [],
-                    growth = [],
-                    growthSeries = [];
-
-                for (let i = 0, length = res.result.data.length; i < length; i++) {
-                    const item = res.result.data[i];
-                    //  无记录，继续
-                    if (!!!item.financingAggregateGrowthRate) {
-                        continue;
-                    }
-
-                    growthDate.push(item._id)
-                    growth.push(item.financingAggregateGrowthRate)
-                }
-
-                growthSeries.push({
-                    name: "社融存量增速",
-                    data: growth.reverse(),
-                    format: function (val, name) {
-                        return val;
-                    }
-                })
-
-                //  绘制图形
-                this.createLineCanvas("financingAggregate", growthDate.reverse(), growthSeries)
-
-                const flowDate = [],
-                    flow = [],
-                    flowSeries = [];
-
-                for (let i = 0, length = res.result.data.length; i < length; i++) {
-                    const item = res.result.data[i];
-                    //  无记录，继续
-                    if (!!!item.financingAggregateFlow) {
-                        continue;
-                    }
-
-                    flowDate.push(item._id)
-                    flow.push(item.financingAggregateFlow)
-                }
-
-                flowSeries.push({
-                    name: "社融增量",
-                    data: flow.reverse(),
-                    format: function (val, name) {
-                        return val;
-                    }
-                })
-
-                //  绘制图形
-                this.createLineCanvas("financingAggregateFlow", flowDate.reverse(), flowSeries)
+                const indexSeries = [{
+                    name: "financingAggregate",
+                    data: [],
+                    subIndex: [{
+                        name: "社融存量增速",
+                        value: "financingAggregateGrowthRate"
+                    }]
+                }]
+                //  简单加工
+                this.simpleProcessing(indexSeries, res.result.data.reverse());
             })
+    },
+
+    /**
+     *  简单加工（原数值上加减乘除）
+     */
+    simpleProcessing: function (series, rawData) {
+        const date = [];
+
+        //  日期    X轴是时间轴
+        rawData.map(item => {
+            date.push(item._id)
+        })
+        //  各宏观指标  Y轴
+        for (let i = 0, length = series.length; i < length; i++) {
+            //  各项子指标
+            series[i].subIndex.map(field => {
+                series[i].data.push({
+                    name: field.name,
+                    data: rawData.map(item => {
+                        if (series[i].name === "totalRetailSales" || series[i].name === "financingAggregate") {
+                            return item[field.value] ? item[field.value] : 0
+                        } else if (series[i].name === "importsExportsBalance") {
+                            return item[field.value] ? (item[field.value] / 100000).toFixed(1) : 0
+                        } else if (series[i].name === "PMI") {
+                            return item[field.value] ? (item[field.value] - 50).toFixed(1) : 0
+                        } else {
+                            return item[field.value] ? (item[field.value] - 100).toFixed(1) : 0
+                        }
+                    }),
+                    format: function (val, name) {
+                        return val;
+                    }
+                })
+            })
+            //  绘制图形
+            this.createLineCanvas(series[i].name, date, series[i].data)
+        }
+    },
+
+    /**
+     *  二次加工
+     */
+    secondaryProcessing: function (rawData, field, canvasId) {
+        const date = [],
+            monthOnMonthGrowth = [],
+            yearOnYearGrowth = [],
+            series = [];
+
+        for (let i = 0, length = rawData.length; i < length - 1; i++) {
+            //  环比比较值不能为空
+            if (!!!rawData[i][field] || !!!rawData[i + 1][field]) {
+                continue;
+            }
+            //  计算环比增速
+            const monthOnMonth = (((rawData[i][field] - rawData[i + 1][field]) / rawData[i + 1][field]) * 100).toFixed(2)
+
+            date.push(rawData[i]._id)
+            monthOnMonthGrowth.push(monthOnMonth)
+
+            //  计算同比增速
+            if (i * 2 < length) {
+                const lastYear = MOMENT(rawData[i]._id, 'YYYY.MM').subtract(1, 'years').format('YYYY.MM') //  一年前
+                const lastYearItem = rawData.filter(record => {
+                    return record._id === lastYear
+                })
+                //  同比比较值不能为空
+                if (lastYearItem.length > 0 && lastYearItem[0][field]) {
+                    const yearOnYear = (((rawData[i][field] - lastYearItem[0][field]) / lastYearItem[0][field]) * 100).toFixed(2)
+                    yearOnYearGrowth.push(yearOnYear)
+                } else {
+                    yearOnYearGrowth.push(0)
+                }
+            } else {
+                yearOnYearGrowth.push(0) //  未参与的比较项用 0 填充
+            }
+
+        }
+
+        series.push({
+            name: "环比",
+            data: monthOnMonthGrowth.reverse(),
+            format: function (val, name) {
+                return val;
+            }
+        })
+        series.push({
+            name: "同比",
+            data: yearOnYearGrowth.reverse(),
+            format: function (val, name) {
+                return val;
+            }
+        })
+        //  绘制图形
+        this.createLineCanvas(canvasId, date.reverse(), series)
     },
 
     /**

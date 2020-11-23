@@ -1,7 +1,15 @@
 <!--pages/index/index.wxml-->
+<!-- --------------        全国消费品零售总额综合数据（累计）        --------------- -->
+<view class="guide">
+	<text class="headline">社会消费品零售总额同比（累计）</text>
+</view>
+
+<canvas canvas-id="totalRetailSales" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="totalRetailSales" bindtouchstart="onCanvasTouched"></canvas>
+
 <!-- --------------        CPI        --------------- -->
 <view class="guide">
-	<text class="headline">全国居民消费价格环比涨跌幅（ CPI ）</text>
+	<text class="headline">全国居民消费价格环比（月度）</text>
 </view>
 
 <canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI"
@@ -9,23 +17,15 @@
 
 <!-- --------------        CCI        --------------- -->
 <view class="guide">
-	<text class="headline">消费者信心指数（ CCI ）</text>
+	<text class="headline">消费者信心指数（月度）</text>
 </view>
 
 <canvas canvas-id="CCI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CCI"
 	bindtouchstart="onCanvasTouched"></canvas>
 
-<!-- --------------        全国消费品零售总额综合数据（月度）        --------------- -->
-<view class="guide">
-	<text class="headline">全国消费品零售总额同比涨跌幅</text>
-</view>
-
-<canvas canvas-id="totalRetailSales" disable-scroll="false" class="canvas" data-category="lineCanvases"
-	data-id="totalRetailSales" bindtouchstart="onCanvasTouched"></canvas>
-
 <!-- --------------        PPI        --------------- -->
 <view class="guide">
-	<text class="headline">工业生产者出厂价格同比涨跌幅（ PPI ）</text>
+	<text class="headline">工业生产者出厂价格同比（月度）</text>
 </view>
 
 <canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI"
@@ -33,7 +33,7 @@
 
 <!-- --------------        PMI        --------------- -->
 <view class="guide">
-	<text class="headline">采购经理指数（ PMI ）</text>
+	<text class="headline">采购经理指数（月度）</text>
 </view>
 
 <canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI"
@@ -41,11 +41,19 @@
 
 <!-- --------------        全国进出口贸易数据（月度）        --------------- -->
 <view class="guide">
-	<text class="headline">进出口贸易差额</text>
+	<text class="headline">进出口贸易差额（月度）</text>
 </view>
 
 <canvas canvas-id="importsExportsBalance" disable-scroll="false" class="canvas" data-category="lineCanvases"
 	data-id="importsExportsBalance" bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        全国进出口贸易数据（累计）        --------------- -->
+<view class="guide">
+	<text class="headline">进出口贸易差额增速（累计）</text>
+</view>
+
+<canvas canvas-id="importsExportsBalanceMonthOnMonth" disable-scroll="false" class="canvas" data-category="lineCanvases"
+	data-id="importsExportsBalanceMonthOnMonth" bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        中债国债收益率曲线        --------------- -->
 <view class="guide">
@@ -78,22 +86,6 @@
 <canvas canvas-id="financingAggregate" disable-scroll="false" class="canvas" data-category="lineCanvases"
 	data-id="financingAggregate" bindtouchstart="onCanvasTouched"></canvas>
 
-<!-- --------------        社会融资规模增量        --------------- -->
-<view class="guide">
-	<text class="headline">社融增量</text>
-</view>
-
-<canvas canvas-id="financingAggregateFlow" disable-scroll="false" class="canvas" data-category="lineCanvases"
-	data-id="financingAggregateFlow" bindtouchstart="onCanvasTouched"></canvas>
-
-<mp-cells title="" footer="">
-	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"
-		bindtap="onCellTap">
-		<view>{{item}}</view>
-	</mp-cell>
-</mp-cells>
-
-
 <!-- --------------        货币信贷        --------------- -->
 <view class="guide">
 	<text class="headline">货币信贷</text>
@@ -101,6 +93,13 @@
 
 <canvas canvas-id="moneySupply" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="moneySupply"
 	bindtouchstart="onCanvasTouched"></canvas>
+
+<mp-cells title="" footer="">
+	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"
+		bindtap="onCellTap">
+		<view>{{item}}</view>
+	</mp-cell>
+</mp-cells>
 
 <!-- --------------        A股市场新增账户数        --------------- -->
 <view class="guide">
