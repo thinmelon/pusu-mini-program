@@ -95,6 +95,10 @@ const HIERARCHY = [{
         title: "如何克服选择困难症？",
         href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Methodology/Choice/",
         num: 10
+    }, {
+        title: "如何优雅地做行业研究？",
+        href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Methodology/IndustrialResearch/",
+        num: 9
     }]
 }, {
     subject: "Case",
@@ -158,6 +162,22 @@ const HIERARCHY = [{
         title: "泡泡玛特",
         href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Case/PopMart/",
         num: 10
+    }, {
+        title: "消费行业",
+        href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Case/Consume/",
+        num: 8
+    }, {
+        title: "国货潮",
+        href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Case/DomesticProduct/",
+        num: 10
+    }, {
+        title: "直播",
+        href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Case/Webcast/",
+        num: 10
+    }, {
+        title: "苏宁易购",
+        href: "cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/articles/Case/Suning/",
+        num: 8
     }]
 }];
 
