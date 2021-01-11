@@ -22,150 +22,150 @@ const $ = db.command.aggregate
  *  房地产开发投资
  */
 const ESTATE_FIELDS = [{
-        key: 'realEstateEnterprisesNumber',
-        /* 房地产企业月末数（个） */
-        name: '房地产企业'
-    },
-    {
-        key: 'realEstateInvestment',
-        /* 房地产开发投资完成额 */
-        name: '房地产开发投资完成额'
-    },
-    {
-        key: 'constructionArea',
-        /* 商品房屋施工面积 */
-        name: '面积'
-    },
-    {
-        key: 'houseConstructionArea',
-        /* #住宅  */
-        name: '#住宅'
-    },
-    {
-        key: 'ninetyMinusHouseConstructionArea',
-        /* #90平方米以下   */
-        name: '#90平方米'
-    },
-    {
-        key: 'newStartConstructionArea',
-        /* 本年新开工面积   */
-        name: '新开工面积'
-    },
-    {
-        key: 'completedArea',
-        /* 商品房屋竣工面积   */
-        name: '竣工面积'
-    },
-    {
-        key: 'houseCompletedArea',
-        /* #住宅    */
-        name: '#住宅'
-    },
-    {
-        key: 'completedValue',
-        /* 商品房屋竣工价值    */
-        name: '竣工价值'
-    },
-    {
-        key: 'saleArea',
-        /* 商品房屋销售面积    */
-        name: '销售面积'
-    },
-    {
-        key: 'houseSaleArea',
-        /* #住宅     */
-        name: '#住宅'
-    },
-    {
-        key: 'saleQuantity',
-        /* 商品房屋销售额     */
-        name: '销售额'
-    },
-    {
-        key: 'houseSaleQuantity',
-        /* #住宅     */
-        name: '#住宅'
-    },
-    {
-        key: 'toBeSoldArea',
-        /* 商品房屋待售面积     */
-        name: '面积'
-    },
-    {
-        key: 'houseToBeSoldArea',
-        /* #住宅     */
-        name: '#住宅'
-    },
-    {
-        key: 'landAcquisitionArea',
-        /* 土地购置面积     */
-        name: '土地购置面积'
-    },
-    {
-        key: 'totalFundsSource',
-        /* 本年资金来源总额     */
-        name: '资金来源总额'
-    },
-    {
-        key: 'loanFunds',
-        /* #国内贷款     */
-        name: '国内贷款'
-    },
-    {
-        key: 'selfRaisedFunds',
-        /* #自筹资金     */
-        name: '自筹资金'
-    },
-    {
-        key: 'otherFund',
-        /* #其他     */
-        name: '其他'
-    }
+    key: 'realEstateEnterprisesNumber',
+    /* 房地产企业月末数（个） */
+    name: '房地产企业'
+},
+{
+    key: 'realEstateInvestment',
+    /* 房地产开发投资完成额 */
+    name: '房地产开发投资完成额'
+},
+{
+    key: 'constructionArea',
+    /* 商品房屋施工面积 */
+    name: '面积'
+},
+{
+    key: 'houseConstructionArea',
+    /* #住宅  */
+    name: '#住宅'
+},
+{
+    key: 'ninetyMinusHouseConstructionArea',
+    /* #90平方米以下   */
+    name: '#90平方米'
+},
+{
+    key: 'newStartConstructionArea',
+    /* 本年新开工面积   */
+    name: '新开工面积'
+},
+{
+    key: 'completedArea',
+    /* 商品房屋竣工面积   */
+    name: '竣工面积'
+},
+{
+    key: 'houseCompletedArea',
+    /* #住宅    */
+    name: '#住宅'
+},
+{
+    key: 'completedValue',
+    /* 商品房屋竣工价值    */
+    name: '竣工价值'
+},
+{
+    key: 'saleArea',
+    /* 商品房屋销售面积    */
+    name: '销售面积'
+},
+{
+    key: 'houseSaleArea',
+    /* #住宅     */
+    name: '#住宅'
+},
+{
+    key: 'saleQuantity',
+    /* 商品房屋销售额     */
+    name: '销售额'
+},
+{
+    key: 'houseSaleQuantity',
+    /* #住宅     */
+    name: '#住宅'
+},
+{
+    key: 'toBeSoldArea',
+    /* 商品房屋待售面积     */
+    name: '面积'
+},
+{
+    key: 'houseToBeSoldArea',
+    /* #住宅     */
+    name: '#住宅'
+},
+{
+    key: 'landAcquisitionArea',
+    /* 土地购置面积     */
+    name: '土地购置面积'
+},
+{
+    key: 'totalFundsSource',
+    /* 本年资金来源总额     */
+    name: '资金来源总额'
+},
+{
+    key: 'loanFunds',
+    /* #国内贷款     */
+    name: '国内贷款'
+},
+{
+    key: 'selfRaisedFunds',
+    /* #自筹资金     */
+    name: '自筹资金'
+},
+{
+    key: 'otherFund',
+    /* #其他     */
+    name: '其他'
+}
 ];
 
 /**
  *  常住总人口
  */
 const POPULATION_FIELDS = [{
-        key: "year",
-        name: "年份",
-        index: 0
-    },
-    {
-        key: "resident",
-        name: "常住总人口",
-        index: 1
-    },
-    {
-        key: "residentMale",
-        name: "常住人口（男）",
-        index: 2
-    },
-    {
-        key: "residentFemale",
-        name: "常住人口（女）",
-        index: 3
-    },
-    {
-        key: "residentTown",
-        name: "常住人口（城镇）",
-        index: 4
-    },
-    {
-        key: "residentCountry",
-        name: "常住人口（农村）",
-        index: 5
-    },
-    {
-        key: "birthRate",
-        name: "出生率",
-        index: 7
-    },
-    {
-        key: "deathRate",
-        name: "死亡率",
-        index: 8
-    }
+    key: "year",
+    name: "年份",
+    index: 0
+},
+{
+    key: "resident",
+    name: "常住总人口",
+    index: 1
+},
+{
+    key: "residentMale",
+    name: "常住人口（男）",
+    index: 2
+},
+{
+    key: "residentFemale",
+    name: "常住人口（女）",
+    index: 3
+},
+{
+    key: "residentTown",
+    name: "常住人口（城镇）",
+    index: 4
+},
+{
+    key: "residentCountry",
+    name: "常住人口（农村）",
+    index: 5
+},
+{
+    key: "birthRate",
+    name: "出生率",
+    index: 7
+},
+{
+    key: "deathRate",
+    name: "死亡率",
+    index: 8
+}
 ];
 
 /**
@@ -221,7 +221,7 @@ function grabEstateInvestmentStatistic(request) {
             if (element.is('tr')) {
                 // 开始解析
                 let index = 0;
-                element.each(function(i, elem) { //  跳过前三个tr元素
+                element.each(function (i, elem) { //  跳过前三个tr元素
                     let children = $(this).children('td'), //  获取tr下所有子元素td
                         key = ESTATE_FIELDS[index] ? ESTATE_FIELDS[index].key : null, //  对象键
                         field = children.eq(0).text().trim(), //  对象键解释
@@ -272,9 +272,11 @@ async function grabResidentPopulation(request) {
             // 开始解析
             let index = 0,
                 residents = [];
-            element.each(function(i, elem) {
+            element.each(function (i, elem) {
                 //  截取从2000年至2018年的常住人口数据
-                if (i >= 20 && i <= 38) {
+                // if (i >= 20 && i <= 38) {
+                //  截取从2019年的常住人口数据
+                if (i === 39) {
                     let item = {}
                     POPULATION_FIELDS.map(field => {
                         item[field.key] = $(this).children().eq(field.index).text()
@@ -282,6 +284,8 @@ async function grabResidentPopulation(request) {
                     residents.push(item)
                 }
             });
+
+            console.log(residents)
             //  更新至数据库
             for (let i = 0; i < residents.length; i++) {
                 await db.collection('_population')
@@ -359,6 +363,7 @@ async function population(request) {
 
 module.exports = {
     grabFinanceStatistic,
+    grabResidentPopulation,
     grabEstateInvestmentStatistic,
     investment,
     population

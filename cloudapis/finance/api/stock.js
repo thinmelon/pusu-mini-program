@@ -260,7 +260,7 @@ async function grabStockInfo(request, url, field) {
     const token = await COMMON.getCNInfoAPIOauthToken()
     const response = await AXIOS.get(UTIL.format(url, request.code, token.access_token))
     const data = {}
-    // console.log(response)
+    console.log(response)
 
     if (response.status === 200 && response.data.resultcode === 200) {
         data[field] = response.data.records
@@ -290,12 +290,12 @@ async function grabStockGossip(request) {
     const response = await HTTP_CLIENT.getPlusPromisify(
         "api.qichacha.com",
         '/CompanyNews/SearchNews?', {
-            "key": userKey,
-            "searchKey": "沪士电子股份有限公司"
-        }, {
-            "Token": token,
-            "Timespan": timeSpan
-        }
+        "key": userKey,
+        "searchKey": "沪士电子股份有限公司"
+    }, {
+        "Token": token,
+        "Timespan": timeSpan
+    }
     )
     const data = {}
     // console.log(response)
@@ -341,6 +341,7 @@ async function manual(request) {
  */
 async function refresh(request) {
     console.log("refresh >>> ", request)
+
     switch (request.market) {
         //  沪深
         case "SZ":
@@ -350,11 +351,18 @@ async function refresh(request) {
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_INDICATORS, "indicators") //  指标表
             break;
-            //  银行系统
+        //  银行系统
         case "BANK":
             await grabStockInfo(request, URL.CNINFO_STOCK_BANK_BALANCE_SHEET, "balance") //  资产负债表
             await grabStockInfo(request, URL.CNINFO_STOCK_BANK_PROFIT_STATEMENT, "profit") //  利润表
             await grabStockInfo(request, URL.CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
+            break;
+        //  香港
+        case "HK":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_BALANCE_SHEET, "balance") //  资产负债表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_PROFIT_STATEMENT, "profit") //  利润表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_CASH_FLOW_STATEMENT, "cashflow") //  现金流量表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_INDICATORS, "indicators") //  指标表
             break;
         default:
             break;
@@ -368,14 +376,20 @@ async function refresh(request) {
  */
 async function shareholder(request) {
     console.log("shareholder >>> ", request)
+
     switch (request.market) {
         case "SZ":
         case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_FREEZING, "freezingShare") //  股份冻结
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_PLEDGE, "pledge") //  股权质押
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FLOAT_HOLDER, "holder") //  十大流通股东持股情况
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_TRADABLE_HOLDER, "tradable") //  十大流通股东持股情况
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_SHARE_HOLDER, "holder") //  十大股东持股情况
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_RESTRICTED, "restricted") //  受限股份流通上市日期
             break;
         case "HK":
-            await grabStockInfo(request, URL.CNINFO_STOCK_HK_SHARE_HOLDER_CHANGE, "change") //  主要股东股权变动
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_CAPITAL, "capital") //  股本结构
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_SHARE_HOLDER, "holder") //  股东持股情况
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_MAJOR_HOLDER_CHANGE, "change") //  主要股东股权变动
             break;
         default:
             break;
@@ -389,13 +403,16 @@ async function shareholder(request) {
  */
 async function fund(request) {
     console.log("fund >>> ", request)
+
     switch (request.market) {
         case "SZ":
         case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_DIVIDENDS, "dividends") //  分红转增信息
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_FUND_SOURCE, "fund") //  募集资金来源
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INVESTMENT, "investment") //  募集资金计划投资项目
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_FUND_PLAN, "plan") //  募集资金计划投资项目
             break;
         case "HK":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_DIVIDENDS, "dividends") //  分红派息
             break;
         default:
             break;
@@ -409,12 +426,39 @@ async function fund(request) {
  */
 async function issue(request) {
     console.log("issue >>> ", request)
+
     switch (request.market) {
         case "SZ":
         case "SH":
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_AUDIT, "audit") //  审计意见
-            await grabStockInfo(request, URL.CNINFO_STOCK_HS_EXTERNAL_GUARANTEE, "guarantee") //  对外担保
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_RELATED_TRANSACTION, "related") //  关联交易
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_ARBITRATION, "arbitration") //  公司仲裁的说明及结构
             await grabStockInfo(request, URL.CNINFO_STOCK_HS_PUNISHMENT, "punishment") //  公司受处罚表
+            break;
+        case "HK":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HK_DIRECTOR_CHANGE, "director") //  董事任职变动
+            break;
+        default:
+            break;
+    }
+
+    return 'DONE'
+}
+
+/**
+ *      刷新上市公司基本信息
+ */
+async function basic(request) {
+    console.log("basic >>> ", request)
+    switch (request.market) {
+        case "SZ":
+        case "SH":
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_LICENSE, "license") //  行政许可
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_EXTERNAL_GUARANTEE, "guarantee") //  对外担保
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_INVEST, "invest") //  对外投资
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_EMPLOYEE, "employee") //  公司员工情况表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_ASSETS_FREEZING, "freezingAssets") //  公司资产冻结表
+            await grabStockInfo(request, URL.CNINFO_STOCK_HS_CAPITAL, "capital") //  股本结构
             break;
         default:
             break;
@@ -429,7 +473,8 @@ async function issue(request) {
 async function principle(request) {
     return await db.collection('_principle')
         .where({
-            "status": 1
+            "status": 1,
+            "market": request.market
         })
         .orderBy("index", "asc")
         .get()
@@ -480,6 +525,7 @@ module.exports = {
     market,
     follow,
     manual,
+    basic,
     refresh,
     shareholder,
     fund,

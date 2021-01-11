@@ -7,7 +7,8 @@ const REAL_ESTATE = 'http://www.putian.gov.cn/was5/web/search?channelid=210831&t
  *          莆田市人民政府 -   政务公开    -   统计数据
  */
 const ESTATES_DEVELOPMENT_INVESTMENT = 'http://www.putian.gov.cn/was5/web/search?channelid=210831&templet=advsch.jsp&sortfield=-docorderpri%2C-docreltime&classsql=chnlid%3D224&prepage=150&page=%s' //   房地产开发投资
-const RESIDENT_POPULATION = 'http://putian.gov.cn/tjnj/pttjnj2019/htms/13.htm' //  2019年莆田统计年鉴 - 主要年份常住总人口及人口变动
+// const RESIDENT_POPULATION = 'http://putian.gov.cn/tjnj/pttjnj2019/htms/13.htm' //  2019年莆田统计年鉴 - 主要年份常住总人口及人口变动
+const RESIDENT_POPULATION = 'http://www.putian.gov.cn/tjnj/pttjnj2020/htms/17.htm' //  2020年莆田统计年鉴 - 主要年份常住总人口及人口变动
 
 /**
  *          商品房签约统计
@@ -72,22 +73,55 @@ const CNINFO_STOCK_BANK_PROFIT_STATEMENT = 'http://webapi.cninfo.com.cn/api/stoc
 const CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2327?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F001D:desc'; //  金融类现金流量表2007版
 
 const CNINFO_STOCK_HS_INDICATORS = 'http://webapi.cninfo.com.cn/api/stock/p_stock2303?scode=%s&type=071001&access_token=%s&@limit=12&@orderby=F069D:desc'; //  指标表
+const CNINFO_STOCK_HS_SHARE_FREEZING = 'http://webapi.cninfo.com.cn/api/stock/p_stock2219?scode=%s&access_token=%s&@orderby=DECLAREDATE:desc'; //  股份冻结
 const CNINFO_STOCK_HS_SHARE_PLEDGE = 'http://webapi.cninfo.com.cn/api/stock/p_stock2220?scode=%s&access_token=%s&@orderby=F009D:desc'; //  股份质押
-const CNINFO_STOCK_HS_FLOAT_HOLDER = 'http://webapi.cninfo.com.cn/api/stock/p_stock2209?scode=%s&access_token=%s&@limit=10&@orderby=ENDDATE:desc'; //  十大流通股东持股情况
+const CNINFO_STOCK_HS_CONTROLLER = 'http://webapi.cninfo.com.cn/api/stock/p_stock2213?scode=%s&access_token=%s&state=2'; //  实际控制人
+const CNINFO_STOCK_HS_RESTRICTED = 'http://webapi.cninfo.com.cn/api/stock/p_stock2228?scode=%s&access_token=%s&@limit=10&@orderby=F002D:desc'; //  受限股份流通上市日期
+const CNINFO_STOCK_HS_TRADABLE_HOLDER = 'http://webapi.cninfo.com.cn/api/stock/p_stock2209?scode=%s&access_token=%s&@limit=10&@orderby=ENDDATE:desc'; //  十大流通股东持股情况
+const CNINFO_STOCK_HS_SHARE_HOLDER = 'http://webapi.cninfo.com.cn/api/stock/p_stock2210?scode=%s&access_token=%s&@limit=10&@orderby=ENDDATE:desc'; //  十大股东持股情况
+const CNINFO_STOCK_HS_DIVIDENDS = 'http://webapi.cninfo.com.cn/api/stock/p_stock2201?scode=%s&access_token=%s&@limit=10&@orderby=F001D:desc'; //  分红转增信息
 const CNINFO_STOCK_HS_FUND_SOURCE = 'http://webapi.cninfo.com.cn/api/stock/p_stock2234?scode=%s&access_token=%s&@limit=10&@orderby=F004D:desc'; //  募集资金来源
-const CNINFO_STOCK_HS_INVESTMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2236?scode=%s&access_token=%s&@limit=20&@orderby=DECLAREDATE:desc'; //  募集资金计划投资项目
+const CNINFO_STOCK_HS_FUND_PLAN = 'http://webapi.cninfo.com.cn/api/stock/p_stock2236?scode=%s&access_token=%s&@limit=20&@orderby=DECLAREDATE:desc'; //  募集资金计划投资项目
 const CNINFO_STOCK_HS_AUDIT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2239?scode=%s&access_token=%s&@limit=12&@orderby=F001D:desc'; //  审计意见
 const CNINFO_STOCK_HS_EXTERNAL_GUARANTEE = 'http://webapi.cninfo.com.cn/api/stock/p_stock2245?scode=%s&access_token=%s&@limit=10&@orderby=DECLAREDATE:desc'; //  对外担保
+const CNINFO_STOCK_HS_RELATED_TRANSACTION = 'http://webapi.cninfo.com.cn/api/stock/p_stock2261?scode=%s&access_token=%s&@limit=10&@orderby=DECLAREDATE:desc'; //  关联交易预计表
 const CNINFO_STOCK_HS_PUNISHMENT = 'http://webapi.cninfo.com.cn/api/stock/p_stock2248?scode=%s&access_token=%s&@limit=10&@orderby=DECLAREDATE:desc'; //  公司受处罚表
+const CNINFO_STOCK_HS_ARBITRATION = 'http://webapi.cninfo.com.cn/api/stock/p_stock2250?scode=%s&access_token=%s&@limit=10&@orderby=DECLAREDATE:desc'; //  公司仲裁的说明及结构
+const CNINFO_STOCK_HS_LICENSE = 'http://webapi.cninfo.com.cn/api/bigdata/p_com_adminlicense?scode=%s&access_token=%s'; //  行政许可
+const CNINFO_STOCK_HS_INVEST = 'http://webapi.cninfo.com.cn/api/bigdata/p_com_invest?scode=%s&access_token=%s'; //  对外投资
+const CNINFO_STOCK_HS_EMPLOYEE = 'http://webapi.cninfo.com.cn/api/stock/p_stock2107?scode=%s&access_token=%s&state=1'; //  公司员工情况表
+const CNINFO_STOCK_HS_ASSETS_FREEZING = 'http://webapi.cninfo.com.cn/api/stock/p_stock2249?scode=%s&access_token=%s&@limit=10&@orderby=DECLAREDATE:desc'; //  公司资产冻结表
+const CNINFO_STOCK_HS_CAPITAL = 'http://webapi.cninfo.com.cn/api/stock/p_stock2215?scode=%s&access_token=%s&state=2'; //  股本结构
 
 /**
  *          巨潮资讯    -   港股
  */
 const CNINFO_STOCK_HK_BALANCE_SHEET = 'http://webapi.cninfo.com.cn/api/hk/p_hk4023?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  资产负债表
-const CNINFO_STOCK_HK_PROFIT_STATEMENT = 'http://webapi.cninfo.com.cn/api/hk/p_hk4024?scode=%s&access_token=%s&@limit=12&@orderby=F001D:desc'; //  利润表
-const CNINFO_STOCK_HK_CASH_FLOW_STATEMENT = 'http://webapi.cninfo.com.cn/api/hk/p_hk4019?scode=%s&access_token=%s&@limit=12&@orderby=F001D:desc'; //  现金流表
-const CNINFO_STOCK_HK_INDICATORS = 'http://webapi.cninfo.com.cn/api/hk/p_hk4025?scode=%s&access_token=%s&@limit=12&@orderby=F069D:desc'; //  指标表
-const CNINFO_STOCK_HK_SHARE_HOLDER_CHANGE = 'http://webapi.cninfo.com.cn/api/hk/p_hk4010?scode=%s&@limit=100&@orderby=F001D:desc&access_token=%s'; //  主要股东股权变动
+const CNINFO_STOCK_HK_PROFIT_STATEMENT = 'http://webapi.cninfo.com.cn/api/hk/p_hk4024?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  利润表
+const CNINFO_STOCK_HK_CASH_FLOW_STATEMENT = 'http://webapi.cninfo.com.cn/api/hk/p_hk4019?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  现金流表
+const CNINFO_STOCK_HK_INDICATORS = 'http://webapi.cninfo.com.cn/api/hk/p_hk4025?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  指标表
+const CNINFO_STOCK_HK_CAPITAL = 'http://webapi.cninfo.com.cn/api/hk/p_hk4045?scode=%s&access_token=%s&@limit=1&@orderby=VARYDATE:desc';  //  股本结构
+const CNINFO_STOCK_HK_SHARE_HOLDER = 'http://webapi.cninfo.com.cn/api/hk/p_hk4042?scode=%s&access_token=%s&@orderby=F003N:desc'; //  股东持股情况
+const CNINFO_STOCK_HK_MAJOR_HOLDER_CHANGE = 'http://webapi.cninfo.com.cn/api/hk/p_hk4010?scode=%s&@limit=100&@orderby=F001D:desc&access_token=%s'; //  主要股东股权变动
+const CNINFO_STOCK_HK_SENIOR_HOLDER_CHANGE = 'http://webapi.cninfo.com.cn/api/hk/p_hk4043?scode=%s&access_token=%s&@limit=10&@orderby=VARYDATE:desc'; //  高管持股变动
+const CNINFO_STOCK_HK_DIVIDENDS = 'http://webapi.cninfo.com.cn/api/hk/p_hk4018?scode=%s&access_token=%s&@limit=10&@orderby=F002D:desc'; //  分红派息
+const CNINFO_STOCK_HK_DIRECTOR_CHANGE = 'http://webapi.cninfo.com.cn/api/hk/p_hk4011?scode=%s&access_token=%s&@limit=100&@orderby=F001D:desc'; //  董事任职变动
+
+/**
+ *          巨潮资讯    -   纳斯达克（NASDAQ）
+ */
+const CNINFO_STOCK_NAS_BALANCE_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_liabilities_NAS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  资产负债表
+const CNINFO_STOCK_NAS_PROFIT_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_income_NAS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  利润表
+const CNINFO_STOCK_NAS_CASH_FLOW_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_cashflow_NAS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  现金流量表
+const CNINFO_STOCK_NAS_INDICATORS = 'http://webapi.cninfo.com.cn/api/oversea/p_mainfinance_NAS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  财务指标
+
+/**
+ *          巨潮资讯    -   纽约交易所
+ */
+const CNINFO_STOCK_NYS_BALANCE_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_liabilities_NYS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  资产负债表
+const CNINFO_STOCK_NYS_PROFIT_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_income_NYS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  利润表
+const CNINFO_STOCK_NYS_CASH_FLOW_SHEET = 'http://webapi.cninfo.com.cn/api/oversea/p_cashflow_NYS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  现金流表
+const CNINFO_STOCK_NYS_INDICATORS = 'http://webapi.cninfo.com.cn/api/oversea/p_mainfinance_NYS?scode=%s&access_token=%s&@limit=12&@orderby=ENDDATE:desc'; //  主要财务指标
 
 /**
  *          聚合数据    -   各大市场的股票列表
@@ -135,20 +169,50 @@ module.exports = {
     CNINFO_STOCK_HS_PROFIT_STATEMENT,
     CNINFO_STOCK_HS_CASH_FLOW_STATEMENT,
     CNINFO_STOCK_HS_INDICATORS,
+    CNINFO_STOCK_HS_SHARE_FREEZING,
     CNINFO_STOCK_HS_SHARE_PLEDGE,
-    CNINFO_STOCK_HS_FLOAT_HOLDER,
+    CNINFO_STOCK_HS_CONTROLLER,
+    CNINFO_STOCK_HS_RESTRICTED,
+    CNINFO_STOCK_HS_TRADABLE_HOLDER,
+    CNINFO_STOCK_HS_SHARE_HOLDER,
+    CNINFO_STOCK_HS_DIVIDENDS,
     CNINFO_STOCK_HS_FUND_SOURCE,
-    CNINFO_STOCK_HS_INVESTMENT,
+    CNINFO_STOCK_HS_FUND_PLAN,
     CNINFO_STOCK_HS_AUDIT,
     CNINFO_STOCK_HS_EXTERNAL_GUARANTEE,
+    CNINFO_STOCK_HS_RELATED_TRANSACTION,
     CNINFO_STOCK_HS_PUNISHMENT,
+    CNINFO_STOCK_HS_ARBITRATION,
+    CNINFO_STOCK_HS_LICENSE,
+    CNINFO_STOCK_HS_INVEST,
+    CNINFO_STOCK_HS_EMPLOYEE,
+    CNINFO_STOCK_HS_ASSETS_FREEZING,
+    CNINFO_STOCK_HS_CAPITAL,
     //  巨潮资讯    -   银行
     CNINFO_STOCK_BANK_BALANCE_SHEET,
     CNINFO_STOCK_BANK_PROFIT_STATEMENT,
     CNINFO_STOCK_BANK_CASH_FLOW_STATEMENT,
     //  巨潮资讯    -   港股
     CNINFO_STOCK_HK_BALANCE_SHEET,
-    CNINFO_STOCK_HK_SHARE_HOLDER_CHANGE,
+    CNINFO_STOCK_HK_PROFIT_STATEMENT,
+    CNINFO_STOCK_HK_CASH_FLOW_STATEMENT,
+    CNINFO_STOCK_HK_INDICATORS,
+    CNINFO_STOCK_HK_CAPITAL,
+    CNINFO_STOCK_HK_SHARE_HOLDER,
+    CNINFO_STOCK_HK_MAJOR_HOLDER_CHANGE,
+    CNINFO_STOCK_HK_SENIOR_HOLDER_CHANGE,
+    CNINFO_STOCK_HK_DIVIDENDS,
+    CNINFO_STOCK_HK_DIRECTOR_CHANGE,
+    //  巨潮资讯    -   纳斯达克（NASDAQ）
+    CNINFO_STOCK_NAS_BALANCE_SHEET,
+    CNINFO_STOCK_NAS_PROFIT_SHEET,
+    CNINFO_STOCK_NAS_CASH_FLOW_SHEET,
+    CNINFO_STOCK_NAS_INDICATORS,
+    //  巨潮资讯    -   纽约交易所
+    CNINFO_STOCK_NYS_BALANCE_SHEET,
+    CNINFO_STOCK_NYS_PROFIT_SHEET,
+    CNINFO_STOCK_NYS_CASH_FLOW_SHEET,
+    CNINFO_STOCK_NYS_INDICATORS,
     //  聚合数据
     JUHE_STOCK_SZ_LIST,
     JUHE_STOCK_SH_LIST,

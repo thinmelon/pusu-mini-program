@@ -2,12 +2,19 @@
 <mp-searchbar bindselectresult="onSearchResultSelected" search="{{search}}"></mp-searchbar>
 
 <!-- 特别关注 -->
-<mp-cells title="特别关注" footer="">
-    <mp-cell link hover wx:for="{{optionals}}" wx:key="code" data-type="general" data-code="{{item.code}}" bindtap="onCellTap">
-        <view>{{item.name}}</view>
-    </mp-cell>
-</mp-cells>
+<view class="guide">
+    <text class="p">特别关注</text>
+</view>
+<view class="bank-list">
+    <view class="tag" wx:for="{{optionals}}" wx:key="code" data-type="general" data-code="{{item.code}}"
+        bindtap="onCellTap">
+        <image mode="aspectFit" src="{{item.icon}}" wx:if="{{item.icon}}"></image>
+        <image src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/default.png" wx:else></image>
+        <text>{{item.name}}</text>
+    </view>
+</view>
 
+<!-- 银行系统 -->
 <view class="guide">
     <text class="p">银行系统</text>
 </view>

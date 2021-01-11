@@ -20,7 +20,8 @@ Page({
             url: "/pages/knowledge/folder/folder?album=清华名师的财务入门课&folder=Finance"
         }],
         methodology: [],
-        cases: []
+        cases: [],
+        macro: []
     },
 
     /**
@@ -33,10 +34,14 @@ Page({
         const cases = config.HIERARCHY.filter(item => {
             return item.subject === "Case"
         })
-
+        const macro = config.HIERARCHY.filter(item => {
+            return item.subject === "Macro"
+        })
+        
         this.setData({
             methodology: methodology[0].articles,
-            cases: cases[0].articles
+            cases: cases[0].articles,
+            macro: macro[0].articles,
         })
     },
 

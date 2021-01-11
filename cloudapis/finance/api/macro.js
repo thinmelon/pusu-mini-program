@@ -182,12 +182,12 @@ async function update(url, collection, factory, options) {
 async function grabFinancingAggregate(request) {
     //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/11/2020111616052956817.htm', {
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/12/2020121416212449196.htm', {
             withCredentials: true,
             headers: {
-                'Cookie': 'wzws_cid=b54cf76189dcde13e3cf51e64f6f7f29a008a9399a65fe222b0eba55a56713c5f5ce8eb6cd17a18f4619ad9218eccd997f266d05ebdaf64e11ede6af82ce082b669d176fdef3aebbfdc2be7252515bb3',
+                'Cookie': 'wzws_cid=ff090a254f80fb65d5c26d5a9be868facf696c231907b68c84ce50a22fb729331df026be39f56dbbadbd1144689fe5d0ef2c71bc971c889edc7319c09666a6acb4665e040bf1297d7fd59e5bed3c5473',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Mobile Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36'
             }
         }
     );

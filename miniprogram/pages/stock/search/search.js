@@ -33,14 +33,14 @@ Page({
     search: function (value) {
         console.log('Search >>> ', value)
         return app.wxp.cloud.callFunction({
-                name: 'search',
-                data: {
-                    action: 'stock',
-                    data: encodeURIComponent(JSON.stringify({
-                        keyword: value
-                    }))
-                }
-            })
+            name: 'search',
+            data: {
+                action: 'stock',
+                data: encodeURIComponent(JSON.stringify({
+                    keyword: value
+                }))
+            }
+        })
             .then(res => {
                 console.log(res)
                 return new Promise((resolve, reject) => {
@@ -65,13 +65,13 @@ Page({
     onSearchResultSelected: function (e) {
         console.log('select result', e.detail)
         wx.navigateTo({
-            url: '/pages/stock/stock?code=' + e.detail.item.value,
+            url: '/pages/stock/index/index?code=' + e.detail.item.value,
         })
     },
 
     onCellTap: function (e) {
         let url = ""
-        e.currentTarget.dataset.type === "general" ? url = `/pages/stock/stock?code=${e.currentTarget.dataset.code}` : url = `/pages/stock/bank/bank?code=${e.currentTarget.dataset.code}`
+        e.currentTarget.dataset.type === "general" ? url = `/pages/stock/index/index?code=${e.currentTarget.dataset.code}` : url = `/pages/stock/bank/bank?code=${e.currentTarget.dataset.code}`
         wx.navigateTo({
             url
         })
@@ -82,11 +82,11 @@ Page({
      */
     getOptionals: function () {
         app.wxp.cloud.callFunction({
-                name: 'search',
-                data: {
-                    action: 'optional'
-                }
-            })
+            name: 'search',
+            data: {
+                action: 'optional'
+            }
+        })
             .then(res => {
                 console.log('getOptionals >>> ', res)
                 if (res.result.data && res.result.data.length > 0) {

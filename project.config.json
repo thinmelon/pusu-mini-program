@@ -10,60 +10,56 @@
         "es6": true,
         "enhance": true,
         "postcss": true,
+        "preloadBackgroundData": false,
         "minified": true,
         "newFeature": true,
+        "coverView": true,
         "nodeModules": true,
         "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
         "scopeDataCheck": false,
         "uglifyFileName": false,
         "checkInvalidKey": true,
         "checkSiteMap": true,
         "uploadWithSourceMap": true,
         "compileHotReLoad": false,
-        "useMultiFrameRuntime": false,
+        "useMultiFrameRuntime": true,
         "useApiHook": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
         },
+        "enableEngineNative": false,
+        "bundle": false,
         "useIsolateContext": true,
         "useCompilerModule": true,
         "userConfirmedUseCompilerModuleSwitch": false,
+        "userConfirmedBundleSwitch": false,
         "packNpmManually": false,
-        "packNpmRelationList": []
+        "packNpmRelationList": [],
+        "minifyWXSS": true,
+        "useApiHostProcess": false
     },
     "compileType": "miniprogram",
-    "libVersion": "2.13.1",
+    "libVersion": "2.14.1",
     "appid": "wx0a72bd7d41e0b066",
-    "projectname": "%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1",
+    "projectname": "%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90",
     "isGameTourist": false,
     "simulatorType": "wechat",
     "simulatorPluginLibVersion": {},
     "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
     "condition": {
-        "search": {
-            "current": -1,
-            "list": []
-        },
-        "conversation": {
-            "current": -1,
-            "list": []
-        },
         "plugin": {
-            "current": -1,
             "list": []
         },
         "game": {
-            "currentL": -1,
             "list": []
         },
         "gamePlugin": {
-            "current": -1,
             "list": []
         },
         "miniprogram": {
-            "current": -1,
             "list": [
                 {
                     "id": 1,
@@ -73,17 +69,9 @@
                     "scene": null
                 },
                 {
-                    "id": 3,
-                    "name": "pages/stock/principle/principle",
-                    "pathName": "pages/stock/principle/principle",
-                    "query": "code=002475",
-                    "scene": null
-                },
-                {
-                    "id": 3,
                     "name": "审核",
                     "pathName": "pages/order/audit/audit",
-                    "query": "_=%7B%22outTradeNo%22%3A%22pEG2AGtx9KJ9mpKm9BdTpif4VgnxTXvM%22%2C%22outRefundNo%22%3A%22cCVzpvsr96ebh6c8tUWOk0OkBEiTDMuD%22%7D",
+                    "query": "_=%7B%22outTradeNo%22%3A%22Q3mJeVAz9b13RUJOXsUHnygFVrWJzxS2%22%2C%22outRefundNo%22%3A%22cCVzpvsr96ebh6c8tUWOk0OkBEiTDMuD%22%7D",
                     "scene": null
                 },
                 {
@@ -94,24 +82,28 @@
                     "scene": null
                 },
                 {
-                    "id": 9,
-                    "name": "全集",
-                    "pathName": "pages/knowledge/folder/folder",
-                    "query": "album=投资必懂的100个经济名词&folder=Economy",
-                    "scene": null
-                },
-                {
-                    "id": 5,
-                    "name": "pages/knowledge/collections/collections",
-                    "pathName": "pages/knowledge/collections/collections",
-                    "query": "code=601398",
-                    "scene": null
-                },
-                {
                     "id": -1,
                     "name": "pages/commodity/commodity",
                     "pathName": "pages/commodity/commodity",
                     "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "知识树",
+                    "pathName": "pages/knowledge/collections/collections",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/stock/index/index",
+                    "pathName": "pages/stock/index/index",
+                    "query": "code=03690",
+                    "scene": null
+                },
+                {
+                    "name": "pages/stock/principle/principle",
+                    "pathName": "pages/stock/principle/principle",
+                    "query": "code=03690&market=HK",
                     "scene": null
                 }
             ]

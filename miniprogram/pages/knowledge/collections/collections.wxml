@@ -20,3 +20,10 @@
 		<view>{{item.title}}</view>
 	</mp-cell>
 </mp-cells>
+
+<!--    宏观调控   -->
+<mp-cells title="宏观调控" footer="">
+	<mp-cell link hover wx:for="{{macro}}" wx:key="title" data-subject="Macro" data-title="{{item.title}}" bindtap="onCellTap">
+		<view>{{item.title}}</view>
+	</mp-cell>
+</mp-cells>

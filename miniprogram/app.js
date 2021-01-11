@@ -4,9 +4,6 @@ import {
     promisify
 } from 'miniprogram-api-promise';
 
-const WX_API_PROMISE = require('./utils/wx.api.promise.js');
-const QQ_MAP_WX_JSSDK = require('./lib/qqmap-wx-jssdk.min.js'); // 引入QQ MAP SDK核心类
-
 App({
     /**
      * 系统设置
@@ -46,52 +43,5 @@ App({
 
     getRandomColor: function () {
         return "#" + ("00000" + ((Math.random() * 16777215 + 0.5) >> 0).toString(16)).slice(-6);
-    },
-
-    /**
-     * 	由坐标到坐标所在位置的文字描述的转换
-     * 	输入坐标返回地理位置信息和附近poi列表
-     */
-    reverseGeocoder: function (options) {
-        let qqMapInstance = new QQ_MAP_WX_JSSDK({ // 实例化API核心类
-            key: 'MWXBZ-GUH6V-3M6P3-U75XD-TMEQH-HZB4U'
-        });
-        const that = this;
-        return new Promise((resolve, reject) => {
-            options.success = function (result) {
-                console.log('reverseGeocoder	>>>	', result)
-                if (result.status === 0 && result.message === "query ok") {
-                    let target = result.result.ad_info.city.substr(0, result.result.ad_info.city.indexOf('市'));
-                    let found = false;
-                    that.cities.map(city => {
-                        if (city === target) {
-                            found = true;
-                        }
-                    })
-
-                    if (found && that.region !== target) { //  检测所在城市与当前位置不一致，提示用户是否切换
-                        WX_API_PROMISE.showModal({
-                                title: "提示",
-                                content: "检测当前所在城市是" + target + "，是否切换？"
-                            })
-                            .then(res => {
-                                if (res.confirm) {
-                                    that.region = target;
-                                }
-                                resolve(res.confirm); //  需要等待用户确定操作
-                            });
-                    } else {
-                        resolve(true); //  一致则直接返回结果
-                    }
-                } else {
-                    reject(false);
-                }
-            }
-            options.fail = function (reason) {
-                console.error(reason)
-                reject(false);
-            }
-            qqMapInstance.reverseGeocoder(options);
-        });
     }
 })

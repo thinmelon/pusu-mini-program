@@ -1,0 +1,241 @@
+<!--pages/stock/index/index.wxml-->
+<wxs src="./../../../utils/math.wxs" module="Math" />
+
+<view class="guide">
+    <view class="head">
+        <text class="headline">{{stock.name}}</text>
+        <mp-icon type="{{stock.follow ? 'field':'outline'}}" icon="star" color="gold" size="{{25}}"
+            bindtap="onFollowTap"></mp-icon>
+        <!-- <mp-icon type="outline" icon="note" size="{{25}}" bindtap="onNoteTap"></mp-icon> -->
+        <!-- <mp-icon type="outline" icon="comment" size="{{25}}" bindtap="onCommentTap"></mp-icon> -->
+    </view>
+</view>
+
+<!--                    数据同步                    -->
+
+<mp-cells title="数据同步" footer="">
+    <mp-cell value="公司概况" footer="更新" data-op="basic" bindtap="onSyncCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_basic.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+    <mp-cell value="财务报表" footer="更新" data-op="refresh" bindtap="onSyncCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_report.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+    <mp-cell value="股本股东" footer="更新" data-op="shareholder" bindtap="onSyncCellTap">
+        <image slot="icon"
+            src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_guquanchuzhi.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+    <mp-cell value="分红募资" footer="更新" data-op="fund" bindtap="onSyncCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_muji.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+    <mp-cell value="重大事项" footer="更新" data-op="issue" bindtap="onSyncCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_zengfa.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+</mp-cells>
+
+<!--                    基本面                    -->
+
+<mp-cells title="基本面" footer="">
+    <mp-cell value="财报阅读" hover link data-op="fundamentals" bindtap="onBasicCellTap">
+        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_read.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+</mp-cells>
+
+<!--                    评分                    -->
+
+<view class="guide">
+    <view class="wrapper">
+        <view class="score">
+            <text class="important">{{Math.toFixed(buy)}}</text>
+            <text class="p">买入分</text>
+        </view>
+        <view class="score">
+            <text class="important">{{Math.toFixed(sell)}}</text>
+            <text class="p">卖出分</text>
+        </view>
+    </view>
+</view>
+
+<!--                    对比公司                    -->
+
+<mp-cells title="" footer="">
+    <mp-cell title="比较">
+        <input bindinput="onInput" data-field="peer" class="weui-input field-input" placeholder="请输入公司代码"
+            value="{{peerCode}}" />
+    </mp-cell>
+</mp-cells>
+<view class="weui-btn-area">
+    <button class="weui-btn" type="warn" bindtap="onCommentTap">开始评分</button>
+</view>
+
+<!--                    公司概况                    -->
+
+<!--                    员工情况                    -->
+<view class="guide" wx:if="{{stock.employee}}">
+    <view class="head">
+        <text class="headline"> 员工总数：{{stock.employee[0].STAFFNUM}} 人</text>
+    </view>
+</view>
+
+<canvas canvas-id="EmployeeDegreeRing" disable-scroll="false" class="canvas" data-id="EmployeeDegreeRing"
+    bindtouchstart="onCanvasTouched" wx:if="{{stock.employee}}"></canvas>
+<canvas canvas-id="EmployeeTypeRing" disable-scroll="false" class="canvas" data-id="EmployeeTypeRing"
+    bindtouchstart="onCanvasTouched" wx:if="{{stock.employee}}"></canvas>
+
+<!--                    股本结构                    -->
+<view class="guide" wx:if="{{stock.capital}}">
+    <view class="head" wx:if="{{stock.market === 'HK'}}">
+        <text class="headline"> 总股本：{{Math.toFixed(stock.capital[0].F002N/100000000)}}亿股 </text>
+    </view>
+    <view class="head" wx:else>
+        <text class="headline"> 总股本：{{stock.capital[0].F003N}} 万股</text>
+    </view>
+</view>
+<!--                    沪深市场                    -->
+<canvas canvas-id="CapitalStructureRing" disable-scroll="false" class="canvas" data-id="CapitalStructureRing"
+    bindtouchstart="onCanvasTouched" wx:if="{{stock.capital && (stock.market==='SZ' || stock.market==='SH')}}"></canvas>
+<!--                    香港市场                    -->
+<canvas canvas-id="HKCapitalStructurePie" disable-scroll="false" class="canvas" data-id="HKCapitalStructurePie"
+    bindtouchstart="onCanvasTouched" wx:if="{{stock.capital && (stock.market==='HK')}}"></canvas>
+
+<!--                    十大股东持股情况                    -->
+
+<!--                    沪深市场                    -->
+<mp-cells title="十大股东占总股本比例" footer="" wx:if="{{stock.holder && (stock.market==='SZ' || stock.market==='SH')}}">
+    <mp-cell hover wx:for="{{stock.holder}}" wx:key="F001N">
+        <view class="brief">{{item.F001N}}. [{{item.F004V}}] {{item.F002V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F006N)}}%</view>
+    </mp-cell>
+</mp-cells>
+<!--                    香港市场                    -->
+<mp-cells title="股东持股资料表（单位：亿股）" footer="" wx:if="{{stock.holder && (stock.market==='HK')}}">
+    <mp-cell hover wx:for="{{stock.holder}}" wx:key="F001V">
+        <view class="brief">{{item.F001V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F002N/100000000)}} ({{item.F003N}}%)</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    十大流通股东持股情况                    -->
+
+<mp-cells title="十大流通股东占流通股本比例" footer="" wx:if="{{stock.tradable}}">
+    <mp-cell hover wx:for="{{stock.tradable}}" wx:key="F001N">
+        <view class="brief">{{item.F001N}}. [{{item.F004V}}] {{item.F003V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F007N)}}%</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    受限股份流通上市日期                    -->
+
+<mp-cells title="受限股份流通上市时间表" footer="" wx:if="{{stock.restricted}}">
+    <mp-cell hover wx:for="{{stock.restricted}}" wx:key="DECLAREDATE">
+        <view class="brief">[{{item.F001V}}] 限售原因：{{item.F004V}} 预计解除限售日期： {{item.F002D}} </view>
+        <view slot="footer">{{Math.toFixed(item.F003N/10000)}}万股</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    主要股东股权变动（香港市场）                    -->
+
+<mp-cells title="主要股东股权变动（单位：万股）" footer="" wx:if="{{stock.change}}">
+    <mp-cell hover wx:for="{{stock.change}}" wx:key="F001D" wx:if="{{index < 10}}">
+        <view class="brief">【{{item.F001D}}】 {{item.F003V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F005N/10000)}} ({{item.F007N}}%)</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    对外投资                    -->
+
+<mp-cells title="对外投资企业投资占比" footer="" wx:if="{{stock.invest && stock.invest.length > 0}}">
+    <mp-cell hover wx:for="{{stock.invest}}" wx:key="F001V">
+        <view class="brief">{{item.F001V}} (法人代表：{{item.F003V}} 注册时间：{{item.F006D}}) </view>
+        <view slot="footer">{{item.F004N}}%</view>
+    </mp-cell>
+</mp-cells>
+<view class="guide" wx:else>
+    <view class="head">
+        <text class="headline"> 无对外投资记录</text>
+    </view>
+</view>
+
+<!--                    对外担保                    -->
+
+<mp-cells title="对外担保企业授信额度" footer="" wx:if="{{stock.guarantee && stock.guarantee.length > 0}}">
+    <mp-cell hover wx:for="{{stock.guarantee}}" wx:key="DECLAREDATE">
+        <view class="brief">{{item.F005D ? '[' + item.F005D + '] ' : ''}} {{item.F002V}} (
+            {{item.F012N ? '担保期限：' + item.F012N + '月 ': ''}}{{item.F008V ? '关联关系：' + item.F008V : ''}} )</view>
+        <view slot="footer">{{Math.toFixed(item.F009N/100000000)}}亿</view>
+    </mp-cell>
+</mp-cells>
+<view class="guide" wx:else>
+    <view class="head">
+        <text class="headline"> 无对外担保记录</text>
+    </view>
+</view>
+
+<!--                    资产冻结                    -->
+
+<mp-cells title="冻结资产" footer="" wx:if="{{stock.freezingAssets && stock.freezingAssets.length > 0}}">
+    <mp-cell hover wx:for="{{stock.freezingAssets}}" wx:key="DECLAREDATE">
+        <view class="brief">【{{item.F001V}}】{{item.F004V}}</view>
+        <view slot="footer">{{item.F005N ? Math.toFixed(item.F005N/10000) + '万元' : ''}}</view>
+    </mp-cell>
+</mp-cells>
+<view class="guide" wx:else>
+    <view class="head">
+        <text class="headline"> 无冻结资产</text>
+    </view>
+</view>
+
+<!--                    股份冻结                    -->
+
+<mp-cells title="冻结股份占总股本比例" footer="" wx:if="{{stock.freezingShare && stock.freezingShare.length > 0}}">
+    <mp-cell hover wx:for="{{stock.freezingShare}}" wx:key="DECLAREDATE">
+        <view class="brief">{{item.F009V}}</view>
+        <view slot="footer">{{Math.toFixed(item.F006N)}}%</view>
+    </mp-cell>
+</mp-cells>
+<view class="guide" wx:else>
+    <view class="head">
+        <text class="headline"> 无冻结股份</text>
+    </view>
+</view>
+
+<!--                    行政许可                    -->
+
+<mp-cells title="行政许可" footer="" wx:if="{{stock.license && stock.license.length > 0}}">
+    <mp-cell hover wx:for="{{stock.license}}" wx:key="F001V">
+        <view class="brief">{{item.F004V}}【有效期：{{item.F002D}} ~ {{item.F003D}}】</view>
+        <view slot="footer">{{item.F007V}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    分红转增                    -->
+
+<!--                    沪深市场                    -->
+<mp-cells title="分红转增方案" footer="" 
+    wx:if="{{stock.dividends && stock.dividends.length > 0 && (stock.market==='SZ' || stock.market==='SH')}}">
+    <mp-cell hover wx:for="{{stock.dividends}}" wx:key="F001D">
+        <view class="brief">【{{item.F001D}}】{{item.F007V}}（{{item.F015N ? '送股：' + item.F015N + '万股 ' : ''}}
+            {{item.F016N ? '转增：' + item.F016N + '万股 ' : ''}} {{item.F017N ? '派息：' + item.F017N + '万元 ' : ''}}）</view>
+        <view slot="footer">{{item.F044V}}</view>
+    </mp-cell>
+</mp-cells>
+<!--                    香港市场                    -->
+<mp-cells title="分红派息方案" footer="" wx:if="{{stock.dividends && stock.dividends.length > 0 && (stock.market==='HK')}}">
+    <mp-cell hover wx:for="{{stock.dividends}}" wx:key="F001D">
+        <view class="brief">【{{item.F001D}}】{{item.F004V}}</view>
+        <view slot="footer">{{item.F010N ? Math.toFixed(item.F010N/100000000) + '亿' : ''}}</view>
+    </mp-cell>
+</mp-cells>
+
+<!--                    董事任职变动                    -->
+<!-- <mp-cells title="董事任职变动" footer="" wx:if="{{stock.director && stock.director.length > 0 && (stock.market==='HK')}}">
+    <mp-cell hover wx:for="{{stock.director}}" wx:key="F001D">
+        <view class="brief">【{{item.F001D}}】{{item.F003V}}</view>
+        <view slot="footer">{{item.F005V}}</view>
+    </mp-cell>
+</mp-cells> -->

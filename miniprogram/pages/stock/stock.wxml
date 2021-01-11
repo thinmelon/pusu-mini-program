@@ -1,113 +1,140 @@
 <!--pages/stock/stock.wxml-->
 <wxs src="./../../utils/math.wxs" module="Math" />
 
-<view class="guide">
-    <view class="head">
-        <text class="headline">{{stock.name}}</text>
-        <mp-icon type="{{stock.follow ? 'field':'outline'}}" icon="star" color="gold" size="{{25}}"
-            bindtap="onFollowTap"></mp-icon>
-        <!-- <mp-icon type="outline" icon="note" size="{{25}}" bindtap="onNoteTap"></mp-icon> -->
-        <!-- <mp-icon type="outline" icon="comment" size="{{25}}" bindtap="onCommentTap"></mp-icon> -->
-    </view>
-</view>
-
-<!--                    刷新数据                    -->
-
-<mp-cells title="" footer="">
-    <mp-cell value="财务报表" footer="更新" data-op="refresh" bindtap="onRefreshCellTap">
-        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_report.png"
-            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
-    </mp-cell>
-    <mp-cell value="股本股东" footer="更新" data-op="shareholder" bindtap="onRefreshCellTap">
-        <image slot="icon"
-            src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_guquanchuzhi.png"
-            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
-    </mp-cell>
-    <mp-cell value="分红募资" footer="更新" data-op="fund" bindtap="onRefreshCellTap">
-        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_muji.png"
-            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
-    </mp-cell>
-    <mp-cell value="重大事项" footer="更新" data-op="issue" bindtap="onRefreshCellTap">
-        <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_zengfa.png"
-            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
-    </mp-cell>
-</mp-cells>
-
-<!--                    评分                    -->
-
-<view class="guide">
-    <view class="wrapper">
-        <view class="score">
-            <text class="important">{{Math.toFixed(buy)}}</text>
-            <text class="p">买入分</text>
-        </view>
-        <view class="score">
-            <text class="important">{{Math.toFixed(sell)}}</text>
-            <text class="p">卖出分</text>
-        </view>
-    </view>
-</view>
-
-<!--                    对比公司                    -->
-
-<mp-cells title="" footer="">
-    <mp-cell title="对比公司">
-        <input bindinput="onInput" data-field="peer" class="weui-input field-input" placeholder="请输入公司代码"
-            value="{{peerCode}}" />
-    </mp-cell>
-</mp-cells>
-<view class="weui-btn-area">
-    <button class="weui-btn" type="warn" bindtap="onCommentTap">开始评分</button>
-</view>
-
-<!--                    交易日记                    -->
-
-<!-- <mp-cells title="交易心得" footer="" wx:if="{{notes.length > 0}}">
-    <mp-cell wx:for="{{notes}}" wx:key="_id" hover link value="{{item.addTime}}" data-_id="{{item._id}}" bindtap="onNoteCellTap">
-        <view slot="footer">{{item.type === 0 ? '交易': '心得'}}</view>
-    </mp-cell>
-</mp-cells> -->
-
-<!--                    股份质押                    -->
-
-<mp-cells title="股份质押（单位：万股）" footer="最多显示5项" wx:if="{{stock.pledge.length > 0}}">
-    <mp-cell wx:for="{{stock.pledge}}" wx:key="F008V" hover value="{{item.F009D}}" wx:if="{{index < 5}}">
-        <view slot="footer">{{Math.toFixed(item.F006N/10000)}}（{{item.F007N}}%）</view>
-    </mp-cell>
-</mp-cells>
-
 <!--                    各项指标                    -->
 
 <view class="guide" wx:if="{{stock.market==='SZ' || stock.market==='SH'}}">
-    <text class="headline">指标 - {{stock.indicators.F069D}}</text>
+    <text class="headline">重要指标 - {{stock.indicators.F069D}}</text>
     <view class="div-line"></view>
     <text class="p" wx:if="{{stock.indicators.F014N}}">净资产收益率：{{Math.toFixed(stock.indicators.F014N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F066N}}">净资产收益率（扣除非经常性损益）：{{Math.toFixed(stock.indicators.F066N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F067N}}">净资产收益率 - 加权：{{Math.toFixed(stock.indicators.F067N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F068N}}">净资产收益率 -
+        加权（扣除非经常性损益）：{{Math.toFixed(stock.indicators.F068N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F015N}}">投资收益率：{{Math.toFixed(stock.indicators.F015N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F066N}}">总资产报酬率：{{Math.toFixed(stock.indicators.F016N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F078N}}">毛利率：{{Math.toFixed(stock.indicators.F078N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F017N}}">净利润率：{{Math.toFixed(stock.indicators.F017N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F018N}}">管理费用率：{{Math.toFixed(stock.indicators.F018N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F019N}}">财务费用率：{{Math.toFixed(stock.indicators.F019N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F021N}}">三费比重：{{Math.toFixed(stock.indicators.F021N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F088N}}">费用毛利比：{{Math.toFixed(stock.indicators.F088N)}}</text>
     <text class="p" wx:if="{{stock.indicators.F027N}}">应收账款周转天数：{{stock.indicators.F027N}}天</text>
     <text class="p" wx:if="{{stock.indicators.F028N}}">存货周转天数：{{stock.indicators.F028N}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F026N}}">固定资产周转天数：{{Math.toFixed(360/stock.indicators.F026N)}}天</text>
     <text class="p" wx:if="{{stock.indicators.F030N}}">流动资产周转天数：{{stock.indicators.F030N}}天</text>
     <text class="p" wx:if="{{stock.indicators.F031N}}">总资产周转天数：{{stock.indicators.F031N}}天</text>
-    <text class="p" wx:if="{{stock.indicators.F033N}}">流动资产比率：{{Math.toFixed(stock.indicators.F033N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F034N}}">货币资金比率：{{Math.toFixed(stock.indicators.F034N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F033N}}">流动资产比率：{{Math.toFixed(stock.indicators.F033N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F035N}}">交易性金融资产比率：{{Math.toFixed(stock.indicators.F035N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F036N}}">存货比率：{{Math.toFixed(stock.indicators.F036N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F048N}}">流动负债比率：{{Math.toFixed(stock.indicators.F048N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F047N}}">非流动负债比率：{{Math.toFixed(stock.indicators.F047N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F041N}}">资产负债比率：{{Math.toFixed(stock.indicators.F041N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F042N}}">流动比率：{{Math.toFixed(stock.indicators.F042N)}}</text>
     <text class="p" wx:if="{{stock.indicators.F043N}}">速动比率：{{Math.toFixed(stock.indicators.F043N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F044N}}">现金比率：{{Math.toFixed(stock.indicators.F044N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F045N}}">利息保障倍数：{{Math.toFixed(stock.indicators.F045N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F050N}}">现金到期债务比率：{{Math.toFixed(stock.indicators.F050N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F051N}}">有形资产净值债务率：{{Math.toFixed(stock.indicators.F051N)}}</text>
     <text class="p" wx:if="{{stock.indicators.F052N}}">营业收入增长率：{{Math.toFixed(stock.indicators.F052N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F058N}}">营业利润增长率：{{Math.toFixed(stock.indicators.F058N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F053N}}">净利润增长率：{{Math.toFixed(stock.indicators.F053N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F054N}}">净资产增长率：{{Math.toFixed(stock.indicators.F054N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F055N}}">固定资产增长率：{{Math.toFixed(stock.indicators.F055N)}}%</text>
     <text class="p" wx:if="{{stock.indicators.F056N}}">总资产增长率：{{Math.toFixed(stock.indicators.F056N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F084N}}">期间费用增长率：{{Math.toFixed(stock.indicators.F084N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F061N}}">经营净现金比率（短期债务）：{{Math.toFixed(stock.indicators.F061N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F062N}}">经营净现金比率（全部债务）：{{Math.toFixed(stock.indicators.F062N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F082N}}">净利含金量：{{Math.toFixed(stock.indicators.F082N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F064N}}">营业收入现金含量：{{Math.toFixed(stock.indicators.F064N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F065N}}">全部资产现金回收率：{{Math.toFixed(stock.indicators.F065N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F080N}}">现金转换周期：{{stock.indicators.F080N}}天</text>
+    <text class="p"
+        wx:if="{{stock.indicators.F089N}}">毛利润：{{Math.toFixed((stock.indicators.F089N - stock.indicators.F090N)/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F097N}}">营业利润：{{Math.toFixed(stock.indicators.F097N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F100N}}">利润总额：{{Math.toFixed(stock.indicators.F100N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F101N}}">净利润：{{Math.toFixed(stock.indicators.F101N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F085N}}">EBIT：{{Math.toFixed(stock.indicators.F085N/100000000)}}亿</text>
+    <text class="p"
+        wx:if="{{stock.indicators.F105N}}">经营活动现金流量净额：{{Math.toFixed(stock.indicators.F105N/100000000)}}亿</text>
+    <view class="div-line"></view>
+</view>
+
+<view class="guide" wx:if="{{stock.market==='HK'}}">
+    <text class="headline">财务指标（{{stock.balance.ENDDATE}}{{stock.balance.F001V}}）</text>
+    <view class="div-line"></view>
+    <text class="p" wx:if="{{stock.indicators.F007N}}">总资产：{{Math.toFixed(stock.indicators.F007N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F008N}}">非流动资产：{{Math.toFixed(stock.indicators.F008N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F009N}}">流动资产：{{Math.toFixed(stock.indicators.F009N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F011N}}">非流动负债：{{Math.toFixed(stock.indicators.F011N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F010N}}">流动负债：{{Math.toFixed(stock.indicators.F010N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F012N}}">总负债：{{Math.toFixed(stock.indicators.F012N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F013N}}">少数股东权益：{{Math.toFixed(stock.indicators.F013N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F014N}}">股东权益：{{Math.toFixed(stock.indicators.F014N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F085N}}">存货占比：{{Math.toFixed(stock.indicators.F085N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F017N}}">营业额（银行经营收入）：{{Math.toFixed(stock.indicators.F017N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F018N}}">经营溢利：{{Math.toFixed(stock.indicators.F018N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F019N}}">非经常性项目收益：{{Math.toFixed(stock.indicators.F019N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F020N}}">融资成本（财务费用）：{{Math.toFixed(stock.indicators.F020N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F021N}}">应占联营公司溢利：{{Math.toFixed(stock.indicators.F021N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F022N}}">除税前经营溢利（亏损）：{{Math.toFixed(stock.indicators.F022N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F023N}}">税项：{{Math.toFixed(stock.indicators.F023N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F024N}}">除税后经营溢利（亏损）：{{Math.toFixed(stock.indicators.F024N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F025N}}">少数股本损益：{{Math.toFixed(stock.indicators.F025N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F026N}}">经调整股东应占溢利：{{Math.toFixed(stock.indicators.F026N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F027N}}">相对上期增减：{{Math.toFixed(stock.indicators.F027N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F028N}}">股息总额：{{Math.toFixed(stock.indicators.F028N/100000000)}}亿元</text>
+    <text class="p" wx:if="{{stock.indicators.F029N}}">扣除非经常性项目后溢利：{{Math.toFixed(stock.indicators.F029N/100000000)}}亿元</text>
+    <!-- <text class="p" wx:if="{{stock.indicators.F046N}}">资产负债率：{{Math.toFixed(stock.indicators.F046N)}}%</text> -->
+    <text class="p" wx:if="{{stock.indicators.F083N}}">利息保障倍数：{{Math.toFixed(stock.indicators.F083N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F047N}}">有形资产负债率：{{Math.toFixed(stock.indicators.F047N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F048N}}">长期负债比率：{{Math.toFixed(stock.indicators.F048N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F041N}}">总资产报酬率：{{Math.toFixed(stock.indicators.F041N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F042N}}">权益报酬率：{{Math.toFixed(stock.indicators.F042N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F043N}}">流动比率：{{Math.toFixed(stock.indicators.F043N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F044N}}">速动比率：{{Math.toFixed(stock.indicators.F044N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F045N}}">现金与流动资产比率：{{Math.toFixed(stock.indicators.F045N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F062N}}">现金与流动负债比率：{{Math.toFixed(stock.indicators.F062N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F051N}}">应收帐款周转天数：{{Math.toFixed(360/stock.indicators.F051N)}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F052N}}">存货周转天数：{{Math.toFixed(360/stock.indicators.F052N)}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F050N}}">流动资产周转天数：{{Math.toFixed(360/stock.indicators.F050N)}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F079N}}">固定资产周转天数：{{Math.toFixed(360/stock.indicators.F079N)}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F049N}}">总资产周转天数：{{Math.toFixed(360/stock.indicators.F049N)}}天</text>
+    <text class="p" wx:if="{{stock.indicators.F071N}}">毛利润：{{Math.toFixed(stock.indicators.F071N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F018N}}">经营利润：{{Math.toFixed(stock.indicators.F018N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F053N}}">EBIT：{{Math.toFixed(stock.indicators.F053N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F054N}}">EBITD：{{Math.toFixed(stock.indicators.F054N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F055N}}">EBITDA：{{Math.toFixed(stock.indicators.F055N/100000000)}}亿</text>
+    <text class="p" wx:if="{{stock.indicators.F037N}}">毛利率：{{Math.toFixed(stock.indicators.F037N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F057N}}">息税折旧摊销前利润率：{{Math.toFixed(stock.indicators.F057N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F056N}}">息税折旧前利润率：{{Math.toFixed(stock.indicators.F056N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F038N}}">税前利润率：{{Math.toFixed(stock.indicators.F038N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F039N}}">销售净利率：{{Math.toFixed(stock.indicators.F039N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F058N}}">长期负债权益比率：{{Math.toFixed(stock.indicators.F058N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F059N}}">营业费用比例：{{Math.toFixed(stock.indicators.F059N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F060N}}">管理费用比例：{{Math.toFixed(stock.indicators.F060N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F061N}}">财务费用比例：{{Math.toFixed(stock.indicators.F061N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F063N}}">非经常性损益率：{{Math.toFixed(stock.indicators.F063N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F064N}}">短期负债现金保障率：{{Math.toFixed(stock.indicators.F064N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F065N}}">销售现金比率：{{Math.toFixed(stock.indicators.F065N)}}</text>
+    <text class="p" wx:if="{{stock.indicators.F066N}}">全部资产现金回收率：{{Math.toFixed(stock.indicators.F066N)}}</text>
+    <!-- <text class="p" wx:if="{{stock.indicators.F067N}}">经营现金净流量与净利润的比率：{{Math.toFixed(stock.indicators.F067N)}}</text> -->
+    <text class="p" wx:if="{{stock.indicators.F086N}}">股东权益增长率：{{Math.toFixed(stock.indicators.F086N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F087N}}">总负债增长率：{{Math.toFixed(stock.indicators.F087N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F088N}}">营业利润增长率：{{Math.toFixed(stock.indicators.F088N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F089N}}">固定资产增长率：{{Math.toFixed(stock.indicators.F089N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F090N}}">总资产增长率：{{Math.toFixed(stock.indicators.F090N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F091N}}">毛利润增长率：{{Math.toFixed(stock.indicators.F091N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F092N}}">营业收入增长率：{{Math.toFixed(stock.indicators.F092N)}}%</text>
+    <text class="p" wx:if="{{stock.indicators.F093N}}">净利润增长率：{{Math.toFixed(stock.indicators.F093N)}}%</text>
     <view class="div-line"></view>
 </view>
 
 <!--                    资产负债表                    -->
 
-<mp-cells title="资产负债表（{{stock.balance.F003V}}） - {{stock.balance.F001D}}" footer="单位：亿元">
+<mp-cells title="资产负债表（{{stock.balance.F003V}}） - {{stock.balance.F001D}}" footer="单位：亿元"
+    wx:if="{{stock.market==='SZ' || stock.market==='SH'}}">
     <mp-cell wx:if="{{stock.balance.F006N}}" hover value="货币资金">
         <view slot="footer">
             {{Math.toFixed(stock.balance.F006N/100000000)}}（{{Math.toFixed(stock.balance.F006N/stock.balance.F038N*100)}}%）
@@ -523,9 +550,100 @@
     </mp-cell>
 </mp-cells>
 
+<!--                    资产负债表（香港市场）                    -->
+
+<mp-cells title="资产负债表（{{stock.balance.ENDDATE}}{{stock.balance.F001V}}）" footer="" wx:if="{{stock.market==='HK'}}">
+    <mp-cell wx:if="{{stock.balance.F005N}}" hover value="固定资产">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F005N/100000000)}}（{{Math.toFixed(stock.balance.F005N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F006N}}" hover value="投资">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F006N/100000000)}}（{{Math.toFixed(stock.balance.F006N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F007N}}" hover value="其他非流动资产">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F007N/100000000)}}（{{Math.toFixed(stock.balance.F007N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F008N}}" hover value="非流动资产总值">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F008N/100000000)}}（{{Math.toFixed(stock.balance.F008N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F010N}}" hover value="存货">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F010N/100000000)}}（{{Math.toFixed(stock.balance.F010N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F011N}}" hover value="现金及银行结存">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F011N/100000000)}}（{{Math.toFixed(stock.balance.F011N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F009N}}" hover value="流动资产总值">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F009N/100000000)}}（{{Math.toFixed(stock.balance.F009N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F012N}}" hover>
+        <view class="important">总资产</view>
+        <view slot="footer">{{Math.toFixed(stock.balance.F012N/100000000)}}</view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F013N}}" hover value="短期债项">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F013N/100000000)}}（{{Math.toFixed(stock.balance.F013N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F014N}}" hover value="流动负债总值">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F014N/100000000)}}（{{Math.toFixed(stock.balance.F014N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F015N}}" hover value="长期债项">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F015N/100000000)}}（{{Math.toFixed(stock.balance.F015N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F016N}}" hover value="其他非流动负债及少数股东权益">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F016N/100000000)}}（{{Math.toFixed(stock.balance.F016N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F017N}}" hover value="总债项">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F017N/100000000)}}（{{Math.toFixed(stock.balance.F017N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F018N}}" hover value="股本">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F018N/100000000)}}（{{Math.toFixed(stock.balance.F018N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F019N}}" hover value="储备">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F019N/100000000)}}（{{Math.toFixed(stock.balance.F019N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F020N}}" hover>
+        <view class="important">股东权益</view>
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F020N/100000000)}}（{{Math.toFixed(stock.balance.F020N/stock.balance.F012N*100)}}%）
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.balance.F022N}}" hover value="营运资金">
+        <view slot="footer">
+            {{Math.toFixed(stock.balance.F022N/100000000)}}
+        </view>
+    </mp-cell>
+</mp-cells>
+
 <!--                    利润表                    -->
 
-<mp-cells title="利润表（{{stock.profit.F003V}}） - {{stock.profit.F001D}}" footer="单位：亿元">
+<mp-cells title="利润表（{{stock.profit.F003V}}） - {{stock.profit.F001D}}" footer="单位：亿元"
+    wx:if="{{stock.market==='SZ' || stock.market==='SH'}}">
     <mp-cell wx:if="{{stock.profit.F035N}}" hover>
         <view class="important">一、营业总收入</view>
         <view slot="footer">{{Math.toFixed(stock.profit.F035N/100000000)}}</view>
@@ -646,9 +764,115 @@
     </mp-cell>
 </mp-cells>
 
+<!--                    综合损益表（香港市场）                    -->
+
+<mp-cells title="综合损益表（{{stock.profit.ENDDATE}}{{stock.profit.F001V}}）" footer="" wx:if="{{stock.market==='HK'}}">
+    <mp-cell wx:if="{{stock.profit.F005N}}" hover value="营业额">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F005N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F006N}}" hover value="经营溢利">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F006N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F007N}}" hover value="特殊项目">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F007N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F008N}}" hover value="联营公司">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F008N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F009N}}" hover value="除税前经营溢利">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F009N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F010N}}" hover value="税项">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F010N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F011N}}" hover value="少数股东损益">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F011N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F012N}}" hover value="经调整股东应占溢利">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F012N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F013N}}" hover value="折旧">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F013N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F014N}}" hover value="贷款利息">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F014N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F015N}}" hover value="利息拨作发展资本">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F015N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F016N}}" hover value="营业额增长">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F016N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F017N}}" hover value="经调整股东应占溢利增长">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F017N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F018N}}" hover value="税率">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F018N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F019N}}" hover value="每股盈利（港元）">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F019N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F030N}}" hover value="经营开支总额">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F030N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F031N}}" hover value="销售及分销成本">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F031N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F032N}}" hover value="行政费用">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F032N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F033N}}" hover value="财务成本">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F033N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.profit.F034N}}" hover value="每股资产净值(经调整)">
+        <view slot="footer">
+            {{Math.toFixed(stock.profit.F034N/100000000)}}
+        </view>
+    </mp-cell>
+</mp-cells>
+
 <!--                    现金流量表                    -->
 
-<mp-cells title="现金流量表（{{stock.cashflow.F003V}}） - {{stock.cashflow.F001D}}" footer="单位：亿元">
+<mp-cells title="现金流量表（{{stock.cashflow.F003V}}） - {{stock.cashflow.F001D}}" footer="单位：亿元"
+    wx:if="{{stock.market==='SZ' || stock.market==='SH'}}">
     <mp-cell wx:if="{{stock.cashflow.F006N}}" hover value="销售商品、提供劳务收到的现金">
         <view slot="footer">
             {{Math.toFixed(stock.cashflow.F006N/100000000)}}（{{Math.toFixed(stock.cashflow.F006N/stock.cashflow.F009N*100)}}%）
@@ -818,20 +1042,161 @@
     </mp-cell>
 </mp-cells>
 
-<!--                    十大流通股东持股情况                    -->
 
-<mp-cells title="十大流通股东持股情况" footer="占总股本比例 单位：%" wx:if="{{stock.holder}}">
-    <mp-cell hover wx:for="{{stock.holder}}" wx:key="F001N">
-        <view class="brief">{{item.F001N}} {{item.F003V}}</view>
-        <view slot="footer">{{item.F006N}}</view>
+<mp-cells title="现金流量表（{{stock.cashflow.ENDDATE}}{{stock.cashflow.F001V}}）" footer="" wx:if="{{stock.market==='HK'}}">
+    <mp-cell wx:if="{{stock.cashflow.F034N}}" hover value="经营活动产生的现金流量净额(报告)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F034N/100000000)}}
+        </view>
     </mp-cell>
-</mp-cells>
-
-<!--                    主要股东股权变动                    -->
-
-<mp-cells title="主要股东股权变动（单位：亿股）" footer="" wx:if="{{stock.change}}">
-    <mp-cell hover wx:for="{{stock.change}}" wx:key="F001D">
-        <view class="brief">{{item.F001D}} {{item.F003V}}</view>
-        <view slot="footer">{{Math.toFixed(item.F005N/100000000)}} ({{Math.toFixed(item.F006N/100000000)}})</view>
+    <mp-cell wx:if="{{stock.cashflow.F035N}}" hover value="投资活动产生的现金流量净额(报告)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F035N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F036N}}" hover value="融资活动产生的现金流量净额(报告)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F036N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F005N}}" hover value="经营活动之现金流量">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F005N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F006N}}" hover value="已收利息">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F006N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F007N}}" hover value="已付利息">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F007N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F008N}}" hover value="已收股息">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F008N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F009N}}" hover value="已派股息">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F009N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F010N}}" hover value="其他(投资回报)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F010N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F011N}}" hover value="投资回报及融资费用之现金流量净额">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F011N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F012N}}" hover value="退回/(已缴)税项">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F012N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F013N}}" hover value="增添固定资产">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F013N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F014N}}" hover value="投资增加">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F014N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F015N}}" hover value="出售固定资产">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F015N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F016N}}" hover value="投资减少">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F016N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F017N}}" hover value="与关连人士之现金流量净额(投资活动)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F017N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F018N}}" hover value="其他(投资活动)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F018N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F019N}}" hover value="投资活动之现金流量(经调整)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F019N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F020N}}" hover value="融资活动前之现金流量净额">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F020N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F021N}}" hover value="新增贷款">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F021N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F022N}}" hover value="偿还贷款">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F022N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F023N}}" hover value="债务融资收到的现金">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F023N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F024N}}" hover value="股权融资收到的现金">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F024N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F025N}}" hover value="与关连人士之现金流量净额(融资活动)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F025N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F026N}}" hover value="偿还债务支付的现金">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F026N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F027N}}" hover value="其他(融资活动)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F027N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F028N}}" hover value="融资活动之现金流量(经调整)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F028N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F029N}}" hover value="现金及现金等价物之增加/(减少)">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F029N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F030N}}" hover value="年初之现金及现金等价物">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F030N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F031N}}" hover value="外币汇率变动之影响/其他">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F031N/100000000)}}
+        </view>
+    </mp-cell>
+    <mp-cell wx:if="{{stock.cashflow.F032N}}" hover value="年终之现金及现金等价物">
+        <view slot="footer">
+            {{Math.toFixed(stock.cashflow.F032N/100000000)}}
+        </view>
     </mp-cell>
 </mp-cells>

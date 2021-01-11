@@ -25,14 +25,19 @@ Page({
         target: 11, //关注企业的目标财报在历史财报数据中的位置
         contrast: 7, //  关注企业的同比财报在历史财报数据中的位置
         // offset: 4, //  计算自由现金流当期财报距上一年报的偏移量
-        page: 0
+        page: 0,
+        market: '',   //  市场，默认为沪深
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function (options) {
         console.log(options)
+        this.setData({
+            market: options.market ? options.market : "CN"
+        })
+
         this.getPrinciples()
         this.getStockInfo(options.code, "stock")
         this.getStockHistory(options.code)
@@ -48,11 +53,7 @@ Page({
         }
     },
 
-    onReady: function() {
-
-    },
-
-    onPrevStepTap: function() {
+    onPrevStepTap: function () {
         if (this.data.page - 1 >= 0) {
             this.setData({
                 page: --this.data.page
@@ -70,7 +71,7 @@ Page({
         }
     },
 
-    onNextStepTap: function() {
+    onNextStepTap: function () {
         console.log('onNextStepTap >>> ', this.data.page, this.data.principles[this.data.page].name)
         if (!this.data.stock.principle[this.data.page]) {
             const item = {}
@@ -86,15 +87,15 @@ Page({
 
         app.wxp.showLoading()
         app.wxp.cloud.callFunction({
-                name: 'finance',
-                data: {
-                    action: 'score',
-                    data: encodeURIComponent(JSON.stringify({
-                        code: this.data.stock.code,
-                        principle: this.data.stock.principle
-                    }))
-                }
-            })
+            name: 'finance',
+            data: {
+                action: 'score',
+                data: encodeURIComponent(JSON.stringify({
+                    code: this.data.stock.code,
+                    principle: this.data.stock.principle
+                }))
+            }
+        })
             .then(res => {
                 console.log(res)
                 app.wxp.hideLoading()
@@ -103,7 +104,7 @@ Page({
                     this.afterPageChanged()
                 } else {
                     wx.redirectTo({
-                        url: '/pages/stock/stock?code=' + this.data.stock.code,
+                        url: '/pages/stock/index/index?code=' + this.data.stock.code,
                     })
                 }
 
@@ -113,7 +114,7 @@ Page({
             })
     },
 
-    onCanvasTouched: function(e) {
+    onCanvasTouched: function (e) {
         // console.log(e)
         const target = this.data.principles.find(principle => {
             return principle.name === e.target.dataset.id
@@ -121,13 +122,13 @@ Page({
         // console.log(target)
 
         target.handler.showToolTip(e, {
-            format: function(item, category) {
+            format: function (item, category) {
                 return '[' + MOMENT(category).format('YYYY.MM') + '] ' + item.name + '：' + item.data
             }
         });
     },
 
-    onCellTap: function(e) {
+    onCellTap: function (e) {
         console.log(e)
         wx.navigateTo({
             url: '/pages/knowledge/knowledge?subject=Stock&title=' + e.currentTarget.dataset.title
@@ -137,7 +138,7 @@ Page({
     /**
      *  响应输入事件
      */
-    onInput: function(e) {
+    onInput: function (e) {
         if (this.data.stock.principle[this.data.page]) {
             // this.data.stock.principle[this.data.page].name = this.data.principles[this.data.page].name; //  原则名称
             this.data.stock.principle[this.data.page][e.currentTarget.dataset.field] = parseInt(e.detail.value); //  评分标准的值 
@@ -153,7 +154,7 @@ Page({
     /**
      *  财报设置参数发生改变
      */
-    onSettingChanged: function(e) {
+    onSettingChanged: function (e) {
         const setting = {}
         setting[e.currentTarget.dataset.field] = parseInt(e.detail.value)
         this.setData(setting)
@@ -162,7 +163,7 @@ Page({
     /**
      *  跳转至指定页
      */
-    onPageChanged: function(e) {
+    onPageChanged: function (e) {
         const page = parseInt(e.detail.value)
         if (page > 0 && page <= this.data.principles.length) {
             this.data.page = page - 1; //  跳转至指定页
@@ -173,7 +174,7 @@ Page({
     /**
      *  增加/减少
      */
-    onAddMinusTap: function(e) {
+    onAddMinusTap: function (e) {
         console.log('onAddMinusTap >>> ', this.data.page, this.data.stock.principle[this.data.page])
 
         const step = e.currentTarget.dataset.field === 'reliability' ? 10 : 1;
@@ -201,7 +202,7 @@ Page({
     /**
      *  页面切换后
      */
-    afterPageChanged: function(e) {
+    afterPageChanged: function (e) {
         this.setData({
             "page": this.data.page,
             "stock.principle": this.data.stock.principle,
@@ -243,13 +244,16 @@ Page({
     /**
      *  我的原则
      */
-    getPrinciples: function() {
+    getPrinciples: function () {
         app.wxp.cloud.callFunction({
-                name: 'finance',
-                data: {
-                    action: 'principle',
-                }
-            })
+            name: 'finance',
+            data: {
+                action: 'principle',
+                data: encodeURIComponent(JSON.stringify({
+                    market: this.data.market
+                }))
+            }
+        })
             .then(res => {
                 console.log("getPrinciples >>> ", res)
                 if (res.result && res.result.data.length > 0) {
@@ -270,17 +274,17 @@ Page({
     /**
      *  获取上市公司的财务数据
      */
-    getStockInfo: function(code, object) {
+    getStockInfo: function (code, object) {
         app.wxp.showLoading()
         app.wxp.cloud.callFunction({
-                name: 'search',
-                data: {
-                    action: 'stock',
-                    data: encodeURIComponent(JSON.stringify({
-                        keyword: code
-                    }))
-                }
-            })
+            name: 'search',
+            data: {
+                action: 'stock',
+                data: encodeURIComponent(JSON.stringify({
+                    keyword: code
+                }))
+            }
+        })
             .then(res => {
                 console.log("getStockInfo >>> ", res)
                 if (res.result && res.result.list.length > 0) {
@@ -316,16 +320,16 @@ Page({
     /**
      *  获取上市公司的财务数据
      */
-    getStockHistory: function(code) {
+    getStockHistory: function (code) {
         app.wxp.cloud.callFunction({
-                name: 'search',
-                data: {
-                    action: 'history',
-                    data: encodeURIComponent(JSON.stringify({
-                        keyword: code
-                    }))
-                }
-            })
+            name: 'search',
+            data: {
+                action: 'history',
+                data: encodeURIComponent(JSON.stringify({
+                    keyword: code
+                }))
+            }
+        })
             .then(res => {
                 console.log("getStockHistory >>> ", res)
                 if (res.result && res.result.data.length > 0) {
@@ -347,7 +351,7 @@ Page({
     /**
      *  创建线形图表
      */
-    createLineCanvas: function(data) {
+    createLineCanvas: function (data) {
         console.log(">>> createLineCanvas：", data)
         let seriesData = []; //  Y轴数组
         const categories = []; //  X轴
@@ -384,7 +388,7 @@ Page({
             series.push({
                 name: principle.state[0],
                 data: seriesData,
-                format: function(val, name) {
+                format: function (val, name) {
                     return val + that.data.principles[that.data.page].unit;
                 }
             })
@@ -404,14 +408,14 @@ Page({
                         total2 += data[principle.dCategory[i]][k] ? parseInt(data[principle.dCategory[i]][k][principle.denominator[i]] || 0) : 0
                     }
                     //  被除数不为零
-                    seriesData.push(total2 !== 0 ? (total1 / total2).toFixed(2) : 0)
+                    seriesData.push(total2 !== 0 ? ((principle.multiple || 1) * total1 / total2).toFixed(2) : 0)
                 }
                 // console.log(seriesData)
 
                 series.push({
                     name: principle.state[0],
                     data: seriesData,
-                    format: function(val, name) {
+                    format: function (val, name) {
                         return val;
                     }
                 })
@@ -428,7 +432,7 @@ Page({
                         series.push({
                             name: principle.state[i],
                             data: seriesData,
-                            format: function(val, name) {
+                            format: function (val, name) {
                                 return val;
                             }
                         })
@@ -465,7 +469,7 @@ Page({
     /**
      *  创建环形图表
      */
-    createRingChart: function(data) {
+    createRingChart: function (data) {
         console.log(">>> createRingChart", data)
         const series = []
         const principle = this.data.principles[this.data.page]; //  原则
@@ -494,7 +498,5 @@ Page({
                 animation: false
             });
         }
-
-
     },
 })

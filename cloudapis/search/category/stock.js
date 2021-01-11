@@ -22,11 +22,11 @@ async function newest(request) {
     return await db.collection('_stocks')
         .aggregate()
         .match(_.or([{
-                "code": request.keyword || ""
-            },
-            {
-                "name": request.keyword || ""
-            }
+            "code": request.keyword || ""
+        },
+        {
+            "name": request.keyword || ""
+        }
         ]))
         .project({
             "name": "$name", //  名称
@@ -38,14 +38,26 @@ async function newest(request) {
             "profit": $.arrayElemAt(["$profit", 0]), //  利润表
             "cashflow": $.arrayElemAt(["$cashflow", 0]), //  现金流量表
             "indicators": $.arrayElemAt(["$indicators", 0]), //  各项指标
+            "freezingShare": "$freezingShare", //   股份冻结
             "pledge": "$pledge", //   股份质押
-            "holder": "$holder", //   十大流通股东
-            "fund": "$fund", //   募资来源
-            "investment": "$investment", //   募资投资项目
-            "audit": "$audit", //   审计意见
-            "guarantee": "$guarantee", //   对外担保
-            "punishment": "$punishment", //   公司受处罚表
+            "holder": "$holder", //   十大股东
+            "tradable": "$tradable", //   十大流通股东
+            "restricted": "$restricted", //   受限股份流通上市日期
             "change": "$change", //  主要股东股权变动
+            "dividends": "$dividends", //   分红转增信息
+            "fund": "$fund", //   募集资金来源
+            "plan": "$plan", //   募资投资项目
+            "audit": "$audit", //   审计意见
+            "related": "$related", //   关联交易
+            "arbitration": "$arbitration", //   公司仲裁的说明及结构
+            "punishment": "$punishment", //   公司受处罚表
+            "license": "$license", //   行政许可
+            "guarantee": "$guarantee", //   对外担保
+            "invest": "$invest", //   对外投资
+            "employee": "$employee", //   公司员工情况表
+            "freezingAssets": "$freezingAssets", //   公司资产冻结表
+            "capital": "$capital", //   股本结构
+            "director": "$director", //   董事变动
         })
         .end()
 
@@ -95,11 +107,11 @@ async function history(request) {
 
     return await db.collection('_stocks')
         .where(_.or([{
-                "code": request.keyword || ""
-            },
-            {
-                "name": request.keyword || ""
-            }
+            "code": request.keyword || ""
+        },
+        {
+            "name": request.keyword || ""
+        }
         ]))
         .limit(1)
         .get()
@@ -116,7 +128,8 @@ async function optional(request) {
         .field({
             'name': true,
             'code': true,
-            'market': true
+            'market': true,
+            'icon': true
         })
         .get()
 }

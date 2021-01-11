@@ -60,14 +60,23 @@ Component({
      * 组件的方法列表
      */
     methods: {
-        onCellTap: function(e) {
+        onCellTap: function (e) {
             // console.log(e)
+            const item = e.currentTarget.dataset.item;
+            const state = e.currentTarget.dataset.state;
+            const content = e.currentTarget.dataset.message;
+            let description = ''
+            for (let i = 0; i < state.length; i++) {
+                if (item[content[i]]) {
+                    description += '【' + state[i] + '】 ' + item[content[i]] + '   ###  '
+                }
+            }
             this.setData({
                 show: true,
-                desc: e.currentTarget.dataset.msg
+                desc: description
             })
         },
-        onInputValueChanged: function(e) {
+        onInputValueChanged: function (e) {
             // console.log(e)
             this.setData({
                 inputValue: parseInt(e.detail.value)

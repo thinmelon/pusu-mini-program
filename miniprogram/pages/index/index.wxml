@@ -86,6 +86,13 @@
 <canvas canvas-id="financingAggregate" disable-scroll="false" class="canvas" data-category="lineCanvases"
 	data-id="financingAggregate" bindtouchstart="onCanvasTouched"></canvas>
 
+<mp-cells title="" footer="">
+	<mp-cell link hover wx:for="{{articles.Macro}}" wx:key="*this" data-subject="Macro" data-title="{{item}}"
+		bindtap="onCellTap">
+		<view>{{item}}</view>
+	</mp-cell>
+</mp-cells>
+
 <!-- --------------        货币信贷        --------------- -->
 <view class="guide">
 	<text class="headline">货币信贷</text>
@@ -120,8 +127,8 @@
 		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[0]].name}} {{currencyList[multiIndex[0]].code}}
-			<image class='icon-smaller'
-				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
+			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
+			</image>
 		</view>
 	</picker>
 	<text>{{currencyFD}}</text>
@@ -132,8 +139,8 @@
 		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[1]].name}} {{currencyList[multiIndex[1]].code}}
-			<image class='icon-smaller'
-				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'></image>
+			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
+			</image>
 		</view>
 	</picker>
 	<text>{{result}}</text>
