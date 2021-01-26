@@ -12,6 +12,7 @@
         "pages/stock/search/search",
         "pages/stock/bank/bank",
         "pages/stock/index/index",
+        "pages/stock/customized/customized",
         "pages/stock/stock",
         "pages/knowledge/knowledge",
         "pages/knowledge/collections/collections",

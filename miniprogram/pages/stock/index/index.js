@@ -146,7 +146,7 @@ Page({
         }
 
         wx.navigateTo({
-            url: '/pages/stock/stock?code=' + this.data.stock.code,
+            url: e.currentTarget.dataset.prefix + this.data.stock.code,
         })
     },
 

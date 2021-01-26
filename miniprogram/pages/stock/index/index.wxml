@@ -40,8 +40,13 @@
 <!--                    基本面                    -->
 
 <mp-cells title="基本面" footer="">
-    <mp-cell value="财报阅读" hover link data-op="fundamentals" bindtap="onBasicCellTap">
+    <mp-cell value="通用性指标" hover link data-prefix="/pages/stock/stock?code=" bindtap="onBasicCellTap">
         <image slot="icon" src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_read.png"
+            style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
+    </mp-cell>
+    <mp-cell value="定制化指标" hover link data-prefix="/pages/stock/customized/customized?code=" bindtap="onBasicCellTap">
+        <image slot="icon"
+            src="cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/stock/_customized.png"
             style="margin-right: 16px;vertical-align: middle;width:20px;height: 20px;"></image>
     </mp-cell>
 </mp-cells>
@@ -216,7 +221,7 @@
 <!--                    分红转增                    -->
 
 <!--                    沪深市场                    -->
-<mp-cells title="分红转增方案" footer="" 
+<mp-cells title="分红转增方案" footer=""
     wx:if="{{stock.dividends && stock.dividends.length > 0 && (stock.market==='SZ' || stock.market==='SH')}}">
     <mp-cell hover wx:for="{{stock.dividends}}" wx:key="F001D">
         <view class="brief">【{{item.F001D}}】{{item.F007V}}（{{item.F015N ? '送股：' + item.F015N + '万股 ' : ''}}
@@ -233,9 +238,9 @@
 </mp-cells>
 
 <!--                    董事任职变动                    -->
-<!-- <mp-cells title="董事任职变动" footer="" wx:if="{{stock.director && stock.director.length > 0 && (stock.market==='HK')}}">
+<mp-cells title="董事任职变动" footer="" wx:if="{{stock.director && stock.director.length > 0 && (stock.market==='HK')}}">
     <mp-cell hover wx:for="{{stock.director}}" wx:key="F001D">
         <view class="brief">【{{item.F001D}}】{{item.F003V}}</view>
         <view slot="footer">{{item.F005V}}</view>
     </mp-cell>
-</mp-cells> -->
+</mp-cells>

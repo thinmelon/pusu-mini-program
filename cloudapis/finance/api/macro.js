@@ -15,11 +15,28 @@ CLOUD.init({
 const db = CLOUD.database()
 
 /**
+ *      生产法国内生产总值分季度统计表
+ */
+async function grabGDPData() {
+    return await updateQuaterly(URL.CNINFO_MACRO_GDP, '_quater', (rawData) => {
+        return {
+            "GDP": rawData.F002N,
+            "GDPYearOnYear": rawData.F003N,
+            "primaryIndustryAdded": rawData.F009N,
+            "primaryIndustryYearOnYear": rawData.F004N,
+            "secondaryIndustryAdded": rawData.F005N,
+            "secondaryIndustryYearOnYear": rawData.F006N,
+            "tertiaryIndustryAdded": rawData.F007N,
+            "tertiaryIndustryYearOnYear": rawData.F008N
+        }
+    })
+}
+
+/**
  *      全国居民消费价格指数
  */
 async function grabCPIData() {
-
-    return await update(URL.CNINFO_MACRO_CPI, '_macro', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_CPI, '_macro', (rawData) => {
         return {
             "cpiYearOnYear": rawData.F007N,
             "cpiMonthOnMonth": rawData.F004N,
@@ -35,7 +52,7 @@ async function grabCPIData() {
  *      采购经理指数（月度）
  */
 async function grabPMIData(request) {
-    return await update(URL.CNINFO_MACRO_PMI, '_macro', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_PMI, '_macro', (rawData) => {
         return {
             "purchasingManagersIndex": rawData.F003N, //   采购经理指数
             "productionIndex": rawData.F004N, //  生产指数
@@ -58,7 +75,7 @@ async function grabPMIData(request) {
  *      工业生产者出厂价格指数
  */
 async function grabPPIData(request) {
-    return await update(URL.CNINFO_MACRO_PPI, '_macro', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_PPI, '_macro', (rawData) => {
         return {
             "ppiYearOnYear": rawData.F005N, //   全国同比
         }
@@ -69,7 +86,7 @@ async function grabPPIData(request) {
  *      消费者信心指数月度统计
  */
 async function grabCCIData(request) {
-    return await update(URL.CNINFO_MACRO_CCI, '_macro', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_CCI, '_macro', (rawData) => {
         return {
             "consumerExpectationIndex": rawData.F003N,
             "consumerSatisfactionIndex": rawData.F004N,
@@ -82,7 +99,7 @@ async function grabCCIData(request) {
  *      货币供应量月度统计表
  */
 async function grabMoneySupply(request) {
-    return await update(URL.CNINFO_MACRO_MONEY_SUPPLY, '_money', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_MONEY_SUPPLY, '_money', (rawData) => {
         return {
             "M0": rawData.F002N,
             "M0YearOnYear": rawData.F003N,
@@ -98,7 +115,7 @@ async function grabMoneySupply(request) {
  *      全国消费品零售总额综合数据（月度）
  */
 async function grabTotalRetailSales(request) {
-    return await update(URL.CNINFO_MACRO_RETAIL_SALES, '_macro', (rawData) => {
+    return await updateMonthly(URL.CNINFO_MACRO_RETAIL_SALES, '_macro', (rawData) => {
         return {
             "retailSales": rawData.F004N,
             "retailSalesYearOnYear": rawData.F005N
@@ -107,10 +124,21 @@ async function grabTotalRetailSales(request) {
 }
 
 /**
+ *      全国固定资产投资价格指数（季度）
+ */
+async function grabFixedAssetInvestmentPrice(request) {
+    return await updateQuaterly(URL.CNINFO_MACRO_FIXED_ASSET_INVESTMENT_PRICE_INDEX, '_quater', (rawData) => {
+        return {
+            "fixedAssetInvestmentPriceIndex": rawData.F001N
+        }
+    })
+}
+
+/**
  *      全国进出口贸易数据（月度）
  */
 async function grabImportsExportsBalance(request) {
-    return await update(URL.CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE,
+    return await updateMonthly(URL.CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE,
         '_macro',
         (rawData) => {
             return {
@@ -122,9 +150,35 @@ async function grabImportsExportsBalance(request) {
 }
 
 /**
- *  如果返回结果中存在上个月数据，比对数据库，存在则更新，不存在则添加
+ *      【季度】更新指标
+ * @param {*} url 
+ * @param {*} collection 
+ * @param {*} factory 
  */
-async function update(url, collection, factory, options) {
+async function updateQuaterly(url, collection, factory) {
+    const token = await COMMON.getCNInfoAPIOauthToken()
+    const response = await AXIOS.get(UTIL.format(url, token.access_token))
+    // console.log(response)
+
+    if (response.status === 200 && response.data.resultmsg === "success") {
+        for (let i = 0; i < response.data.records.length; i++) {
+            const target = response.data.records[i]
+            const _id = `${target.YEAR}.${target.QUATER}`
+            const data = factory(target)
+            refreshDB(collection, _id, data)
+        }
+        return 'DONE'
+    } else {
+        return {
+            errMsg: "无法获取数据"
+        }
+    }
+}
+
+/**
+ *  【月度】如果返回结果中存在上个月数据，比对数据库，存在则更新，不存在则添加
+ */
+async function updateMonthly(url, collection, factory, options) {
     const lastMonth = MOMENT().subtract(1, 'months')
     const year = lastMonth.year()
     const month = lastMonth.month() + 1
@@ -144,29 +198,7 @@ async function update(url, collection, factory, options) {
         if (target.length === 1) {
             const _id = MOMENT(`${target[0].YEAR}.${target[0].MONTH}`, 'YYYY-M').format('YYYY.MM')
             const data = factory(target[0])
-            const result = await db.collection(collection)
-                .where({
-                    "_id": _id
-                })
-                .limit(1)
-                .get()
-            console.log(_id, result)
-
-            if (result.data && result.data.length > 0) {
-                await db.collection(collection)
-                    .doc(_id)
-                    .update({
-                        data
-                    })
-                return "Update"
-            } else {
-                await db.collection(collection)
-                    .doc(_id)
-                    .set({
-                        data
-                    })
-                return "Add"
-            }
+            return refreshDB(collection, _id, data)
         }
 
     } else {
@@ -177,19 +209,51 @@ async function update(url, collection, factory, options) {
 }
 
 /**
+ *      刷新数据库，无则插入，有则更新
+ * @param {*} collection 
+ * @param {*} _id 
+ * @param {*} data 
+ */
+async function refreshDB(collection, _id, data) {
+    const result = await db.collection(collection)
+        .where({
+            "_id": _id
+        })
+        .limit(1)
+        .get()
+    console.log(_id, result)
+
+    if (result.data && result.data.length > 0) {
+        await db.collection(collection)
+            .doc(_id)
+            .update({
+                data
+            })
+        return "Update"
+    } else {
+        await db.collection(collection)
+            .doc(_id)
+            .set({
+                data
+            })
+        return "Add"
+    }
+}
+
+/**
  *  社会融资规模存量统计表（存量及增速）
  */
 async function grabFinancingAggregate(request) {
     //  中国人民银行官网设置反爬虫，需要在headers中添加Cookie访问，Cookie值需要实时更新，在官网的F12中查看
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/12/2020121416212449196.htm', {
-            withCredentials: true,
-            headers: {
-                'Cookie': 'wzws_cid=ff090a254f80fb65d5c26d5a9be868facf696c231907b68c84ce50a22fb729331df026be39f56dbbadbd1144689fe5d0ef2c71bc971c889edc7319c09666a6acb4665e040bf1297d7fd59e5bed3c5473',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36'
-            }
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2021/01/2021011818185281952.htm', {
+        withCredentials: true,
+        headers: {
+            'Cookie': 'wzws_cid=4d86ab0444dec54099151d97ea1c9df0dd18be9afa30d51de4a62367cd9543ffb6206945d580b0c210970ccd8a565acce36e2d509c2454113cd73e13be7b49c28c38ccd459b235383bad2908937d1e974bf3ba811e9d5dce0f812ee7f1c015d8',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36'
         }
+    }
     );
     // console.log(response.data)
     const $ = CHEERIO.load(response.data, {
@@ -249,14 +313,14 @@ async function grabFinancingAggregate(request) {
  */
 async function grabFinancingAggregateFlow(request) {
     const response = await AXIOS.get(
-        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2020/11/2020111616044569755.htm', {
-            withCredentials: true,
-            headers: {
-                'Cookie': 'wzws_cid=45bc11bfada4c23fc3ed3c87df38393febff58978182f74d567d5e9130fddcc63aa1f891cc84a84276731e05d7c2f2231a52d1497c84a6ef561d50b8f3c0dc429f2d2f2ef30618fd3240f047fdaffe06',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Mobile Safari/537.36'
-            }
+        'http://www.pbc.gov.cn/diaochatongjisi/resource/cms/2021/01/2021011818180275034.htm', {
+        withCredentials: true,
+        headers: {
+            'Cookie': 'wzws_cid=3955ef54d02b81592e95a76ff1bc6953bab4dcc5c2af0f832ae4b5a047248aa8e30fcaeb20fe561685c2697a89361d010d8e54fba2a3df142330e3de02dace6cf1d65d600d64469594bc5de92ef9dd69dd3dcd1e889cc40c0f6213b218f2f02e',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36'
         }
+    }
     );
     // console.log(response.data)
     const $ = CHEERIO.load(response.data, {
@@ -314,9 +378,7 @@ async function grabFinancingAggregateFlow(request) {
         }
     }
 
-
     return 'DONE'
-
 }
 
 /**
@@ -326,10 +388,11 @@ async function refresh() {
     await grabCPIData()
     await grabPMIData()
     await grabPPIData()
-    await grabCCIData()
     await grabMoneySupply()
     await grabTotalRetailSales()
     await grabImportsExportsBalance()
+    await grabGDPData()
+    await grabFixedAssetInvestmentPrice()
 
     return 'DONE'
 }
@@ -349,12 +412,14 @@ async function manual() {
 module.exports = {
     refresh,
     manual,
+    grabGDPData,
     grabCPIData,
     grabPMIData,
     grabPPIData,
     grabCCIData,
     grabMoneySupply,
     grabTotalRetailSales,
+    grabFixedAssetInvestmentPrice,
     grabImportsExportsBalance,
     grabFinancingAggregate,
     grabFinancingAggregateFlow

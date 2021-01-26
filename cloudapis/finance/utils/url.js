@@ -26,6 +26,7 @@ const TOP_PRE_SELL = BUREAU_HOUSING_HOST + '/House/link/ListPreSell?Area=%s'
 /**
  *          巨潮资讯    -   宏观
  */
+const CNINFO_MACRO_GDP = 'http://webapi.cninfo.com.cn/api/macro/p_macro9057?access_token=%s&@limit=4&@orderby=YEAR:desc'; //  生产法国内生产总值分季度统计表
 const CNINFO_MACRO_CPI = 'http://webapi.cninfo.com.cn/api/macro/p_CPI?access_token=%s&year=%s&month=%s'; //  全国居民消费价格指数
 const CNINFO_MACRO_PMI = 'http://webapi.cninfo.com.cn/api/macro/p_PMI?access_token=%s&year=%s&month=%s'; //  采购经理指数（月度）
 const CNINFO_MACRO_PPI = 'http://webapi.cninfo.com.cn/api/macro/p_PPI?access_token=%s&year=%s&month=%s'; //  工业生产者出厂价格指数
@@ -34,6 +35,7 @@ const CNINFO_MACRO_MONEY_SUPPLY = 'http://webapi.cninfo.com.cn/api/macro/p_macro
 const CNINFO_MACRO_RETAIL_SALES = 'http://webapi.cninfo.com.cn/api/macro/p_macro9047?access_token=%s&year=%s&month=%s'; //  全国消费品零售总额综合数据（月度）
 const CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE = 'http://webapi.cninfo.com.cn/api/macro/p_macro9048?access_token=%s&year=%s&month=%s&sortcode=%s'; //  全国进出口贸易数据(月度)
 const CNINFO_MACRO_INDUSTRIAL_PRODUCTS = 'http://webapi.cninfo.com.cn/api/macro/p_macro9025?access_token=%s&year=%s&month=%s'; //  全国工业主要产品产量及增长速度
+const CNINFO_MACRO_FIXED_ASSET_INVESTMENT_PRICE_INDEX = 'http://webapi.cninfo.com.cn/api/macro/p_macro9019?access_token=%s&@limit=4&@orderby=YEAR:desc'; //  全国固定资产投资价格指数（季度）
 const CNINFO_MACRO_REAL_ESTATE = 'http://webapi.cninfo.com.cn/api/macro/p_macro9042?access_token=%s&year=%s&month=%s'; //  全国房地产建设与销售
 
 /**
@@ -144,6 +146,7 @@ module.exports = {
     ESTATES_DEVELOPMENT_INVESTMENT,
     RESIDENT_POPULATION,
     //  巨潮资讯    -   宏观
+    CNINFO_MACRO_GDP,
     CNINFO_MACRO_CPI,
     CNINFO_MACRO_PMI,
     CNINFO_MACRO_PPI,
@@ -152,6 +155,7 @@ module.exports = {
     CNINFO_MACRO_RETAIL_SALES,
     CNINFO_MACRO_IMPORTS_EXPORTS_BALANCE,
     CNINFO_MACRO_INDUSTRIAL_PRODUCTS,
+    CNINFO_MACRO_FIXED_ASSET_INVESTMENT_PRICE_INDEX,
     CNINFO_MACRO_REAL_ESTATE,
     //  中国人民银行
     HISTORY_CHINA_TREASURY_YIELDS,

@@ -1,0 +1,9 @@
+<!--pages/stock/customized/customized.wxml-->
+<block wx:for="{{indicators}}" wx:key="id">
+    <view class="guide">
+        <text class="headline">{{item.description}}</text>
+    </view>
+
+    <canvas canvas-id="{{item.id}}" disable-scroll="false" class="canvas" data-id="{{item.id}}"
+        bindtouchstart="onCanvasTouched"></canvas>
+</block>

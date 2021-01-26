@@ -1,4 +1,12 @@
 <!--pages/index/index.wxml-->
+<!-- --------------        GDP        --------------- -->
+<view class="guide">
+	<text class="headline">生产法国内生产总值同比（季度）</text>
+</view>
+
+<canvas canvas-id="GDP" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="GDP"
+	bindtouchstart="onCanvasTouched"></canvas>
+
 <!-- --------------        全国消费品零售总额综合数据（累计）        --------------- -->
 <view class="guide">
 	<text class="headline">社会消费品零售总额同比（累计）</text>
@@ -15,28 +23,12 @@
 <canvas canvas-id="CPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CPI"
 	bindtouchstart="onCanvasTouched"></canvas>
 
-<!-- --------------        CCI        --------------- -->
+<!-- --------------        全国固定资产投资价格指数（季度）        --------------- -->
 <view class="guide">
-	<text class="headline">消费者信心指数（月度）</text>
+	<text class="headline">全国固定资产投资价格指数（季度）</text>
 </view>
 
-<canvas canvas-id="CCI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="CCI"
-	bindtouchstart="onCanvasTouched"></canvas>
-
-<!-- --------------        PPI        --------------- -->
-<view class="guide">
-	<text class="headline">工业生产者出厂价格同比（月度）</text>
-</view>
-
-<canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI"
-	bindtouchstart="onCanvasTouched"></canvas>
-
-<!-- --------------        PMI        --------------- -->
-<view class="guide">
-	<text class="headline">采购经理指数（月度）</text>
-</view>
-
-<canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI"
+<canvas canvas-id="fixedAssetInvestmentPriceIndex" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="fixedAssetInvestmentPriceIndex"
 	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        全国进出口贸易数据（月度）        --------------- -->
@@ -54,6 +46,37 @@
 
 <canvas canvas-id="importsExportsBalanceMonthOnMonth" disable-scroll="false" class="canvas" data-category="lineCanvases"
 	data-id="importsExportsBalanceMonthOnMonth" bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        货币信贷        --------------- -->
+<view class="guide">
+	<text class="headline">货币信贷</text>
+</view>
+
+<canvas canvas-id="moneySupply" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="moneySupply"
+	bindtouchstart="onCanvasTouched"></canvas>
+
+<mp-cells title="" footer="">
+	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"
+		bindtap="onCellTap">
+		<view>{{item}}</view>
+	</mp-cell>
+</mp-cells>
+
+<!-- --------------        PPI        --------------- -->
+<view class="guide">
+	<text class="headline">工业生产者出厂价格同比（月度）</text>
+</view>
+
+<canvas canvas-id="PPI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PPI"
+	bindtouchstart="onCanvasTouched"></canvas>
+
+<!-- --------------        PMI        --------------- -->
+<view class="guide">
+	<text class="headline">采购经理指数（月度）</text>
+</view>
+
+<canvas canvas-id="PMI" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="PMI"
+	bindtouchstart="onCanvasTouched"></canvas>
 
 <!-- --------------        中债国债收益率曲线        --------------- -->
 <view class="guide">
@@ -93,21 +116,6 @@
 	</mp-cell>
 </mp-cells>
 
-<!-- --------------        货币信贷        --------------- -->
-<view class="guide">
-	<text class="headline">货币信贷</text>
-</view>
-
-<canvas canvas-id="moneySupply" disable-scroll="false" class="canvas" data-category="lineCanvases" data-id="moneySupply"
-	bindtouchstart="onCanvasTouched"></canvas>
-
-<mp-cells title="" footer="">
-	<mp-cell link hover wx:for="{{articles.Money}}" wx:key="*this" data-subject="Money" data-title="{{item}}"
-		bindtap="onCellTap">
-		<view>{{item}}</view>
-	</mp-cell>
-</mp-cells>
-
 <!-- --------------        A股市场新增账户数        --------------- -->
 <view class="guide">
 	<text class="headline">A股市场新增账户数</text>
@@ -127,7 +135,8 @@
 		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[0]].name}} {{currencyList[multiIndex[0]].code}}
-			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
+			<image class='icon-smaller'
+				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
 			</image>
 		</view>
 	</picker>
@@ -139,7 +148,8 @@
 		range-key="name">
 		<view class="picker">
 			{{currencyList[multiIndex[1]].name}} {{currencyList[multiIndex[1]].code}}
-			<image class='icon-smaller' src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
+			<image class='icon-smaller'
+				src='cloud://diandi-software-cloud.6469-diandi-software-cloud-1300349273/right.png'>
 			</image>
 		</view>
 	</picker>
